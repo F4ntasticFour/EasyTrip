@@ -6,9 +6,9 @@
 #define EASYTRIP_STATIONCLASS_H
 
 
-class Station {
+class StationClass {
 
 };
 
 
-#endif //EASYTRIP_STATION_H
+#endif //EASYTRIP_STATIONCLASS_H
