@@ -25,6 +25,6 @@ public:
     void printStack() const;
 };
 
-#include "Stack.cpp"
+#include "Stack.impl"
 
 #endif //EASYTRIP_STACK_H

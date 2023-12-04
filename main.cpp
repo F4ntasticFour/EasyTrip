@@ -2,7 +2,7 @@
 #include "CompanyClass.h"
 #include "PassengerClass.h"
 #include "EventClass.h"
-#include "Station.h"
+#include "StationClass.h"
 #include "BusClass.h"
 #include "UiClass.h"
 

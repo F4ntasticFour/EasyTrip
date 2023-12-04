@@ -21,6 +21,6 @@ public:
     void printPriorityQueue() const;
 };
 
-#include "PriorityQueue.cpp"
+#include "PriorityQueue.impl"
 
 #endif //EASYTRIP_PRIORITYQUEUE_H

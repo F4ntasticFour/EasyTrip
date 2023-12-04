@@ -30,6 +30,6 @@ public:
     void printQueue() const;
 };
 
-#include "Queue.cpp"
+#include "Queue.impl"
 
 #endif //EASYTRIP_QUEUE_H
