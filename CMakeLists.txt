@@ -24,6 +24,7 @@ add_executable(EasyTrip main.cpp
         Node.h
         PriorityQueue.impl
         PriorityQueue.h
+<<<<<<< HEAD
         LinkedList.impl
         LinkedList.h
         MixedBusClass.cpp
@@ -34,3 +35,19 @@ add_executable(EasyTrip main.cpp
         TimeClass.cpp
         TimeClass.h)
 
+=======
+        LinkedList.cpp
+        LinkedList.h
+        TimeClass.cpp
+        TimeClass.h
+        MixedBusClass.cpp
+        MixedBusClass.h
+        WheelChairBusClass.cpp
+        WheelChairBusClass.h
+        SpecialCategoryPassengerClass.cpp
+        SpecialCategoryPassengerClass.h
+        NormalPassengerClass.cpp
+        NormalPassengerClass.h
+        WheelChairPassengerClass.cpp
+        WheelChairPassengerClass.h)
+>>>>>>> 4884c76 (add derived classes WCP, SCP, NP Passengers and WCB, MB.)
