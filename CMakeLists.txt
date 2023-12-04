@@ -12,17 +12,17 @@ add_executable(EasyTrip main.cpp
         BusClass.h
         CompanyClass.cpp
         CompanyClass.h
-        Station.cpp
-        Station.h
+        StationClass.cpp
+        StationClass.h
         UiClass.cpp
         UiClass.h
-        Stack.cpp
+        Stack.impl
         Stack.h
-        Queue.cpp
+        Queue.impl
         Queue.h
-        Node.cpp
+        Node.impl
         Node.h
-        PriorityQueue.cpp
+        PriorityQueue.impl
         PriorityQueue.h
-        LinkedList.cpp
+        LinkedList.impl
         LinkedList.h)

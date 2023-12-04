@@ -31,6 +31,6 @@ public:
     T getItem() const;
 };
 
-#include "LinkedList.cpp"
+#include "LinkedList.impl"
 
 #endif //EASYTRIP_LINKEDLIST_H

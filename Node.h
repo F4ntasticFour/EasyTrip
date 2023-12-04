@@ -24,6 +24,6 @@ public:
     Node<T> *getNext() const;
 };
 
-#include "Node.cpp"
+#include "Node.impl"
 
 #endif //EASYTRIP_NODE_H
