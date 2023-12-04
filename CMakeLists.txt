@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.26)
+ cmake_minimum_required(VERSION 3.26)
 project(EasyTrip)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -25,4 +25,9 @@ add_executable(EasyTrip main.cpp
         PriorityQueue.impl
         PriorityQueue.h
         LinkedList.impl
-        LinkedList.h)
+        LinkedList.h
+        MixedBusClass.cpp
+        NormalPassengerClass.h
+        SpecialCategoryPassengerClass.h
+        WheelChairBusClass.cpp
+        WheelChairPassengerClass.cpp)
