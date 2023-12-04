@@ -32,3 +32,4 @@ void Station::setStationNumber(int number) {
     this->number = number;
 }
 
+#include "StationClass.h"
