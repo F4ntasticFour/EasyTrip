@@ -32,3 +32,4 @@ int Station::getStationNumber() {
 void Station::setStationNumber(int number) {
     this->number = number;
 }
+
