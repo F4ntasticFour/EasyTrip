@@ -15,4 +15,14 @@ add_executable(EasyTrip main.cpp
         Station.cpp
         Station.h
         UiClass.cpp
-        UiClass.h)
+        UiClass.h
+        Stack.cpp
+        Stack.h
+        Queue.cpp
+        Queue.h
+        Node.cpp
+        Node.h
+        PriorityQueue.cpp
+        PriorityQueue.h
+        LinkedList.cpp
+        LinkedList.h)
