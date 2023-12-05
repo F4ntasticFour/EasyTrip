@@ -1,8 +1,3 @@
-//
-// Created by Safey Elrahman on 04/12/2023.
-//
-
-<<<<<<< HEAD
 #ifndef EASYTRIP_STATIONCLASS_H
 #define EASYTRIP_STATIONCLASS_H
 
@@ -38,5 +33,9 @@ private:
     void removeWpPassenger(PassengerClass passenger);
 
     void removeSpPassenger();
+
+};
+
+#include "StationClass.cpp"
 
 #endif //EASYTRIP_STATIONCLASS_H

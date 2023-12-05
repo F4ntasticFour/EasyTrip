@@ -1,9 +1,7 @@
-//
-// Created by Safey Elrahman on 04/12/2023.
-//
 
-#include "StationClass.h"
+#include "StationCLass.h"
 #include "PriorityQueue.h"
+
 
 Station::Station(int number) {
     this->number = number;
@@ -15,7 +13,7 @@ void Station::addWpPassenger(PassengerClass passenger) {
     WPpassengers.insertAtEnd(passenger);
 }
 void Station::addSpPassenger(PassengerClass passenger) {
-    SPpassengers.enqueue(passenger, passenger.getPriority());
+    SPpassengers.enqueue(passenger, passenger.getPriority();
 }
 void Station::removeNpPassenger(PassengerClass passenger) {
     NPpassengers.remove(passenger);
@@ -32,5 +30,4 @@ int Station::getStationNumber() {
 void Station::setStationNumber(int number) {
     this->number = number;
 }
-
 
