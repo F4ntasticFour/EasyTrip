@@ -10,14 +10,16 @@ private:
     int BusCapacity;
     int JourneyCompleted;
     Time CheckUpTime;
+    int BusCurrentStation;
 
 public:
 
-    BusClass(const std::string& busType, int busCapacity, int journeyCompleted, Time checkUpTime);
+    BusClass(const std::string& busType, int busCapacity, int journeyCompleted, Time checkUpTime, int busCurrentStation);
 
     std::string getBusType() const;
     int getBusCapacity() const;
     int getJourneyCompleted() const;
+    int getBusCurrentStation() const;
     Time getCheckUpTime() const;
 
     // Setters
