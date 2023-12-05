@@ -25,6 +25,8 @@ public:
     T getData() const;
 
     Node<T> *getNext() const;
+
+    Node<T> *getPriority() const;
 };
 
 #include "Node.impl"

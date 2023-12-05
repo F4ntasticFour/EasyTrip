@@ -37,3 +37,8 @@ template<class T>
 Node<T> *Node<T>::getNext() const {
     return next;
 }
+
+template<class T>
+Node<T> *Node<T>::getPriority() const {
+    return priority;
+}

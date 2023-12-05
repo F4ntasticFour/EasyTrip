@@ -15,7 +15,7 @@ class CompanyClass{
 private:
     Queue<BusClass*> FinishedBusMbus;
     Queue<BusClass*> FinishedBusWCBus;
-    StationClass StationList[100];
+    Station StationList[100];
     Queue<BusClass*> CheckUpQueueMbus;
     Queue<BusClass*> CheckUpQueueWCbus;
     Queue<BusClass*> MovingBusMbus;
