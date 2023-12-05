@@ -6,15 +6,18 @@ template<class T>
 class Node {
 private:
     T data;
+    int priority;
     Node<T> *next;
 
 public:
     // Constructor
+    Node(T data, int priority);
     Node(T data);
 
 
     // Setter methods
     void setData(T data);
+    void setPriority(int priority);
 
     void setNext(Node<T> *next);
 

@@ -25,7 +25,7 @@ public:
     void addSpPassenger(PassengerClass SPpassenger);
     void removeNpPassenger(PassengerClass passenger);
     void removeWpPassenger(PassengerClass passenger);
-    void removeSpPassenger(PassengerClass passenger);
+    void removeSpPassenger();
 };
 
 
