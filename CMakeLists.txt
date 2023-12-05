@@ -11,26 +11,15 @@ add_executable(EasyTrip main.cpp
         BusClass.cpp
         BusClass.h
         CompanyClass.cpp
-        CompanyClass.h
         StationClass.cpp
         StationClass.h
         UiClass.cpp
         UiClass.h
-        Stack.impl
         Stack.h
-        Queue.impl
         Queue.h
-        Node.impl
         Node.h
-        PriorityQueue.impl
         PriorityQueue.h
-        LinkedList.impl
         LinkedList.h
-        MixedBusClass.cpp
-        NormalPassengerClass.h
-        SpecialCategoryPassengerClass.h
-        WheelChairBusClass.cpp
-        WheelChairPassengerClass.cpp
         TimeClass.cpp
         TimeClass.h)
 

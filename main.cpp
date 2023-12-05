@@ -1,5 +1,4 @@
 #include <iostream>
-#include "CompanyClass.h"
 #include "PassengerClass.h"
 #include "EventClass.h"
 #include "StationClass.h"
