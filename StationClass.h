@@ -26,7 +26,7 @@ private:
 
     void addWpPassenger(PassengerClass passenger);
 
-    void addSpPassenger(PassengerClass SPpassenger);
+    void addSpPassenger(PassengerClass xpassenger);
 
     void removeNpPassenger(PassengerClass passenger);
 
@@ -36,8 +36,5 @@ private:
 
 };
 
-
-
-#include "StationClass.cpp"
 
 #endif //EASYTRIP_STATIONCLASS_H

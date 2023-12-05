@@ -1,6 +1,9 @@
 #include "PassengerClass.h"
-PassengerClass::PassengerClass(Time& ArrivalTime, const int& StartStation, int& EndStation, Time& GetOnOffTime, const std::string& passengerType)
-        : ArrivalTime(ArrivalTime), StartStation(StartStation), EndStation(EndStation), GetOnOffTime(GetOnOffTime), PassengerType(passengerType) {
+
+PassengerClass::PassengerClass(Time &ArrivalTime, const int &StartStation, int &EndStation, Time &GetOnOffTime,
+                               const std::string &passengerType)
+        : ArrivalTime(ArrivalTime), StartStation(StartStation), EndStation(EndStation), GetOnOffTime(GetOnOffTime),
+          PassengerType(passengerType) {
 }
 
 
@@ -15,6 +18,7 @@ int PassengerClass::getStartStation() const {
 int PassengerClass::getEndStation() const {
     return EndStation;
 }
+
 Time PassengerClass::getGetOnOffTime() const {
     return GetOnOffTime;
 }
@@ -24,15 +28,15 @@ std::string PassengerClass::getPassengerType() const {
 }
 
 // Setters
-void PassengerClass::setArrivalTime(const Time& arrivalTime) {
+void PassengerClass::setArrivalTime(const Time &arrivalTime) {
     ArrivalTime = arrivalTime;
 }
 
-void PassengerClass::setStartStation(const int& startStation) {
+void PassengerClass::setStartStation(const int &startStation) {
     StartStation = startStation;
 }
 
-void PassengerClass::setEndStation(const int& endStation) {
+void PassengerClass::setEndStation(const int &endStation) {
     EndStation = endStation;
 }
 
@@ -40,12 +44,14 @@ void PassengerClass::setGetOnOffTime(Time getOnOffTime) {
     GetOnOffTime = getOnOffTime;
 }
 
-void PassengerClass::setPassengerType(const std::string& passengerType) {
+void PassengerClass::setPassengerType(const std::string &passengerType) {
     PassengerType = passengerType;
 }
-void PassengerClass::setStatue(const std::string& statue) {
+
+void PassengerClass::setStatue(const std::string &statue) {
     this->statue = statue;
 }
+
 std::string PassengerClass::getStatue() const {
     return statue;
 }
@@ -53,16 +59,17 @@ std::string PassengerClass::getStatue() const {
 
 int PassengerClass::getPriority() const {
     if (getPassengerType() == "SP") {
-        if (getStatue() == "Aged"){
+        if (getStatue() == "Aged") {
             return 4;
-        }
-        else if(getStatue() == "POD"){
+        } else if (getStatue() == "POD") {
             return 3;
-        }
-        else if(getStatue() == "Pregnant"){
+        } else if (getStatue() == "Pregnant") {
             return 2;
         }
-    }else if(getPassengerType() == "NP"){
-        return 1;
-        }
+    }
+    return 1;
+}
+
+bool PassengerClass::operator==(const PassengerClass &rhs) const {
+    return getPriority() == rhs.getPriority();
 }

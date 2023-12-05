@@ -36,6 +36,8 @@ public:
     void setStatue(const std::string& statue);
     int getPriority() const;
     std::string getStatue() const;
+    bool operator==(const PassengerClass& lhs) const;
+
 };
 
 
