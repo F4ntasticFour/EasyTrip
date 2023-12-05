@@ -34,6 +34,8 @@ private:
 
     void removeSpPassenger();
 
+};
+
 
 
 #include "StationClass.cpp"
