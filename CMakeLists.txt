@@ -33,3 +33,5 @@ add_executable(EasyTrip main.cpp
         WheelChairPassengerClass.cpp
         TimeClass.cpp
         TimeClass.h)
+
+

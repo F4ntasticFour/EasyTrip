@@ -90,3 +90,31 @@ T LinkedList<T>::getItem() const {
     }
     return temp != nullptr ? temp->getData() : T();
 }
+
+template<class T>
+void LinkedList<T>::remove(T data) {
+    Node<T> *temp = Head;
+    Node<T> *prev = nullptr;
+    if (isEmpty()) {
+        std::cout << "List is empty, cannot remove" << std::endl;
+    } else {
+        while (temp->getNext() != nullptr) {
+            if (temp->getData() == data) {
+                if (prev == nullptr) {
+                    // If the node to be removed is the head
+                    Head = temp->getNext();
+                } else {
+                    // If the node to be removed is not the head
+                    prev->setNext(temp->getNext());
+                }
+
+                // Delete the node and break out of the loop
+                delete temp;
+                break;
+            } else {
+                prev = temp;
+                temp = temp->getNext();
+            }
+        }
+    }
+}

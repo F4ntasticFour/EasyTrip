@@ -29,6 +29,8 @@ public:
 
     // Utility Functions
     T getItem() const;
+
+    void remove(T data);
 };
 
 #include "LinkedList.impl"
