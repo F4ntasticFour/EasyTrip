@@ -37,6 +37,4 @@ public:
 
     void removeSpPassenger();
 
-};
-
 #endif //EASYTRIP_STATIONCLASS_H

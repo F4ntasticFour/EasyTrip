@@ -3,8 +3,8 @@
 //
 
 #include "StationClass.h"
-
 #include "PriorityQueue.h"
+
 Station::Station(int number) {
     this->number = number;
 }
@@ -23,6 +23,7 @@ void Station::removeNpPassenger(PassengerClass passenger) {
 void Station::removeWpPassenger(PassengerClass passenger) {
     WPpassengers.remove(passenger);
 }
+<<<<<<< HEAD
 void Station::removeSpPassenger() {
     SPpassengers.dequeue();
 }
@@ -32,4 +33,5 @@ int Station::getStationNumber() {
 void Station::setStationNumber(int number) {
     this->number = number;
 }
+
 
