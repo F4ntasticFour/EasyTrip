@@ -21,7 +21,7 @@ public:
         return front == nullptr;
     }
 
-    void Enqueue(T data) {
+    void enqueue(T data) {
         Node<T> *newNode = new Node<T>(data);
         if (isEmpty()) {
             front = rear = newNode;
@@ -31,7 +31,7 @@ public:
         }
     }
 
-    void Dequeue() {
+    void dequeue() {
         if (isEmpty()) {
             std::cout << "Queue is empty" << std::endl;
             return;
