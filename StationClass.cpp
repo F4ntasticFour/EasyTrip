@@ -23,7 +23,6 @@ void Station::removeNpPassenger(PassengerClass passenger) {
 void Station::removeWpPassenger(PassengerClass passenger) {
     WPpassengers.remove(passenger);
 }
-<<<<<<< HEAD
 void Station::removeSpPassenger() {
     SPpassengers.dequeue();
 }

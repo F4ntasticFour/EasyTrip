@@ -19,6 +19,8 @@ public:
     LinkedList<PassengerClass> NPpassengers;
     LinkedList<PassengerClass> WPpassengers;
 
+private:
+
     Station(int number);
 
     void setStationNumber(int number);
