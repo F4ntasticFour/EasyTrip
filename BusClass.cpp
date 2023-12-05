@@ -1,5 +1,5 @@
 #include "BusClass.h"
-BusClass::BusClass(const std::string& busType, int busCapacity, int journeyCompleted, Time checkUpTime)
+BusClass::BusClass(const std::string& busType, int busCapacity, int journeyCompleted, Time checkUpTime, int busCurrentStation)
         : BusType(busType), BusCapacity(busCapacity), JourneyCompleted(journeyCompleted), CheckUpTime(checkUpTime) {
 
 }
@@ -15,6 +15,10 @@ int BusClass::getBusCapacity() const {
 
 int BusClass::getJourneyCompleted() const {
     return JourneyCompleted;
+}
+
+int BusClass::getBusCurrentStation() const {
+    return BusCurrentStation;
 }
 
 Time BusClass::getCheckUpTime() const {
@@ -37,6 +41,7 @@ void BusClass::setJourneyCompleted(int journeyCompleted) {
 void BusClass::setCheckUpTime(Time checkUpTime) {
     CheckUpTime = checkUpTime;
 }
+
 
 
 void BusClass::performMaintenance() {}
