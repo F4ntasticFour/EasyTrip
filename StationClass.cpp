@@ -4,8 +4,9 @@
 
 #include "StationClass.h"
 
-Station::Station(string name) {
-    this->name = name;
+#include "PriorityQueue.h"
+Station::Station(int number) {
+    this->number = number;
 }
 void Station::addNpPassenger(PassengerClass passenger) {
     NPpassengers.insertAtEnd(passenger);
@@ -25,9 +26,9 @@ void Station::removeWpPassenger(PassengerClass passenger) {
 void Station::removeSpPassenger() {
     SPpassengers.dequeue();
 }
-string Station::getName() {
-    return name;
+int Station::getStationNumber() {
+    return number;
 }
-void Station::setName(string name) {
-    this->name = name;
+void Station::setStationNumber(int number) {
+    this->number = number;
 }

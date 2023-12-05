@@ -13,13 +13,13 @@ using namespace std;
 
 class Station {
 public:
-    string name;
+    int number;
     PriorityQueue<PassengerClass> SPpassengers;
     LinkedList<PassengerClass> NPpassengers;
     LinkedList<PassengerClass> WPpassengers;
-    Station(string name);
-    void setName(string name);
-    string getName();
+    Station(int number);
+    void setStationNumber(int number);
+    int getStationNumber();
     void addNpPassenger(PassengerClass passenger);
     void addWpPassenger(PassengerClass passenger);
     void addSpPassenger(PassengerClass SPpassenger);
