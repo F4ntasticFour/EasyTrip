@@ -36,6 +36,7 @@ private:
 
 };
 
+
 #include "StationClass.cpp"
 
 #endif //EASYTRIP_STATIONCLASS_H
