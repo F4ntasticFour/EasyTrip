@@ -1,5 +1,4 @@
 #include <iostream>
-#include "CompanyClass.h"
 #include "PassengerClass.h"
 #include "EventClass.h"
 #include "StationClass.h"
@@ -9,6 +8,6 @@
 using namespace std;
 
 int main() {
-    cout << "Hello, Worldd!" << std::endl;
+    std::cout << "Hello, World" << std::endl;
     return 0;
 }

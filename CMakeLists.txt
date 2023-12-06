@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.26)
+ cmake_minimum_required(VERSION 3.26)
 project(EasyTrip)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -11,18 +11,17 @@ add_executable(EasyTrip main.cpp
         BusClass.cpp
         BusClass.h
         CompanyClass.cpp
-        CompanyClass.h
         StationClass.cpp
         StationClass.h
         UiClass.cpp
         UiClass.h
-        Stack.impl
         Stack.h
-        Queue.impl
         Queue.h
-        Node.impl
         Node.h
-        PriorityQueue.impl
         PriorityQueue.h
-        LinkedList.impl
-        LinkedList.h)
+        LinkedList.h
+        TimeClass.cpp
+        TimeClass.h
+        CompanyClass.h)
+
+
