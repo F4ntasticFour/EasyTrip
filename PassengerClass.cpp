@@ -1,5 +1,6 @@
 #include "PassengerClass.h"
 
+PassengerClass::PassengerClass() {}
 PassengerClass::PassengerClass(Time &ArrivalTime, const int &StartStation, int &EndStation, Time &GetOnOffTime,
                                const std::string &passengerType)
         : ArrivalTime(ArrivalTime), StartStation(StartStation), EndStation(EndStation), GetOnOffTime(GetOnOffTime),
@@ -27,6 +28,9 @@ std::string PassengerClass::getPassengerType() const {
     return PassengerType;
 }
 
+int PassengerClass::getPassengerID() const {
+    return passengerID;
+}
 // Setters
 void PassengerClass::setArrivalTime(const Time &arrivalTime) {
     ArrivalTime = arrivalTime;
@@ -40,6 +44,7 @@ void PassengerClass::setEndStation(const int &endStation) {
     EndStation = endStation;
 }
 
+//TODO: ADD SWITCH CASE TO COMPARE PASSENGER TYPES AND GIVE ON/OFF TIME ACCORDING TO PASSENGER TYPE
 void PassengerClass::setGetOnOffTime(Time getOnOffTime) {
     GetOnOffTime = getOnOffTime;
 }
@@ -51,10 +56,14 @@ void PassengerClass::setPassengerType(const std::string &passengerType) {
 void PassengerClass::setStatue(const std::string &statue) {
     this->statue = statue;
 }
+void PassengerClass::setPassengerID(int passengerID) {
+    this->passengerID = passengerID;
+}
 
 std::string PassengerClass::getStatue() const {
     return statue;
 }
+
 
 
 int PassengerClass::getPriority() const {
