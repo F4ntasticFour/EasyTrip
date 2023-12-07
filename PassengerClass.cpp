@@ -44,7 +44,6 @@ void PassengerClass::setEndStation(const int &endStation) {
     EndStation = endStation;
 }
 
-//TODO: ADD SWITCH CASE TO COMPARE PASSENGER TYPES AND GIVE ON/OFF TIME ACCORDING TO PASSENGER TYPE
 void PassengerClass::setGetOnOffTime(Time getOnOffTime) {
     GetOnOffTime = getOnOffTime;
 }

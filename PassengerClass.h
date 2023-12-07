@@ -19,7 +19,7 @@ private:
     std::string statue;
 public:
     // Constructor
-//    TODO: ADD PASSENGER ID
+//    TODO: ADD PASSENGER ID, constant get on off time = 1/6min
     PassengerClass();
     PassengerClass(Time& ArrivalTime, const int& StartStation, int& EndStation, Time& GetOnOffTime, const std::string& passengerType);
 

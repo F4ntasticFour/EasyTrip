@@ -10,13 +10,12 @@
 
 class CompanyClass {
 private:
-    Queue<BusClass*> FinishedBusMbus;
-    Queue<BusClass*> FinishedBusWCBus;
+    Queue<BusClass*> FinishedPassengersBus;
     Station StationList[100];
     Queue<BusClass*> CheckUpQueueMbus;
     Queue<BusClass*> CheckUpQueueWCbus;
-    Queue<BusClass*> MovingBusMbus;
-    Queue<BusClass*> MovingBusWCBus;
+//    no need for two kinds
+    Queue<BusClass*> MovingBus;
 
 public:
     bool busFinshed(BusClass* Bus);

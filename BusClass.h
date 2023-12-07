@@ -20,6 +20,7 @@ public:
     int getBusCapacity() const;
     int getJourneyCompleted() const;
     int getBusCurrentStation() const;
+//    priority queue (priorty=nearest station) of passengers
     Time getCheckUpTime() const;
 
     // Setters

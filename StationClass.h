@@ -12,7 +12,9 @@ public:
     int number;
     PriorityQueue<PassengerClass> SPpassengers;
     LinkedList<PassengerClass> NPpassengers;
-    LinkedList<PassengerClass> WPpassengers;
+// queue instead of ll    LinkedList<PassengerClass> WPpassengers;
+//List of buses
+//list of both directions of route (fwd,bck)
 
 private:
 
@@ -26,13 +28,15 @@ private:
 
     void addWpPassenger(PassengerClass passenger);
 
-    void addSpPassenger(PassengerClass xpassenger);
+    void addSpPassenger(PassengerClass passenger);
 
     void removeNpPassenger(PassengerClass passenger);
 
     void removeWpPassenger(PassengerClass passenger);
 
     void removeSpPassenger();
+
+//    add
 
 };
 
