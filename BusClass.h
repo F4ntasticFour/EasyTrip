@@ -28,10 +28,10 @@ public:
     void setJourneyCompleted(int journeyCompleted);
     void setCheckUpTime(Time checkUpTime);
 
+    //Member Functions
     void performMaintenance();
-
-
     bool isSuitableForPassengerType(const std::string& passengerType) const;
+    //TODO: add onBoarding and gotOff functions
 };
 
 #endif //EASYTRIP_BUSCLASS_H
