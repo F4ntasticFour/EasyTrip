@@ -19,8 +19,6 @@ private:
     Queue<BusClass> BWbuses;
     Queue<BusClass> WaitingBuses;
 
-
-
 public:
 
     Station(int number);
@@ -35,22 +33,19 @@ public:
 
     void addSpPassenger(PassengerClass * Passenger);
 
-    PassengerClass removeNpPassenger(PassengerClass * Passenger);
+    void removeNpPassenger(PassengerClass * Passenger);
 
     PassengerClass removeWpPassenger();
 
     PassengerClass removeSpPassenger();
 
-    void addFwBus(BusClass & Bus);
+    void addFwBus(BusClass * Bus);
 
-    void addBwBus(BusClass & Bus);
+    void addBwBus(BusClass * Bus);
 
     BusClass removeFwBus();
 
     BusClass removeBwBus();
-
-
-
 
 };
 
