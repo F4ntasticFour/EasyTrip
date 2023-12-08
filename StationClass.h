@@ -17,9 +17,6 @@ private:
     Queue<PassengerClass> WPpassengers;
     Queue<BusClass> FWbuses;
     Queue<BusClass> BWbuses;
-
-// queue instead of ll    LinkedList<PassengerClass> WPpassengers;
-//List of buses
     Queue<BusClass> WaitingBuses;
 
 
@@ -38,23 +35,20 @@ public:
 
     void addSpPassenger(PassengerClass * Passenger);
 
-    void removeNpPassenger(PassengerClass * Passenger);
+    PassengerClass removeNpPassenger(PassengerClass * Passenger);
 
-    void removeWpPassenger();
+    PassengerClass removeWpPassenger();
 
-    void removeWpPassenger(PassengerClass * Passenger);
+    PassengerClass removeSpPassenger();
 
-    void removeSpPassenger(PassengerClass * Passenger);
+    void addFwBus(BusClass & Bus);
 
-    void addWaitingBus(BusClass * Bus);
+    void addBwBus(BusClass & Bus);
 
-    void addFwBus(BusClass bus);
+    BusClass removeFwBus();
 
-    void addBwBus(BusClass bus);
+    BusClass removeBwBus();
 
-    void removeFwBus();
-
-    void removeBwBus();
 
 
 

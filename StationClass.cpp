@@ -8,46 +8,61 @@ Station::Station(int number) {
     this->number = number;
 }
 
-void Station::addNpPassenger(PassengerClass * Passenger) {
-    NPpassengers.insertAtEnd(* Passenger);
+void Station::addNpPassenger(PassengerClass* Passenger) {
+    NPpassengers.insertAtEnd(*Passenger);
 }
 
-void Station::addWpPassenger(PassengerClass * Passenger) {
-    WPpassengers.enqueue(* Passenger);
-}
-void Station::addSpPassenger(PassengerClass * Passenger) {
-    SPpassengers.enqueue(* Passenger, Passenger->getPriority());
-}
-void Station::removeNpPassenger(PassengerClass * Passenger) {
-    NPpassengers.remove(* Passenger);
+void Station::addWpPassenger(PassengerClass* Passenger) {
+    WPpassengers.enqueue(*Passenger);
 }
 
-void Station::removeWpPassenger(PassengerClass * Passenger) {
+void Station::addSpPassenger(PassengerClass* Passenger) {
+    SPpassengers.enqueue(*Passenger, Passenger->getPriority());
+}
+
+PassengerClass Station::removeNpPassenger(PassengerClass* Passenger) {
+    NPpassengers.remove(*Passenger);
+}
+
+PassengerClass Station::removeWpPassenger() {
+    PassengerClass passenger = WPpassengers.frontElement();
     WPpassengers.dequeue();
+    return passenger;
 }
-void Station::removeSpPassenger(PassengerClass * Passenger) {
+
+PassengerClass Station::removeSpPassenger() {
+    PassengerClass passenger = SPpassengers.frontElement();
     SPpassengers.dequeue();
+    return passenger;
 }
+
 int Station::getStationNumber() {
     return number;
 }
+
 void Station::setStationNumber(int number) {
     this->number = number;
 }
-void Station::addFwBus(BusClass bus) {
-    FWbuses.enqueue(bus);
+
+void Station::addFwBus(BusClass & Bus) {
+    FWbuses.enqueue(Bus);
 }
-void Station::addBwBus(BusClass bus) {
-    BWbuses.enqueue(bus);
+
+void Station::addBwBus(BusClass & Bus) {
+    BWbuses.enqueue(Bus);
 }
-void Station::removeFwBus() {
+
+BusClass Station::removeFwBus() {
+    BusClass bus = FWbuses.frontElement();
     FWbuses.dequeue();
+    return bus;
 }
-void Station::removeBwBus() {
+
+BusClass Station::removeBwBus() {
+    BusClass bus = BWbuses.frontElement();
     BWbuses.dequeue();
+    return bus;
 }
-void Station::addWaitingBus(BusClass * Bus) {
-    WaitingBuses.enqueue(* Bus);
-}
+
 
 #include "StationClass.h"
