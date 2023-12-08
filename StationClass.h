@@ -1,20 +1,25 @@
 #ifndef EASYTRIP_STATIONCLASS_H
 #define EASYTRIP_STATIONCLASS_H
 
-#include <string>
+#include "BusClass.h"
 #include "PriorityQueue.h"
 #include "PassengerClass.h"
 #include "LinkedList.h"
+#include "Queue.h"
+#include "BusClass.h"
 
 
 class Station {
-public:
+private:
     int number;
     PriorityQueue<PassengerClass> SPpassengers;
     LinkedList<PassengerClass> NPpassengers;
-    LinkedList<PassengerClass> WPpassengers;
+    Queue<PassengerClass> WPpassengers;
+    Queue<BusClass> FWbuses;
+    Queue<BusClass> BWbuses;
+    Queue<BusClass> WaitingBuses;
 
-private:
+public:
 
     Station(int number);
 
@@ -22,17 +27,25 @@ private:
 
     int getStationNumber();
 
-    void addNpPassenger(PassengerClass passenger);
+    void addNpPassenger(PassengerClass * Passenger);
 
-    void addWpPassenger(PassengerClass passenger);
+    void addWpPassenger(PassengerClass * Passenger);
 
-    void addSpPassenger(PassengerClass xpassenger);
+    void addSpPassenger(PassengerClass * Passenger);
 
-    void removeNpPassenger(PassengerClass passenger);
+    void removeNpPassenger(PassengerClass * Passenger);
 
-    void removeWpPassenger(PassengerClass passenger);
+    PassengerClass removeWpPassenger();
 
-    void removeSpPassenger();
+    PassengerClass removeSpPassenger();
+
+    void addFwBus(BusClass * Bus);
+
+    void addBwBus(BusClass * Bus);
+
+    BusClass removeFwBus();
+
+    BusClass removeBwBus();
 
 };
 

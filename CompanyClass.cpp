@@ -2,40 +2,30 @@
 
 #include "CompanyClass.h"
 
-bool CompanyClass::busFinshed(BusClass* Bus) {
-    // should be chnaged S station when we add the filehandling
-    int finalStationNum = 20;
-    if (Bus->getBusType() == "Mbus") {
-        if (Bus->getBusCurrentStation() == finalStationNum) {
-            FinishedBusMbus.enqueue(Bus);
-            return true;
-        }
-    } else if (Bus->getBusType() == "WCBus") {
-        if (Bus->getBusCurrentStation() == finalStationNum) {
-            FinishedBusWCBus.enqueue(Bus);
-            return true;
-        }
-    }
-    return false;
-}
 
 bool CompanyClass::busMoving(BusClass* Bus) {
-    if (Bus->getBusType() == "Mbus") {
-        MovingBusMbus.enqueue(Bus);
-        return true;
-    } else if (Bus->getBusType() == "WCBus") {
-        MovingBusWCBus.enqueue(Bus);
-        return true;
-    }
-    return false;
+    MovingBus.enqueue(Bus);
+    return true;
 }
 
 bool CompanyClass::busAtCheckup(BusClass* Bus) {
-    if (Bus->getBusType() == "Mbus" && Bus->getJourneyCompleted() == 5) {
-        CheckUpQueueMbus.enqueue(Bus);
+    if (Bus->getBusCurrentStation() == 0 && Bus->getJourneyCompleted() == 5) {
+        BusCheckUpQueue.enqueue(Bus);
         return true;
-    } else if (Bus->getBusType() == "WCBus" && Bus->getJourneyCompleted() == 5) {
-        CheckUpQueueWCbus.enqueue(Bus);
+    }
+    return false;
+}
+
+
+bool CompanyClass::addPassenger(PassengerClass* Passenger) {
+    StationList[Passenger->getStartStation()].addNpPassenger(Passenger);
+    return true;
+}
+
+bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus) {
+    if (Bus->getBusCurrentStation() == Passenger->getEndStation()) {
+        FinishedPassengers.enqueue(Passenger);
+        StationList[Passenger->getEndStation()].removeNpPassenger(Passenger);
         return true;
     }
     return false;

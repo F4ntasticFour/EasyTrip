@@ -5,4 +5,7 @@
 #ifndef EASYTRIP_EVENTCLASS_H
 #define EASYTRIP_EVENTCLASS_H
 
+//event (base) sub class leave and arrive each has an seperate execute function
+//pointer to company
+
 #endif //EASYTRIP_EVENTCLASS_H
