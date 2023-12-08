@@ -25,6 +25,7 @@ bool CompanyClass::addPassenger(PassengerClass* Passenger) {
 bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus) {
     if (Bus->getBusCurrentStation() == Passenger->getEndStation()) {
         FinishedPassengers.enqueue(Passenger);
+        StationList[Passenger->getEndStation()].removeNpPassenger(Passenger);
         return true;
     }
     return false;
