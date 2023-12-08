@@ -7,22 +7,25 @@
 Station::Station(int number) {
     this->number = number;
 }
-void Station::addNpPassenger(PassengerClass passenger) {
-    NPpassengers.insertAtEnd(passenger);
+
+void Station::addNpPassenger(PassengerClass * Passenger) {
+    NPpassengers.insertAtEnd(* Passenger);
 }
-void Station::addWpPassenger(PassengerClass passenger) {
-    WPpassengers.enqueue(passenger);
+
+void Station::addWpPassenger(PassengerClass * Passenger) {
+    WPpassengers.enqueue(* Passenger);
 }
-void Station::addSpPassenger(PassengerClass passenger) {
-    SPpassengers.enqueue(passenger, passenger.getPriority());
+void Station::addSpPassenger(PassengerClass * Passenger) {
+    SPpassengers.enqueue(* Passenger, Passenger->getPriority());
 }
-void Station::removeNpPassenger(PassengerClass passenger) {
-    NPpassengers.remove(passenger);
+void Station::removeNpPassenger(PassengerClass * Passenger) {
+    NPpassengers.remove(* Passenger);
 }
-void Station::removeWpPassenger() {
+
+void Station::removeWpPassenger(PassengerClass * Passenger) {
     WPpassengers.dequeue();
 }
-void Station::removeSpPassenger() {
+void Station::removeSpPassenger(PassengerClass * Passenger) {
     SPpassengers.dequeue();
 }
 int Station::getStationNumber() {
@@ -42,6 +45,9 @@ void Station::removeFwBus() {
 }
 void Station::removeBwBus() {
     BWbuses.dequeue();
+}
+void Station::addWaitingBus(BusClass * Bus) {
+    WaitingBuses.enqueue(* Bus);
 }
 
 #include "StationClass.h"

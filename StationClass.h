@@ -1,7 +1,7 @@
 #ifndef EASYTRIP_STATIONCLASS_H
 #define EASYTRIP_STATIONCLASS_H
 
-#include <string>
+#include "BusClass.h"
 #include "PriorityQueue.h"
 #include "PassengerClass.h"
 #include "LinkedList.h"
@@ -20,7 +20,9 @@ private:
 
 // queue instead of ll    LinkedList<PassengerClass> WPpassengers;
 //List of buses
-//list of both directions of route (fwd,bck)
+    Queue<BusClass> WaitingBuses;
+
+
 
 public:
 
@@ -30,17 +32,21 @@ public:
 
     int getStationNumber();
 
-    void addNpPassenger(PassengerClass passenger);
+    void addNpPassenger(PassengerClass * Passenger);
 
-    void addWpPassenger(PassengerClass passenger);
+    void addWpPassenger(PassengerClass * Passenger);
 
-    void addSpPassenger(PassengerClass passenger);
+    void addSpPassenger(PassengerClass * Passenger);
 
-    void removeNpPassenger(PassengerClass passenger);
+    void removeNpPassenger(PassengerClass * Passenger);
 
     void removeWpPassenger();
 
-    void removeSpPassenger();
+    void removeWpPassenger(PassengerClass * Passenger);
+
+    void removeSpPassenger(PassengerClass * Passenger);
+
+    void addWaitingBus(BusClass * Bus);
 
     void addFwBus(BusClass bus);
 
@@ -50,7 +56,7 @@ public:
 
     void removeBwBus();
 
-//    add
+
 
 };
 
