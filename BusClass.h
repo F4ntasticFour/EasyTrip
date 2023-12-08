@@ -14,6 +14,8 @@ private:
 
 public:
 
+    BusClass() = default;
+
     BusClass(const std::string& busType, int busCapacity, int journeyCompleted, Time checkUpTime, int busCurrentStation);
 
     std::string getBusType() const;
