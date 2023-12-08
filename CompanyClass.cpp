@@ -3,26 +3,29 @@
 #include "CompanyClass.h"
 
 
-
 bool CompanyClass::busMoving(BusClass* Bus) {
-
-        MovingBus.enqueue(Bus);
-        return true;
-
+    MovingBus.enqueue(Bus);
+    return true;
 }
 
 bool CompanyClass::busAtCheckup(BusClass* Bus) {
-    if (Bus->getBusType() == "Mbus" && Bus->getJourneyCompleted() == 5) {
-        CheckUpQueueMbus.enqueue(Bus);
-        return true;
-    } else if (Bus->getBusType() == "WCBus" && Bus->getJourneyCompleted() == 5) {
-        CheckUpQueueWCbus.enqueue(Bus);
+    if (Bus->getBusCurrentStation() == 0 && Bus->getJourneyCompleted() == 5) {
+        BusCheckUpQueue.enqueue(Bus);
         return true;
     }
     return false;
-//    add passenger (P*){
-//    get source station
-//    add to station array[srcstation].addpass(P)}
-//    leave passenger(P*,src station)
+}
 
+
+bool CompanyClass::addPassenger(PassengerClass* Passenger) {
+    StationList[Passenger->getStartStation()].addNpPassenger(Passenger);
+    return true;
+}
+
+bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus) {
+    if (Bus->getBusCurrentStation() == Passenger->getEndStation()) {
+        FinishedPassengers.enqueue(Passenger);
+        return true;
+    }
+    return false;
 }

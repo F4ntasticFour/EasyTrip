@@ -5,20 +5,18 @@
 #include "Queue.h"
 #include "StationClass.h"
 #include "BusClass.h"
-#include "PriorityQueue.h"
 #include "PassengerClass.h"
 
 class CompanyClass {
 private:
-    Queue<BusClass*> FinishedPassengersBus;
+    Queue<PassengerClass*> FinishedPassengers;
     Station StationList[100];
-    Queue<BusClass*> CheckUpQueueMbus;
-    Queue<BusClass*> CheckUpQueueWCbus;
-//    no need for two kinds
+    Queue<BusClass*> BusCheckUpQueue;
     Queue<BusClass*> MovingBus;
 
 public:
-    bool busFinshed(BusClass* Bus);
+    bool addPassenger(PassengerClass* Passenger);
+    bool addFinshedPassengers(PassengerClass * Passenger,BusClass* Bus);
     bool busMoving(BusClass* Bus);
     bool busAtCheckup(BusClass* Bus);
 };
