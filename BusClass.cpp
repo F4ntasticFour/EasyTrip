@@ -1,7 +1,13 @@
 #include "BusClass.h"
-BusClass::BusClass(const std::string& busType, int busCapacity, int journeyCompleted, TimeClass checkUpTime, int busCurrentStation)
-        : BusType(busType), BusCapacity(busCapacity), JourneyCompleted(journeyCompleted), CheckUpTime(checkUpTime) {
 
+#include "CompanyClass.h"
+
+BusClass::BusClass(int BusID, const std::string& busType, TimeClass TimeBetweenStations, int busCapacity,
+                   TimeClass checkUpTime, int TripsBeforeCheckUp)
+
+
+    : BusID(BusID), BusType(busType), TimeBetweenStations(TimeBetweenStations), BusCapacity(busCapacity),
+      CheckUpTime(checkUpTime), BusCurrentStation(0), TripsBeforeCheckUp(TripsBeforeCheckUp) {
 }
 
 // Getters
@@ -43,8 +49,8 @@ void BusClass::setCheckUpTime(TimeClass checkUpTime) {
 }
 
 
-
-void BusClass::performMaintenance() {}
+void BusClass::performMaintenance() {
+}
 
 bool BusClass::isSuitableForPassengerType(const std::string& passengerType) const {
     if (BusType == "WBus" && passengerType == "WP") {
@@ -54,4 +60,22 @@ bool BusClass::isSuitableForPassengerType(const std::string& passengerType) cons
     } else {
         return false;
     }
+}
+
+bool BusClass::onBoardPassenger(PassengerClass* Passenger) {
+    if (PassengersOnBoard.size() < BusCapacity) {
+        PassengersOnBoard.enqueue(Passenger, Passenger->getPriority());
+        return true;
+    }
+    return false;
+}
+
+bool BusClass::offBoardPassenger(PassengerClass* Passenger, CompanyClass* Company) {
+    if (PassengersOnBoard.frontElement() == Passenger && BusCurrentStation == Passenger
+        ->getEndStation()) {
+        Company->addFinshedPassengers(Passenger, this);
+        PassengersOnBoard.dequeue();
+        return true;
+    }
+    return false;
 }
