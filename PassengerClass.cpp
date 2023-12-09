@@ -3,17 +3,20 @@
 PassengerClass::PassengerClass() {
 }
 
-PassengerClass::PassengerClass(TimeClass& ArrivalTime, const int& StartStation, int& EndStation,
+PassengerClass::PassengerClass(TimeClass ArrivalTime ,const int& StartStation, int& EndStation, int PassengerID,
                                const std::string& passengerType, const std::string& statue)
-    : ArrivalTime(ArrivalTime), StartStation(StartStation), EndStation(EndStation),
+    :  StartStation(StartStation), EndStation(EndStation), PassengerID(PassengerID),
       PassengerType(passengerType), statue(statue) {
 }
 
-
-TimeClass PassengerClass::getArrivalTime() const {
+// Getters
+TimeClass PassengerClass::getArrivalTime() {
     return ArrivalTime;
 }
 
+TimeClass PassengerClass::getLeaveTime() {
+    return LeaveTime;
+}
 int PassengerClass::getStartStation() const {
     return StartStation;
 }
@@ -31,13 +34,18 @@ std::string PassengerClass::getPassengerType() const {
 }
 
 int PassengerClass::getPassengerID() const {
-    return passengerID;
+    return PassengerID;
 }
 
 // Setters
-void PassengerClass::setArrivalTime(TimeClass& arrivalTime) {
-    ArrivalTime = arrivalTime;
+void PassengerClass::setArrivalTime(TimeClass ArrivalTime) {
+    this->ArrivalTime = ArrivalTime;
 }
+
+void PassengerClass::setLeaveTime(TimeClass LeaveTime) {
+    this->LeaveTime = LeaveTime;
+}
+
 
 void PassengerClass::setStartStation(const int& startStation) {
     StartStation = startStation;
@@ -55,8 +63,8 @@ void PassengerClass::setStatue(const std::string& statue) {
     this->statue = statue;
 }
 
-void PassengerClass::setPassengerID(int passengerID) {
-    this->passengerID = passengerID;
+void PassengerClass::setPassengerID(int PassengerID) {
+    this->PassengerID = PassengerID;
 }
 
 std::string PassengerClass::getStatue() const {
