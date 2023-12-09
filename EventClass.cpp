@@ -1,57 +1,71 @@
-// #include "EventClass.h"
-//
-// Event::Event(TimeClass eventTime, int passengerID, int startStation, int endStation, char type) {
-//     this->eventTime = eventTime;
-//     this->passengerID = passengerID;
-//     this->startStation = startStation;
-//     this->endStation = endStation;
-//     this->type = type;
-//     this->C = nullptr;
-// }
-//
-// char Event::getType() {
-//     return type;
-// }
-//
-// void Event::setTime(TimeClass& eventTime) {
-//     this->eventTime = eventTime;
-// }
-// TimeClass Event::getTime() {
-//     return eventTime;
-// }
-//
-// ArriveEvent::ArriveEvent(TimeClass ArrivalTime,int passengerID, int startStation, int endStation) : Event(ArrivalTime,passengerID,startStation,endStation,'A' ) {
-//     this->ArrivalTime = ArrivalTime;
-//     this->passengerID = passengerID;
-//     this->startStation = startStation;
-//     this->endStation = endStation;
-//     this->C = nullptr;
-// }
-// void ArriveEvent::execute() {
-//     CompanyClass *C;
-// //    we need to add passengerid to the constructor of passenger class
-//     PassengerClass* Passenger = new PassengerClass(passengerID,ArrivalTime,startStation,endStation,GetOnOffTime,"np");
-//     C->addPassenger(Passenger);
-// }
-// LeaveEvent::LeaveEvent(TimeClass LeaveTime,int passengerID, int startStation,int endStation) : Event(LeaveTime,passengerID,startStation,endStation,'L') {
-//     this->LeaveTime = LeaveTime;
-//     this->passengerID = passengerID;
-//     this->startStation = startStation;
-//     this->endStation = endStation;
-//     this->C = nullptr;
-// }
-//
-// void LeaveEvent::execute() {
-//     CompanyClass *C;
-//     PassengerClass* Passenger = new PassengerClass(passengerID,LeaveTime,startStation,endStation,GetOnOffTime,"np");
-//     //why do we need to create a new bus here? leave event is called when a passenger asked to leave and hasnt been picked up yet
-//     //so the logic should be like this
-//     // C->leavePassenger(Passenger);
-//     BusClass* Bus = new BusClass();
-//     C->addFinshedPassengers(Passenger,Bus);
-// }
-//
-//
-//
-//
-//
+#include "EventClass.h"
+#include "FileHandler.h"
+
+Event::Event(TimeClass eventTime, PassengerClass* P, CompanyClass* C)
+    : eventTime(eventTime), P(P), C(C) {
+}
+
+TimeClass Event::getTime() {
+    return eventTime;
+}
+
+ArriveEvent::ArriveEvent(TimeClass ArrivalTime, PassengerClass* P, CompanyClass* C)
+    : Event(ArrivalTime, P, C), ArrivalTime(ArrivalTime) {
+}
+
+void ArriveEvent::execute(CompanyClass* C) {
+    FileHandler file("text");
+    Queue<std::string> eventList = file.getEventList();
+    std::string line = eventList.frontElement();
+    eventList.dequeue();
+    std::string delimiter = " ";
+    std::string token = line.substr(0, line.find(delimiter));
+    std::string PassengerType = token;
+    line.erase(0, line.find(delimiter) + delimiter.length());
+    token = line.substr(0, line.find(delimiter));
+    token = token.substr(0, token.find(':'));
+    TimeClass ArrivalTime = TimeClass(token[1], token[2]);
+    line.erase(0, line.find(delimiter) + delimiter.length());
+    token = line.substr(0, line.find(delimiter));
+    int PassengerID = std::stoi(token);
+    line.erase(0, line.find(delimiter) + delimiter.length());
+    token = line.substr(0, line.find(delimiter));
+    int StartStation = std::stoi(token);
+    line.erase(0, line.find(delimiter) + delimiter.length());
+    token = line.substr(0, line.find(delimiter));
+    int EndStation = std::stoi(token);
+    line.erase(0, line.find(delimiter) + delimiter.length());
+    token = line.substr(0, line.find(delimiter));
+    std::string statue = token;
+
+    PassengerClass* P = new PassengerClass(ArrivalTime,StartStation, EndStation, PassengerID, PassengerType, statue);
+    C->addPassenger(P);
+}
+
+LeaveEvent::LeaveEvent(TimeClass LeaveTime, PassengerClass* P, CompanyClass* C)
+    : Event(LeaveTime, P, C), LeaveTime(LeaveTime) {
+}
+
+void LeaveEvent::execute(CompanyClass* C) {
+    FileHandler file("text");
+    Queue<std::string> eventList = file.getEventList();
+    std::string line = eventList.frontElement();
+    eventList.dequeue();
+    std::string delimiter = " ";
+    std::string token = line.substr(0, line.find(delimiter));
+    std::string PassengerType = token;
+    line.erase(0, line.find(delimiter) + delimiter.length());
+    token = line.substr(0, line.find(delimiter));
+    token = token.substr(0, token.find(':'));
+    TimeClass LeaveTime = TimeClass(token[1], token[2]);
+    line.erase(0, line.find(delimiter) + delimiter.length());
+    token = line.substr(0, line.find(delimiter));
+    int PassengerID = std::stoi(token);
+    line.erase(0, line.find(delimiter) + delimiter.length());
+    token = line.substr(0, line.find(delimiter));
+    int StartStation = std::stoi(token);
+    line.erase(0, line.find(delimiter) + delimiter.length());
+
+
+    C->leavePassenger(P, LeaveTime);
+}
