@@ -1,72 +1,114 @@
-
 #include "FileHandler.h"
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include "Queue.h"
 
-#include <utility>
 
-FileHandler::FileHandler(std::string fileName) : fileName(std::move(fileName)) {
+// Constructor and other methods...
+FileHandler::FileHandler(std::string fileName) {
+    this->fileName = std::move(fileName);
+    readFileContents();
 }
-
-std::string FileHandler::getFileName() {
-    return fileName;
-}
-
-int FileHandler::getBusData() {
-    std::ifstream busFile;
-    busFile.open(getFileName());
-    if (!busFile.is_open()) {
-        std::cout << "Error opening file" << std::endl;
-        return 1;
-    }
+void FileHandler::readFileContents() {
+    std::ifstream file(fileName);
     std::string line;
-    while (std::getline(busFile, line)) {
-        std::cout << line << std::endl;
+    while (std::getline(file, line)) {
+        fileContents.push_back(line);
     }
-    busFile.close();
-    return 0;
+    file.close();
+}
+int FileHandler::getNumStations() {
+    std::istringstream ss1(fileContents[0]);
+    int numStations, timeBetweenStations;
+    ss1 >> numStations >> timeBetweenStations;
+    return numStations;
+}
+int FileHandler::getTimeBetweenStations() {
+    std::istringstream ss1(fileContents[0]);
+    int numStations, timeBetweenStations;
+    ss1 >> numStations >> timeBetweenStations;
+    return timeBetweenStations;
+}
+int FileHandler::getWBusCount() {
+    std::istringstream ss2(fileContents[1]);
+    int WBus_count, MBus_count;
+    ss2 >> WBus_count >> MBus_count;
+    return WBus_count;
+}
+int FileHandler::getMBusCount() {
+    std::istringstream ss2(fileContents[1]);
+    int WBus_count, MBus_count;
+    ss2 >> WBus_count >> MBus_count;
+    return MBus_count;
+}
+int FileHandler::getWBusCapacity() {
+    std::istringstream ss3(fileContents[2]);
+    int WBus_capacity, MBus_capacity;
+    ss3 >> WBus_capacity >> MBus_capacity;
+    return WBus_capacity;
+}
+int FileHandler::getMBusCapacity() {
+    std::istringstream ss3(fileContents[2]);
+    int WBus_capacity, MBus_capacity;
+    ss3 >> WBus_capacity >> MBus_capacity;
+    return MBus_capacity;
+}
+int FileHandler::getJ() {
+    std::istringstream ss4(fileContents[3]);
+    int J, C_WBus, C_MBus;
+    ss4 >> J >> C_WBus >> C_MBus;
+    return J;
+}
+int FileHandler::getC_WBus() {
+    std::istringstream ss4(fileContents[3]);
+    int J, C_WBus, C_MBus;
+    ss4 >> J >> C_WBus >> C_MBus;
+    return C_WBus;
+}
+int FileHandler::getC_MBus() {
+    std::istringstream ss4(fileContents[3]);
+    int J, C_WBus, C_MBus;
+    ss4 >> J >> C_WBus >> C_MBus;
+    return C_MBus;
+}
+int FileHandler::getMaxW() {
+    std::istringstream ss5(fileContents[4]);
+    int maxW, getOnOffTime;
+    ss5 >> maxW >> getOnOffTime;
+    return maxW;
+}
+int FileHandler::getGetOnOffTime() {
+    std::istringstream ss5(fileContents[4]);
+    int maxW, getOnOffTime;
+    ss5 >> maxW >> getOnOffTime;
+    return getOnOffTime;
 }
 
-Queue<std::string> FileHandler::getEventList() {
-    std::ifstream eventFile;
-    eventFile.open(getFileName());
-    if (!eventFile.is_open()) {
-        std::cout << "Error opening file" << std::endl;
-        return {};
-    }
-    std::string line;
-    Queue<std::string> eventList;
-    while (std::getline(eventFile, line)) {
-        eventList.enqueue(line);
-    }
-    eventFile.close();
-    return eventList;
-}
+// Assuming fileContents is a member of FileHandler and contains all lines of the file
+Queue<std::vector<std::string>> FileHandler::processEventLines() {
+    Queue<std::vector<std::string>> eventQueue;
 
-int FileHandler::getStationData() {
-    std::ifstream stationFile;
-    stationFile.open(getFileName());
-    if (!stationFile.is_open()) {
-        std::cout << "Error opening file" << std::endl;
-        return 1;
-    }
-    std::string line;
-    while (std::getline(stationFile, line)) {
-        std::cout << line << std::endl;
-    }
-    stationFile.close();
-    return 0;
-}
+    // Starting from the line where event lines begin
+    for (size_t i = 5; i < fileContents.size(); ++i) {
+        std::istringstream iss(fileContents[i]);
+        std::vector<std::string> lineDetails;
+        std::string word;
 
-int FileHandler::getCheckupData() {
-    std::ifstream checkupFile;
-    checkupFile.open(getFileName());
-    if (!checkupFile.is_open()) {
-        std::cout << "Error opening file" << std::endl;
-        return 1;
+        while (iss >> word) {
+            lineDetails.push_back(word);
+        }
+
+        // Check for SP Passenger and their statue
+        if (lineDetails.size() > 1 && lineDetails[1] == "SP" && lineDetails.size() == 6) {
+            // SP Passenger with statue provided
+        } else if (lineDetails.size() > 1 && lineDetails[1] == "SP" && lineDetails.size() == 5) {
+            // SP Passenger without statue, set statue to 'normal'
+            lineDetails.push_back("normal");
+        }
+
+        eventQueue.enqueue(lineDetails);
     }
-    std::string line;
-    while (std::getline(checkupFile, line)) {
-        std::cout << line << std::endl;
-    }
-    checkupFile.close();
-    return 0;
+
+    return eventQueue;
 }
