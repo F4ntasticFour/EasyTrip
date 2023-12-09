@@ -22,6 +22,8 @@ add_executable(EasyTrip main.cpp
         LinkedList.h
         TimeClass.cpp
         TimeClass.h
-        CompanyClass.h)
+        CompanyClass.h
+        FileHandler.cpp
+        FileHandler.h)
 
 
