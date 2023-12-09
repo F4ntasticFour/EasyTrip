@@ -2,22 +2,43 @@
 #define EASYTRIP_FILEHANDLER_H
 
 #include <string>
-#include <fstream>
-#include "Queue.h"
-
+#include <vector>
+#include "CompanyClass.h"  // Include your main simulation class
+#include "TimeClass.h"     // Include if you have a separate TimeClass for handling time
 
 class FileHandler {
+private:
     std::string fileName;
+    std::vector<std::string> fileContents;
+
+    void readFileContents();
+
 public:
-    FileHandler(std::string fileName);
-    std::string getFileName();
-    int getBusData();
-    Queue<std::string> getEventList();
-    int getStationData();
-    int getCheckupData();
+    explicit FileHandler(std::string fileName);
 
+    int getNumStations();
+
+    int getTimeBetweenStations();
+
+    int getGetOnOffTime();
+
+    int getMaxW();
+
+    int getC_MBus();
+
+    int getC_WBus();
+
+    int getJ();
+
+    int getMBusCapacity();
+
+    int getWBusCapacity();
+
+    int getMBusCount();
+
+    int getWBusCount();
+
+    Queue<std::vector<std::string>> processEventLines();
 };
-
-
 
 #endif //EASYTRIP_FILEHANDLER_H

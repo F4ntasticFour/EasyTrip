@@ -17,8 +17,6 @@ private:
     Queue<PassengerClass> WPpassengers;
     Queue<BusClass> FWbuses;
     Queue<BusClass> BWbuses;
-    Queue<BusClass> WaitingBuses;
-
 public:
 
     Station(int number);
