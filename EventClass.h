@@ -10,11 +10,12 @@
 
 class Event {
 public:
-    Event(TimeClass eventTime, PassengerClass* P, CompanyClass* C);
+    Event(char eventType,TimeClass eventTime, PassengerClass* P, CompanyClass* C);
     void setTime(TimeClass& eventTime);
     TimeClass getTime();
 
 protected:
+    char eventType;
     TimeClass eventTime;
     PassengerClass* P;
     CompanyClass* C;

@@ -1,7 +1,7 @@
 #include "EventClass.h"
 #include "FileHandler.h"
 
-Event::Event(TimeClass eventTime, PassengerClass* P, CompanyClass* C)
+Event::Event(char eventType,TimeClass eventTime, PassengerClass* P, CompanyClass* C)
     : eventTime(eventTime), P(P), C(C) {
 }
 
@@ -10,7 +10,7 @@ TimeClass Event::getTime() {
 }
 
 ArriveEvent::ArriveEvent(TimeClass ArrivalTime, PassengerClass* P, CompanyClass* C)
-    : Event(ArrivalTime, P, C), ArrivalTime(ArrivalTime) {
+: Event(eventType = 'A',ArrivalTime, P, C), ArrivalTime(ArrivalTime) {
 }
 
 void ArriveEvent::execute(CompanyClass* C) {
@@ -43,7 +43,7 @@ void ArriveEvent::execute(CompanyClass* C) {
 }
 
 LeaveEvent::LeaveEvent(TimeClass LeaveTime, PassengerClass* P, CompanyClass* C)
-    : Event(LeaveTime, P, C), LeaveTime(LeaveTime) {
+    : Event(eventType = 'L',LeaveTime, P, C), LeaveTime(LeaveTime) {
 }
 
 void LeaveEvent::execute(CompanyClass* C) {
