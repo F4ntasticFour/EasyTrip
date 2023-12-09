@@ -6,12 +6,13 @@
 
 template<class T>
 class PriorityQueue {
-private:
-    Node<T> *front;
+protected:
+    Node<T>* front;
 
 public:
     // Constructor
-    PriorityQueue() : front(nullptr) {}
+    PriorityQueue() : front(nullptr) {
+    }
 
     // Priority Queue Operations
     bool isEmpty() const {
@@ -19,13 +20,13 @@ public:
     }
 
     void enqueue(T data, int priority) {
-        Node<T> *temp = new Node<T>(data, priority);
+        Node<T>* temp = new Node<T>(data, priority);
 
         if (isEmpty() || front->getPriority() > priority) {
             temp->setNext(front);
             front = temp;
         } else {
-            Node<T> *current = front;
+            Node<T>* current = front;
             while (current->getNext() != nullptr && current->getNext()->getPriority() <= priority) {
                 current = current->getNext();
             }
@@ -39,7 +40,7 @@ public:
             std::cout << "Priority Queue is empty" << std::endl;
             return;
         }
-        Node<T> *temp = front;
+        Node<T>* temp = front;
         front = front->getNext();
         delete temp;
     }
@@ -57,13 +58,26 @@ public:
             std::cout << "Priority Queue is empty" << std::endl;
             return;
         }
-        Node<T> *temp = front;
+        Node<T>* temp = front;
         while (temp != nullptr) {
             std::cout << "(" << temp->getData() << ", " << temp->getPriority() << ") ";
             temp = temp->getNext();
         }
         std::cout << std::endl;
     }
+
+    int size() const {
+        int count = 0;
+        Node<T>* temp = front;
+        while (temp != nullptr) {
+            count++;
+            temp = temp->getNext();
+        }
+        return count;
+    }
+
+
+
 };
 
 #endif //EASYTRIP_PRIORITYQUEUE_H
