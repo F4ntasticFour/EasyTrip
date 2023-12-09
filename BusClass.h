@@ -9,27 +9,27 @@ private:
     std::string BusType;
     int BusCapacity;
     int JourneyCompleted;
-    Time CheckUpTime;
+    TimeClass CheckUpTime;
     int BusCurrentStation;
 
 public:
 
     BusClass() = default;
 
-    BusClass(const std::string& busType, int busCapacity, int journeyCompleted, Time checkUpTime, int busCurrentStation);
+    BusClass(const std::string& busType, int busCapacity, int journeyCompleted, TimeClass checkUpTime, int busCurrentStation);
 
     std::string getBusType() const;
     int getBusCapacity() const;
     int getJourneyCompleted() const;
     int getBusCurrentStation() const;
 //    priority queue (priorty=nearest station) of passengers
-    Time getCheckUpTime() const;
+    TimeClass getCheckUpTime() const;
 
     // Setters
     void setBusType(const std::string& busType);
     void setBusCapacity(int busCapacity);
     void setJourneyCompleted(int journeyCompleted);
-    void setCheckUpTime(Time checkUpTime);
+    void setCheckUpTime(TimeClass checkUpTime);
 
     //Member Functions
     void performMaintenance();

@@ -1,34 +1,89 @@
-//
-// Created by Safey Elrahman on 04/12/2023.
-//
+// timeclass.cpp
 
 #include "TimeClass.h"
+#include <iostream>
 #include <iomanip>
 
-void Time::normalize() {
-    while (minutes >= 60) {
-        minutes -= 60;
-        hours++;
-    }
-    hours %= 24;
-}
-
-Time::Time(int h, int m) : hours(h), minutes(m) {
+// Constructor
+TimeClass::TimeClass(int hours, int minutes) : hours(hours), minutes(minutes) {
     normalize();
 }
 
-void Time::addMinutes(int mins) {
+// Private member function to normalize time
+void TimeClass::normalize() {
+    hours += minutes / 60;
+    minutes %= 60;
+    hours %= 24;
+}
+
+// Public member function to add minutes to the time
+void TimeClass::addMinutes(int mins) {
     minutes += mins;
     normalize();
 }
 
-void Time::tick() {
-    addMinutes(5);  // Every tick adds 10 minutes
+// Public member function to increment time by one minute
+void TimeClass::tick() {
+    addMinutes(1);
 }
 
-std::ostream& operator<<(std::ostream& os, const Time& t) {
+// Overloaded assignment operator
+TimeClass& TimeClass::operator=(TimeClass& rhs){
+    if (this != &rhs) {
+        hours = rhs.hours;
+        minutes = rhs.minutes;
+        normalize();
+    }
+    return *this;
+}
+
+// Overloaded stream insertion operator
+std::ostream& operator<<(std::ostream& os, const TimeClass& t) {
     os << std::setfill('0') << std::setw(2) << t.hours << ":"
        << std::setfill('0') << std::setw(2) << t.minutes;
     return os;
 }
 
+// Overloaded less-than operator
+bool operator<(const TimeClass& lhs, const TimeClass& rhs) {
+    if (lhs.hours < rhs.hours) {
+        return true;
+    }if (lhs.hours == rhs.hours && lhs.minutes < rhs.minutes) {
+        return true;
+    }
+    return false;
+}
+
+// Overloaded greater-than operator
+bool operator>(const TimeClass& lhs, const TimeClass& rhs) {
+    if (lhs.hours > rhs.hours) {
+        return true;
+    } else if (lhs.hours == rhs.hours && lhs.minutes > rhs.minutes) {
+        return true;
+    }
+    return false;
+}
+
+// Overloaded equality operator
+bool operator==(const TimeClass& lhs, const TimeClass& rhs) {
+    return (lhs.hours == rhs.hours && lhs.minutes == rhs.minutes);
+}
+
+// Overloaded inequality operator
+bool operator!=(const TimeClass& lhs, const TimeClass& rhs) {
+    return !(lhs == rhs);
+}
+
+// Overloaded addition operator
+TimeClass operator+(const TimeClass& lhs, const TimeClass& rhs) {
+    TimeClass temp(lhs.hours + rhs.hours, lhs.minutes + rhs.minutes);
+    temp.normalize();
+    return temp;
+}
+
+// Overloaded subtraction operator
+TimeClass operator-(const TimeClass& lhs, const TimeClass& rhs) {
+    TimeClass temp(lhs.hours - rhs.hours, lhs.minutes - rhs.minutes);
+    temp.normalize();
+    return temp;
+}
