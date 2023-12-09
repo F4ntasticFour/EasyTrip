@@ -7,11 +7,12 @@
 template<class T>
 class LinkedList {
 private:
-    Node<T> *Head;
+    Node<T>* Head;
 
 public:
     // Constructor
-    LinkedList() : Head(nullptr) {}
+    LinkedList() : Head(nullptr) {
+    }
 
     // Basic Operations
     bool isEmpty() const {
@@ -19,17 +20,17 @@ public:
     }
 
     void insertAtBeg(T data) {
-        Node<T> *newNode = new Node<T>(data);
+        Node<T>* newNode = new Node<T>(data);
         newNode->setNext(Head);
         Head = newNode;
     }
 
     void insertAtEnd(T data) {
-        Node<T> *newNode = new Node<T>(data);
+        Node<T>* newNode = new Node<T>(data);
         if (isEmpty()) {
             Head = newNode;
         } else {
-            Node<T> *temp = Head;
+            Node<T>* temp = Head;
             while (temp->getNext() != nullptr) {
                 temp = temp->getNext();
             }
@@ -46,7 +47,7 @@ public:
             insertAtBeg(data);
             return;
         }
-        Node<T> *temp = Head;
+        Node<T>* temp = Head;
         for (int i = 0; temp != nullptr && i < index - 1; i++) {
             temp = temp->getNext();
         }
@@ -54,13 +55,13 @@ public:
             std::cerr << "Index out of bounds" << std::endl;
             return;
         }
-        Node<T> *newNode = new Node<T>(data);
+        Node<T>* newNode = new Node<T>(data);
         newNode->setNext(temp->getNext());
         temp->setNext(newNode);
     }
 
     void printList() const {
-        Node<T> *temp = Head;
+        Node<T>* temp = Head;
         if (isEmpty()) {
             std::cout << "List is Empty" << std::endl;
         } else {
@@ -73,10 +74,10 @@ public:
     }
 
     // Advanced Operations
-    static LinkedList<T> merge(const LinkedList<T> &list1, const LinkedList<T> &list2) {
+    static LinkedList<T> merge(const LinkedList<T>& list1, const LinkedList<T>& list2) {
         LinkedList<T> mergedList;
-        Node<T> *temp1 = list1.Head;
-        Node<T> *temp2 = list2.Head;
+        Node<T>* temp1 = list1.Head;
+        Node<T>* temp2 = list2.Head;
         while (temp1 != nullptr) {
             mergedList.insertAtEnd(temp1->getData());
             temp1 = temp1->getNext();
@@ -90,7 +91,7 @@ public:
 
     // Utility Functions
     T getItem() const {
-        Node<T> *temp = Head;
+        Node<T>* temp = Head;
         while (temp != nullptr && temp->getNext() != nullptr) {
             temp = temp->getNext();
         }
@@ -98,8 +99,8 @@ public:
     }
 
     void remove(T data) {
-        Node<T> *temp = Head;
-        Node<T> *prev = nullptr;
+        Node<T>* temp = Head;
+        Node<T>* prev = nullptr;
         if (isEmpty()) {
             std::cout << "List is empty, cannot remove" << std::endl;
         } else {
