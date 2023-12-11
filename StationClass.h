@@ -47,6 +47,8 @@ public:
 
     PassengerClass * getNpPassengerByID(int ID);
 
+    int getCount(std::string);
+
     Station * operator->();
 
 

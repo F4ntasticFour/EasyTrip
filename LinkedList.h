@@ -1,8 +1,9 @@
 #ifndef EASYTRIP_LINKEDLIST_H
 #define EASYTRIP_LINKEDLIST_H
 
-#include "Node.h"
 #include <iostream>
+#include "Node.h"
+
 
 template<class T>
 class LinkedList {
@@ -37,6 +38,7 @@ public:
             temp->setNext(newNode);
         }
     }
+
 
     void insertAtIndex(int index, T data) {
         if (index < 0) {
@@ -133,6 +135,9 @@ public:
         return temp->getData();
     }
     int getLength() const {
+        if (isEmpty()) {
+            return 0;
+        }
         Node<T>* temp = Head;
         int length = 0;
         while (temp != nullptr) {

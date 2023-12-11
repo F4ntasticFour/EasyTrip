@@ -3,8 +3,9 @@
 #ifndef EASYTRIP_QUEUE_H
 #define EASYTRIP_QUEUE_H
 
-#include "Node.h"
+
 #include <iostream>
+#include "Node.h"
 
 template<class T>
 class Queue {
@@ -66,6 +67,15 @@ public:
             temp = temp->getNext();
         }
         std::cout << "end" << std::endl;
+    }
+    int getLength() {
+        int count = 0;
+        Node<T> *temp = front;
+        while (temp != nullptr) {
+            count++;
+            temp = temp->getNext();
+        }
+        return count;
     }
 };
 

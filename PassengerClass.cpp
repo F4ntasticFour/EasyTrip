@@ -75,14 +75,14 @@ std::string PassengerClass::getStatue() const {
 int PassengerClass::getPriority() const {
     if (getPassengerType() == "SP") {
         if (getStatue() == "Aged") {
-            return 4;
-        } else if (getStatue() == "POD") {
             return 3;
-        } else if (getStatue() == "Pregnant") {
+        } else if (getStatue() == "POD") {
             return 2;
+        } else if (getStatue() == "Pregnant") {
+            return 1;
         }
     }
-    return 1;
+    return 4;
 }
 
 bool PassengerClass::operator==(const PassengerClass& rhs) const {

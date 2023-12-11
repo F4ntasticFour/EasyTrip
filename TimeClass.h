@@ -20,15 +20,28 @@ public:
     void tick();
 
     friend std::ostream& operator<<(std::ostream& os, const TimeClass& t);
+
+
     friend bool operator<(const TimeClass& lhs, const TimeClass& rhs);
+
     friend bool operator>(const TimeClass& lhs, const TimeClass& rhs);
+
     friend bool operator==(const TimeClass& lhs, const TimeClass& rhs);
+
     friend bool operator!=(const TimeClass& lhs, const TimeClass& rhs);
+
     friend TimeClass operator+(const TimeClass& lhs, const TimeClass& rhs);
+
     friend TimeClass operator-(const TimeClass& lhs, const TimeClass& rhs);
-    TimeClass& operator=(TimeClass& rhs);
+
+    // Inside the TimeClass declaration
+    TimeClass& operator=(const TimeClass& rhs);
+
+    // Inside the TimeClass declaration
     TimeClass operator*(int multiplier) const;
+    // Inside the TimeClass declaration
 
 };
+
 
 #endif //EASYTRIP_TIMECLASS_H
