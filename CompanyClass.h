@@ -38,6 +38,10 @@ public:
     bool busAtCheckup(BusClass* Bus);
 
     PassengerClass *getPassengerByID(int ID);
+
+    int getStationCount() const;
+
+    Station getStation(int ID);
 };
 
 #endif //EASYTRIP_COMPANYCLASS_H
