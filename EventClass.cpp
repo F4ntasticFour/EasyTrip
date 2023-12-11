@@ -54,14 +54,13 @@ void LeaveEvent::execute() {
     C->leavePassenger(P);
 }
 
-void processEvent(std::string filename,TimeClass Time ,CompanyClass* company) {
+void processEvent(std::string filename, TimeClass Time, CompanyClass* company) {
     FileHandler file(filename);
     Queue<std::vector<std::string>> eventQueue = file.processEventLines();
 
     while (!eventQueue.isEmpty()) {
         std::vector<std::string> line = eventQueue.frontElement();
         std::string eventType = line[0];
-
 
         if (eventType == "A") {
             std::string PassengerType = line[1];
@@ -76,21 +75,23 @@ void processEvent(std::string filename,TimeClass Time ,CompanyClass* company) {
 
             TimeClass ArrivalTime(hours, minutes);
 
+
             int PassengerID = std::stoi(line[3]);
             int StartStation = std::stoi(line[4]);
             int EndStation = std::stoi(line[5]);
             std::string statue = line[6];
-            if(Time==ArrivalTime){
-            auto* P = new PassengerClass(ArrivalTime, StartStation, EndStation, PassengerID, PassengerType, statue);
+            if (Time == ArrivalTime) {
+                auto* P = new PassengerClass(ArrivalTime, StartStation, EndStation, PassengerID, PassengerType, statue);
 
-            ArriveEvent arriveEvent(ArrivalTime, P, company);
-            delete P;
-            arriveEvent.execute();
-            eventQueue.dequeue();
-        }
+                ArriveEvent arriveEvent(ArrivalTime, P, company);
+                delete P;
+                arriveEvent.execute();
+                eventQueue.dequeue();
+            }
+            break;
         } else if (eventType == "L") {
-            std::istringstream iss(line[1]);
-
+            std::string PassengerType = line[1];
+            std::istringstream iss(line[2]);
             std::string arrivaltime;
 
             std::getline(iss, arrivaltime, ':');
@@ -102,17 +103,15 @@ void processEvent(std::string filename,TimeClass Time ,CompanyClass* company) {
 
             TimeClass leaveTime(hours, minutes);
             if (Time == leaveTime) {
-                PassengerClass* P = company->getPassengerByID(std::stoi(line[2]));
+                PassengerClass* P = company->getPassengerByID(std::stoi(line[3]));
                 LeaveEvent leaveEvent(leaveTime, P, company);
 
                 leaveEvent.execute();
                 eventQueue.dequeue();
             }
-        } else {
             break;
+        } else {
+            std::cerr << "Invalid event type: " << eventType << std::endl;
         }
-        std::cerr << "Invalid event type: " << eventType << std::endl;
     }
 }
-
-
