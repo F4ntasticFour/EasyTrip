@@ -17,6 +17,7 @@ private:
     TimeClass TimeBetweenStations;
     int JourneyCompleted;
     TimeClass CheckUpTime;
+    TimeClass TimeAtStation = TimeClass(0,0);
     int BusCurrentStation;
     int TripsBeforeCheckUp;
     PriorityQueue<PassengerClass*> PassengersOnBoard;
@@ -55,6 +56,9 @@ public:
     bool onBoardPassenger(PassengerClass* Passenger);
 
     bool offBoardPassenger(PassengerClass* Passenger,CompanyClass* Company);
+
+    bool moveToNextStation(CompanyClass* Company, TimeClass& CurrentTime);
+
 
 };
 
