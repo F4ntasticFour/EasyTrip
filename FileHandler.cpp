@@ -90,7 +90,7 @@ Queue<std::vector<std::string>> FileHandler::processEventLines() {
     Queue<std::vector<std::string>> eventQueue;
 
     // Starting from the line where event lines begin
-    for (size_t i = 5; i < fileContents.size(); ++i) {
+    for (size_t i = 6; i < fileContents.size(); ++i) {
         std::istringstream iss(fileContents[i]);
         std::vector<std::string> lineDetails;
         std::string word;
