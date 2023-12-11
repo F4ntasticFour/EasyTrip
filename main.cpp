@@ -15,5 +15,8 @@ int main() {
                                              fileHandler.getWBusCapacity(), fileHandler.getMBusCapacity(),
                                              fileHandler.getJ(), fileHandler.getC_WBus(), fileHandler.getC_MBus());
     TimeClass time(0, 0);
+
+
     processEvent("../random_file.txt",time, company);
+    return 0;
 }

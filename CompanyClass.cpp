@@ -67,8 +67,8 @@ bool CompanyClass::leavePassenger(PassengerClass* Passenger) {
 }
 PassengerClass * CompanyClass::getPassengerByID(int ID) {
     for (int i = 0; i < StationCount; ++i) {
-        if (StationList[i].getNpPassengerByID(ID) != nullptr) {
-            return StationList[i]->getNpPassengerByID(ID);
+        if ( StationList[i].getNpPassengerByID(ID)!= nullptr) {
+            return StationList[i].getNpPassengerByID(ID);
         }
     }
     return nullptr;

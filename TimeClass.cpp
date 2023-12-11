@@ -28,14 +28,6 @@ void TimeClass::tick() {
 }
 
 // Overloaded assignment operator
-TimeClass& TimeClass::operator=(TimeClass& rhs){
-    if (this != &rhs) {
-        hours = rhs.hours;
-        minutes = rhs.minutes;
-        normalize();
-    }
-    return *this;
-}
 
 // Overloaded stream insertion operator
 std::ostream& operator<<(std::ostream& os, const TimeClass& t) {
@@ -93,4 +85,15 @@ TimeClass TimeClass::operator*(int multiplier) const {
     temp.normalize();
     return temp;
 }
+// Definition for overloaded assignment operator
+TimeClass& TimeClass::operator=(const TimeClass& rhs) {
+    if (this != &rhs) {
+        hours = rhs.hours;
+        minutes = rhs.minutes;
+        normalize();
+    }
+    return *this;
+}
+
+
 
