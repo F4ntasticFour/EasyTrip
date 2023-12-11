@@ -79,3 +79,17 @@ bool BusClass::offBoardPassenger(PassengerClass* Passenger, CompanyClass* Compan
     }
     return false;
 }
+
+bool BusClass::moveToNextStation(CompanyClass* Company, TimeClass& CurrentTime) {
+
+    if (BusCurrentStation == Company->getStationCount() - 1)  {
+        BusCurrentStation = BusCurrentStation - 1;
+        Company->getStation(BusCurrentStation).addBwBus(this);
+        JourneyCompleted++;
+        return true;
+    } else {
+        BusCurrentStation++;
+        Company->getStation(BusCurrentStation).addFwBus(this);
+        return true;
+    }
+}
