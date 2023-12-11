@@ -9,19 +9,20 @@
 
 
 class Station {
-private:
+public:
     int number;
     PriorityQueue<PassengerClass> SPpassengers;
     LinkedList<PassengerClass> NPpassengers;
     Queue<PassengerClass> WPpassengers;
     Queue<BusClass> FWbuses;
     Queue<BusClass> BWbuses;
-public:
     Station() = default;
 
     explicit Station(int number);
 
     void setStationNumber(int number);
+
+    LinkedList<PassengerClass> getNPpassengers();
 
     int getStationNumber();
 
@@ -41,11 +42,17 @@ public:
 
     void addBwBus(BusClass * Bus);
 
+    void printNpPassengers(Station station);
+
+    BusClass getFwBus();
+
     BusClass removeFwBus();
 
     BusClass removeBwBus();
 
     PassengerClass * getNpPassengerByID(int ID);
+
+    Queue<BusClass> getBusQueue();
 
     Station * operator->();
 

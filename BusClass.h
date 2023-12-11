@@ -17,9 +17,11 @@ private:
     TimeClass TimeBetweenStations;
     int JourneyCompleted;
     TimeClass CheckUpTime;
+    TimeClass TimeAtStation = TimeClass(0,0);
     int BusCurrentStation;
     int TripsBeforeCheckUp;
     PriorityQueue<PassengerClass*> PassengersOnBoard;
+    std::string BusDirection = "Fw";
 
 
 public:
@@ -36,7 +38,11 @@ public:
 
     int getBusCurrentStation() const;
 
+    std::string getBusDirection() const;
+
     TimeClass getCheckUpTime() const;
+
+    int getBusID();
 
     // Setters
     void setBusType(const std::string& busType);
@@ -47,6 +53,8 @@ public:
 
     void setCheckUpTime(TimeClass checkUpTime);
 
+    void setBusCurrentStation(int busCurrentStation);
+
     //Member Functions
     void performMaintenance();
 
@@ -55,6 +63,9 @@ public:
     bool onBoardPassenger(PassengerClass* Passenger);
 
     bool offBoardPassenger(PassengerClass* Passenger,CompanyClass* Company);
+
+    bool moveToNextStation(CompanyClass* Company, TimeClass& CurrentTime);
+
 
 };
 
