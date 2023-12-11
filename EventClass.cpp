@@ -62,7 +62,6 @@ void processEvent(std::string filename, TimeClass Time, CompanyClass* company) {
         std::vector<std::string> line = eventQueue.frontElement();
         std::string eventType = line[0];
 
-
         if (eventType == "A") {
             std::string PassengerType = line[1];
             std::istringstream iss(line[2]);
