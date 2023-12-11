@@ -1,71 +1,104 @@
 #include "EventClass.h"
 #include "FileHandler.h"
+#include <sstream>
 
-Event::Event(char eventType,TimeClass eventTime, PassengerClass* P, CompanyClass* C)
+Event::Event(TimeClass eventTime, PassengerClass* P, CompanyClass* C)
     : eventTime(eventTime), P(P), C(C) {
 }
-
-TimeClass Event::getTime() {
-    return eventTime;
+void Event::setCompany(CompanyClass* company) {
+    this->C = company;
 }
-
+void Event::setPassenger(PassengerClass* passenger) {
+    this->P = passenger;
+}
+void Event::setEventQueue(Queue<std::vector<std::string>> eventQueue) {
+    this->eventQueue = eventQueue;
+}
+void Event::setFile(std::string filename) {
+    this->file = filename;
+}
+CompanyClass * Event::getCompany() {
+    return C;
+}
+PassengerClass * Event::getPassenger() {
+    return P;
+}
+Queue<std::vector<std::string>> Event::getEventQueue() {
+    return eventQueue;
+}
+std::string Event::getFile() {
+    return file;
+}
 ArriveEvent::ArriveEvent(TimeClass ArrivalTime, PassengerClass* P, CompanyClass* C)
-: Event(eventType = 'A',ArrivalTime, P, C), ArrivalTime(ArrivalTime) {
+    : Event(ArrivalTime, P, C){
 }
 
-void ArriveEvent::execute(CompanyClass* C) {
-    FileHandler file("text");
-    Queue<std::string> eventList = file.getEventList();
-    std::string line = eventList.frontElement();
-    eventList.dequeue();
-    std::string delimiter = " ";
-    std::string token = line.substr(0, line.find(delimiter));
-    std::string PassengerType = token;
-    line.erase(0, line.find(delimiter) + delimiter.length());
-    token = line.substr(0, line.find(delimiter));
-    token = token.substr(0, token.find(':'));
-    TimeClass ArrivalTime = TimeClass(token[1], token[2]);
-    line.erase(0, line.find(delimiter) + delimiter.length());
-    token = line.substr(0, line.find(delimiter));
-    int PassengerID = std::stoi(token);
-    line.erase(0, line.find(delimiter) + delimiter.length());
-    token = line.substr(0, line.find(delimiter));
-    int StartStation = std::stoi(token);
-    line.erase(0, line.find(delimiter) + delimiter.length());
-    token = line.substr(0, line.find(delimiter));
-    int EndStation = std::stoi(token);
-    line.erase(0, line.find(delimiter) + delimiter.length());
-    token = line.substr(0, line.find(delimiter));
-    std::string statue = token;
+void ArriveEvent::execute() {
 
-    PassengerClass* P = new PassengerClass(ArrivalTime,StartStation, EndStation, PassengerID, PassengerType, statue);
     C->addPassenger(P);
 }
 
 LeaveEvent::LeaveEvent(TimeClass LeaveTime, PassengerClass* P, CompanyClass* C)
-    : Event(eventType = 'L',LeaveTime, P, C), LeaveTime(LeaveTime) {
+    : Event(LeaveTime, P, C){
 }
 
-void LeaveEvent::execute(CompanyClass* C) {
-    FileHandler file("text");
-    Queue<std::string> eventList = file.getEventList();
-    std::string line = eventList.frontElement();
-    eventList.dequeue();
-    std::string delimiter = " ";
-    std::string token = line.substr(0, line.find(delimiter));
-    std::string PassengerType = token;
-    line.erase(0, line.find(delimiter) + delimiter.length());
-    token = line.substr(0, line.find(delimiter));
-    token = token.substr(0, token.find(':'));
-    TimeClass LeaveTime = TimeClass(token[1], token[2]);
-    line.erase(0, line.find(delimiter) + delimiter.length());
-    token = line.substr(0, line.find(delimiter));
-    int PassengerID = std::stoi(token);
-    line.erase(0, line.find(delimiter) + delimiter.length());
-    token = line.substr(0, line.find(delimiter));
-    int StartStation = std::stoi(token);
-    line.erase(0, line.find(delimiter) + delimiter.length());
-
-
-    C->leavePassenger(P, LeaveTime);
+void LeaveEvent::execute() {
+    C->leavePassenger(P);
 }
+
+void processEvent(std::string filename, CompanyClass* company) {
+    FileHandler file(filename);
+    Queue<std::vector<std::string>> eventQueue = file.processEventLines();
+
+    while (!eventQueue.isEmpty()) {
+        std::vector<std::string> line = eventQueue.frontElement();
+        std::string eventType = line[0];
+
+
+           if(eventType == "A"){
+               std::string PassengerType = line[1];
+               std::istringstream iss(line[2]);
+               std::string arrivaltime;
+
+               std::getline(iss, arrivaltime, ':');
+               int hours = std::stoi(arrivaltime);
+
+               std::getline(iss, arrivaltime);
+               int minutes = std::stoi(arrivaltime);
+
+               TimeClass ArrivalTime(hours, minutes);
+
+               int PassengerID = std::stoi(line[3]);
+               int StartStation = std::stoi(line[4]);
+               int EndStation = std::stoi(line[5]);
+               std::string statue = line[6];
+               auto *P = new PassengerClass(ArrivalTime, StartStation, EndStation, PassengerID, PassengerType, statue);
+
+               ArriveEvent arriveEvent(ArrivalTime,P, company);
+               delete P;
+               arriveEvent.execute();
+           } else if (eventType == "L") {
+
+
+               std::istringstream iss(line[1]);
+
+               std::string arrivaltime;
+
+               std::getline(iss, arrivaltime, ':');
+               int hours = std::stoi(arrivaltime);
+
+               std::getline(iss, arrivaltime);
+               int minutes = std::stoi(arrivaltime);
+
+               TimeClass leaveTime(hours, minutes);
+               PassengerClass * P = new PassengerClass();
+               LeaveEvent leaveEvent(leaveTime, P, company);
+
+               leaveEvent.execute();
+           } else {
+               std::cerr << "Invalid event type: " << eventType << std::endl;
+           }
+        eventQueue.dequeue();
+       }
+}
+

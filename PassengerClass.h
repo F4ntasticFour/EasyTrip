@@ -21,7 +21,7 @@ private:
 public:
     // Constructor
     PassengerClass();
-    PassengerClass(TimeClass ArrivalTime,const int& StartStation, int& EndStation,int PassengerID,const std::string& passengerType ,const std::string& statue);
+    PassengerClass(TimeClass ArrivalTime, int StartStation, int EndStation,int PassengerID,const std::string& passengerType ,const std::string& statue);
 
     // Getters
     TimeClass getArrivalTime();
@@ -36,8 +36,8 @@ public:
     // Setters
     void setArrivalTime(TimeClass ArrivalTime);
     void setLeaveTime(TimeClass LeaveTime);
-    void setStartStation(const int& startStation);
-    void setEndStation(const int& endStation);
+    void setStartStation(int startStation);
+    void setEndStation(int endStation);
     void setPassengerType(const std::string& passengerType);
     void setStatue(const std::string& statue);
     void setPassengerID(int passengerID);

@@ -74,7 +74,7 @@ public:
     }
 
     // Advanced Operations
-    static LinkedList<T> merge(const LinkedList<T>& list1, const LinkedList<T>& list2) {
+     LinkedList<T> merge(const LinkedList<T>& list1, const LinkedList<T>& list2) {
         LinkedList<T> mergedList;
         Node<T>* temp1 = list1.Head;
         Node<T>* temp2 = list2.Head;
@@ -90,13 +90,6 @@ public:
     }
 
     // Utility Functions
-    T getItem() const {
-        Node<T>* temp = Head;
-        while (temp != nullptr && temp->getNext() != nullptr) {
-            temp = temp->getNext();
-        }
-        return temp != nullptr ? temp->getData() : T();
-    }
 
     void remove(T data) {
         Node<T>* temp = Head;
@@ -123,6 +116,30 @@ public:
                 }
             }
         }
+    }
+    T  getItemAtIndex(int index) const {
+        if (index < 0) {
+            std::cout << "Invalid index" << std::endl;
+            return T();
+        }
+        Node<T>* temp = Head;
+        for (int i = 0; temp != nullptr && i < index; i++) {
+            temp = temp->getNext();
+        }
+        if (temp == nullptr) {
+            std::cout << "Index out of bounds" << std::endl;
+            return T();
+        }
+        return temp->getData();
+    }
+    int getLength() const {
+        Node<T>* temp = Head;
+        int length = 0;
+        while (temp != nullptr) {
+            length++;
+            temp = temp->getNext();
+        }
+        return length;
     }
 };
 

@@ -6,7 +6,6 @@
 #include "PassengerClass.h"
 #include "LinkedList.h"
 #include "Queue.h"
-#include "BusClass.h"
 
 
 class Station {
@@ -18,8 +17,9 @@ private:
     Queue<BusClass> FWbuses;
     Queue<BusClass> BWbuses;
 public:
+    Station() = default;
 
-    Station(int number);
+    explicit Station(int number);
 
     void setStationNumber(int number);
 
@@ -44,6 +44,11 @@ public:
     BusClass removeFwBus();
 
     BusClass removeBwBus();
+
+    PassengerClass * getNpPassengerByID(int ID);
+
+    Station * operator->();
+
 
 };
 

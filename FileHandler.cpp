@@ -84,13 +84,19 @@ int FileHandler::getGetOnOffTime() {
     ss5 >> maxW >> getOnOffTime;
     return getOnOffTime;
 }
+int FileHandler::getNumEvents() {
+    std::istringstream ss(fileContents[5]);
+    int numEvents;
+    ss >> numEvents;
+    return numEvents;
+}
 
 // Assuming fileContents is a member of FileHandler and contains all lines of the file
 Queue<std::vector<std::string>> FileHandler::processEventLines() {
     Queue<std::vector<std::string>> eventQueue;
 
     // Starting from the line where event lines begin
-    for (size_t i = 5; i < fileContents.size(); ++i) {
+    for (size_t i = 6; i < fileContents.size(); ++i) {
         std::istringstream iss(fileContents[i]);
         std::vector<std::string> lineDetails;
         std::string word;
@@ -112,3 +118,5 @@ Queue<std::vector<std::string>> FileHandler::processEventLines() {
 
     return eventQueue;
 }
+
+
