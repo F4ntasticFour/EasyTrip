@@ -3,7 +3,7 @@
 PassengerClass::PassengerClass() {
 }
 
-PassengerClass::PassengerClass(TimeClass ArrivalTime ,const int& StartStation, int& EndStation, int PassengerID,
+PassengerClass::PassengerClass(TimeClass ArrivalTime ,const int StartStation, int EndStation, int PassengerID,
                                const std::string& passengerType, const std::string& statue)
     :  StartStation(StartStation), EndStation(EndStation), PassengerID(PassengerID),
       PassengerType(passengerType), statue(statue) {
@@ -47,11 +47,11 @@ void PassengerClass::setLeaveTime(TimeClass LeaveTime) {
 }
 
 
-void PassengerClass::setStartStation(const int& startStation) {
+void PassengerClass::setStartStation(int startStation) {
     StartStation = startStation;
 }
 
-void PassengerClass::setEndStation(const int& endStation) {
+void PassengerClass::setEndStation(int endStation) {
     EndStation = endStation;
 }
 
