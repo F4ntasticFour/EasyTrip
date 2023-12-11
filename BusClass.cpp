@@ -27,8 +27,16 @@ int BusClass::getBusCurrentStation() const {
     return BusCurrentStation;
 }
 
+std::string BusClass::getBusDirection() const {
+    return BusDirection;
+}
+
 TimeClass BusClass::getCheckUpTime() const {
     return CheckUpTime;
+}
+
+int BusClass::getBusID(){
+    return BusID;
 }
 
 // Setters
@@ -46,6 +54,10 @@ void BusClass::setJourneyCompleted(int journeyCompleted) {
 
 void BusClass::setCheckUpTime(TimeClass checkUpTime) {
     CheckUpTime = checkUpTime;
+}
+
+void BusClass::setBusCurrentStation(int busCurrentStation) {
+    BusCurrentStation = busCurrentStation;
 }
 
 
@@ -82,14 +94,29 @@ bool BusClass::offBoardPassenger(PassengerClass* Passenger, CompanyClass* Compan
 
 bool BusClass::moveToNextStation(CompanyClass* Company, TimeClass& CurrentTime) {
 
-    if (BusCurrentStation == Company->getStationCount() - 1)  {
-        BusCurrentStation = BusCurrentStation - 1;
+    if (BusCurrentStation == Company->getStationCount() - 1&& BusDirection == "Fw")  {
+        BusCurrentStation--;
         Company->getStation(BusCurrentStation).addBwBus(this);
+        BusDirection = "Bw";
         JourneyCompleted++;
         return true;
-    } else {
+    }else if(BusDirection== "Bw" && BusCurrentStation == 0) {
+        BusCurrentStation++;
+        Company->getStation(BusCurrentStation).addFwBus(this);
+        BusDirection = "Fw";
+        JourneyCompleted++;
+        return true;
+    }
+    else if (BusDirection == "Bw") {
+        BusCurrentStation--;
+        Company->getStation(BusCurrentStation).addBwBus(this);
+        return true;
+    }
+    else if (BusDirection == "Fw") {
         BusCurrentStation++;
         Company->getStation(BusCurrentStation).addFwBus(this);
         return true;
+
     }
+     return false;
 }

@@ -40,6 +40,10 @@ int Station::getStationNumber() {
     return number;
 }
 
+LinkedList<PassengerClass> Station::getNPpassengers() {
+    return NPpassengers;
+}
+
 void Station::setStationNumber(int number) {
     this->number = number;
 }
@@ -51,6 +55,10 @@ void Station::addFwBus(BusClass * Bus) {
 
 void Station::addBwBus(BusClass * Bus) {
     BWbuses.enqueue(*Bus);
+}
+BusClass Station::getFwBus() {
+    return FWbuses.frontElement();
+
 }
 
 BusClass Station::removeFwBus() {
@@ -80,6 +88,9 @@ PassengerClass * Station::getNpPassengerByID(int ID) {
     return new PassengerClass(); // Return a default-constructed object or handle the case appropriately.
 }
 
+Queue<BusClass> Station::getBusQueue() {
+    return FWbuses;
+}
 
 
 Station * Station::operator->() {

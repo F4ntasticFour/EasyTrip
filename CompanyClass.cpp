@@ -20,23 +20,27 @@ CompanyClass::CompanyClass(int StationCount, TimeClass TimeBetweenStations, int 
     }
     for (int i = 0; i < NumberOfMBuses; ++i) {
         auto* bus = new BusClass(i, "Mbus", TimeBetweenStations, MBusCapacity,
-                                     CheckupDurationMBus, TripsBeforeCheckup);
+                                 CheckupDurationMBus, TripsBeforeCheckup);
         StationList[0].addFwBus(bus);
     }
     for (int i = 0; i < NumberOfWCBuses; ++i) {
         auto* bus = new BusClass(i, "Wbus", TimeBetweenStations, WCBusCapacity,
-                                     CheckupDurationWCBus, TripsBeforeCheckup);
+                                 CheckupDurationWCBus, TripsBeforeCheckup);
         StationList[0].addFwBus(bus);
     }
 }
 
-bool CompanyClass::busMoving(BusClass* Bus) {
+Queue<BusClass> CompanyClass::getMovingBus() {
+    return MovingBus;
+}
+
+bool CompanyClass::busMoving(BusClass Bus) {
     MovingBus.enqueue(Bus);
     return true;
 }
 
-bool CompanyClass::busAtCheckup(BusClass* Bus) {
-    if (Bus->getBusCurrentStation() == 0 && Bus->getJourneyCompleted() == TripsBeforeCheckup) {
+bool CompanyClass::busAtCheckup(BusClass Bus) {
+    if (Bus.getBusCurrentStation() == 0 && Bus.getJourneyCompleted() == TripsBeforeCheckup) {
         BusCheckUpQueue.enqueue(Bus);
         return true;
     }
@@ -57,6 +61,7 @@ bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus
     }
     return false;
 }
+
 bool CompanyClass::leavePassenger(PassengerClass* Passenger) {
     if (Passenger->getEndStation() == Passenger->getStartStation()) {
         StationList[Passenger->getStartStation()].removeNpPassenger(Passenger);
@@ -65,9 +70,10 @@ bool CompanyClass::leavePassenger(PassengerClass* Passenger) {
     }
     return false;
 }
-PassengerClass * CompanyClass::getPassengerByID(int ID) {
+
+PassengerClass* CompanyClass::getPassengerByID(int ID) {
     for (int i = 0; i < StationCount; ++i) {
-        if ( StationList[i].getNpPassengerByID(ID)!= nullptr) {
+        if (StationList[i].getNpPassengerByID(ID) != nullptr) {
             return StationList[i].getNpPassengerByID(ID);
         }
     }
@@ -81,3 +87,26 @@ int CompanyClass::getStationCount() const {
 Station CompanyClass::getStation(int StationID) {
     return StationList[StationID];
 }
+
+void CompanyClass::moveBus(TimeClass CurrentTime) {
+    int size = NumberOfMBuses+ NumberOfWCBuses;
+    BusClass bus;
+    if (MovingBus.isEmpty()) {
+        MovingBus.enqueue(bus);
+        for(int i = 0; i<size;i++){
+                MovingBus.enqueue(StationList[0].removeFwBus());
+                bus = MovingBus.frontElement();
+                MovingBus.frontElement().moveToNextStation(this, CurrentTime);
+                MovingBus.dequeue();
+        }
+        MovingBus.enqueue(bus);
+    }
+    else {
+        MovingBus.enqueue(StationList[0].removeFwBus());
+        MovingBus.frontElement().moveToNextStation(this, CurrentTime);
+
+    }
+}
+
+
+

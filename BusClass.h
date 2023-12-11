@@ -21,6 +21,7 @@ private:
     int BusCurrentStation;
     int TripsBeforeCheckUp;
     PriorityQueue<PassengerClass*> PassengersOnBoard;
+    std::string BusDirection = "Fw";
 
 
 public:
@@ -37,7 +38,11 @@ public:
 
     int getBusCurrentStation() const;
 
+    std::string getBusDirection() const;
+
     TimeClass getCheckUpTime() const;
+
+    int getBusID();
 
     // Setters
     void setBusType(const std::string& busType);
@@ -47,6 +52,8 @@ public:
     void setJourneyCompleted(int journeyCompleted);
 
     void setCheckUpTime(TimeClass checkUpTime);
+
+    void setBusCurrentStation(int busCurrentStation);
 
     //Member Functions
     void performMaintenance();

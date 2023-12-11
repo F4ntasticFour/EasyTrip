@@ -67,6 +67,16 @@ public:
         }
         std::cout << "end" << std::endl;
     }
+
+    int getLength() const {
+        int length = 0;
+        Node<T> *temp = front;
+        while (temp != nullptr) {
+            length++;
+            temp = temp->getNext();
+        }
+        return length;
+    }
 };
 
 

@@ -11,8 +11,8 @@ private:
     Queue<PassengerClass *> FinishedPassengers;
     int StationCount;
     std::vector<Station> StationList;
-    Queue<BusClass *> BusCheckUpQueue;
-    Queue<BusClass *> MovingBus;
+    Queue<BusClass> BusCheckUpQueue;
+    Queue<BusClass> MovingBus;
     TimeClass TimeBetweenStations;
     int NumberOfWCBuses;
     int NumberOfMBuses;
@@ -33,15 +33,21 @@ public:
 
     bool leavePassenger(PassengerClass* Passenger);
 
-    bool busMoving(BusClass* Bus);
+    Queue<BusClass> getMovingBus();
 
-    bool busAtCheckup(BusClass* Bus);
+    bool busMoving(BusClass Bus);
+
+    bool busAtCheckup(BusClass Bus);
 
     PassengerClass *getPassengerByID(int ID);
 
     int getStationCount() const;
 
     Station getStation(int ID);
+
+    void moveBus(TimeClass CurrentTime);
+
+
 };
 
 #endif //EASYTRIP_COMPANYCLASS_H
