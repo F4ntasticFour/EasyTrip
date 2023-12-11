@@ -4,8 +4,7 @@
 #include <string>
 #include <vector>
 #include "CompanyClass.h"  // Include your main simulation class
-#include "TimeClass.h"     // Include if you have a separate TimeClass for handling time
-
+#include "Queue.h"
 class FileHandler {
 private:
     std::string fileName;
