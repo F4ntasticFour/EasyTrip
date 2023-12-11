@@ -87,3 +87,13 @@ TimeClass operator-(const TimeClass& lhs, const TimeClass& rhs) {
     temp.normalize();
     return temp;
 }
+TimeClass operator*(const TimeClass& lhs, const int& multiplier) {
+    TimeClass temp(lhs.hours * multiplier, lhs.minutes * multiplier);
+    temp.normalize();
+    return temp;
+}
+TimeClass& operator=(TimeClass& lhs, const TimeClass& rhs) {
+    lhs.hours = rhs.hours;
+    lhs.minutes = rhs.minutes;
+    return lhs;
+}

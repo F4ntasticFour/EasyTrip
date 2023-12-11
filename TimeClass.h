@@ -6,13 +6,13 @@
 #include <iostream>
 
 class TimeClass {
-private:
+public:
     int hours;
+
     int minutes;
 
     void normalize();
 
-public:
     TimeClass(int hours = 0, int minutes = 0);
 
     void addMinutes(int mins);
@@ -26,7 +26,9 @@ public:
     friend bool operator!=(const TimeClass& lhs, const TimeClass& rhs);
     friend TimeClass operator+(const TimeClass& lhs, const TimeClass& rhs);
     friend TimeClass operator-(const TimeClass& lhs, const TimeClass& rhs);
-    TimeClass& operator=(TimeClass& rhs); // Corrected here
+    TimeClass& operator=(TimeClass& rhs);
+    TimeClass& operator*(const TimeClass& rhs, int multiplier);
+
 };
 
 #endif //EASYTRIP_TIMECLASS_H
