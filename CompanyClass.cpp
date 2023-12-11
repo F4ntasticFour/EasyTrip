@@ -81,3 +81,4 @@ int CompanyClass::getStationCount() const {
 Station CompanyClass::getStation(int StationID) {
     return StationList[StationID];
 }
+
