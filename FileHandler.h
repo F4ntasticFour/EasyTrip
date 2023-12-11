@@ -39,6 +39,8 @@ public:
     int getWBusCount();
 
     Queue<std::vector<std::string>> processEventLines();
+
+    int getNumEvents();
 };
 
 #endif //EASYTRIP_FILEHANDLER_H

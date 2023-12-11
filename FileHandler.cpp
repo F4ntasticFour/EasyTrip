@@ -112,3 +112,10 @@ Queue<std::vector<std::string>> FileHandler::processEventLines() {
 
     return eventQueue;
 }
+
+int FileHandler::getNumEvents() {
+    std::istringstream ss(fileContents[5]);
+    int numEvents;
+    ss >> numEvents;
+    return numEvents;
+}
