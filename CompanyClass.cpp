@@ -73,3 +73,11 @@ PassengerClass * CompanyClass::getPassengerByID(int ID) {
     }
     return nullptr;
 }
+
+int CompanyClass::getStationCount() const {
+    return StationCount;
+}
+
+Station CompanyClass::getStation(int StationID) {
+    return StationList[StationID];
+}
