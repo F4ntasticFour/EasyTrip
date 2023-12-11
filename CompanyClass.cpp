@@ -3,27 +3,28 @@
 #include "CompanyClass.h"
 
 CompanyClass::CompanyClass(int StationCount, TimeClass TimeBetweenStations, int NumberOfWCBuses, int NumberOfMBuses,
-                           int WCBusCapacity, int MBusCapacity, int TripsBeforeCheckup, TimeClass CheckupDurationWCBus,
-                           TimeClass CheckupDurationMBus) {
-    this->StationCount = StationCount;
+                           int WCBusCapacity, int MBusCapacity, int TripsBeforeCheckup,
+                           TimeClass CheckupDurationWCBus, TimeClass CheckupDurationMBus)
+    : StationCount(StationCount),
+      TimeBetweenStations(TimeBetweenStations),
+      NumberOfWCBuses(NumberOfWCBuses),
+      NumberOfMBuses(NumberOfMBuses),
+      WCBusCapacity(WCBusCapacity),
+      MBusCapacity(MBusCapacity),
+      TripsBeforeCheckup(TripsBeforeCheckup),
+      CheckupDurationWCBus(CheckupDurationWCBus),
+      CheckupDurationMBus(CheckupDurationMBus) {
+    StationList.resize(StationCount);
     for (auto i = 0; i < StationCount; i++) {
         StationList[i] = Station(i);
-    };
-    this->TimeBetweenStations = TimeBetweenStations;
-    this->NumberOfWCBuses = NumberOfWCBuses;
-    this->NumberOfMBuses = NumberOfMBuses;
-    this->WCBusCapacity = WCBusCapacity;
-    this->MBusCapacity = MBusCapacity;
-    this->TripsBeforeCheckup = TripsBeforeCheckup;
-    this->CheckupDurationWCBus = CheckupDurationWCBus;
-    this->CheckupDurationMBus = CheckupDurationMBus;
+    }
     for (int i = 0; i < NumberOfMBuses; ++i) {
-        BusClass* bus = new BusClass(i, "Mbus", TimeBetweenStations, MBusCapacity,
+        auto* bus = new BusClass(i, "Mbus", TimeBetweenStations, MBusCapacity,
                                      CheckupDurationMBus, TripsBeforeCheckup);
         StationList[0].addFwBus(bus);
     }
     for (int i = 0; i < NumberOfWCBuses; ++i) {
-        BusClass* bus = new BusClass(i, "Wbus", TimeBetweenStations, WCBusCapacity,
+        auto* bus = new BusClass(i, "Wbus", TimeBetweenStations, WCBusCapacity,
                                      CheckupDurationWCBus, TripsBeforeCheckup);
         StationList[0].addFwBus(bus);
     }
@@ -56,12 +57,19 @@ bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus
     }
     return false;
 }
-bool CompanyClass::leavePassenger(PassengerClass* Passenger,TimeClass LeaveTime) {
+bool CompanyClass::leavePassenger(PassengerClass* Passenger) {
     if (Passenger->getEndStation() == Passenger->getStartStation()) {
-        Passenger->setLeaveTime(LeaveTime);
         StationList[Passenger->getStartStation()].removeNpPassenger(Passenger);
         FinishedPassengers.enqueue(Passenger);
         return true;
     }
     return false;
+}
+PassengerClass * CompanyClass::getPassengerByID(int ID) {
+    for (int i = 0; i < StationCount; ++i) {
+        if (StationList[i].getNpPassengerByID(ID) != nullptr) {
+            return StationList[i]->getNpPassengerByID(ID);
+        }
+    }
+    return nullptr;
 }

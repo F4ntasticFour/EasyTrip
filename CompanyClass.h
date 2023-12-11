@@ -10,6 +10,7 @@ class CompanyClass {
 private:
     Queue<PassengerClass *> FinishedPassengers;
     int StationCount;
+    std::vector<Station> StationList;
     Queue<BusClass *> BusCheckUpQueue;
     Queue<BusClass *> MovingBus;
     TimeClass TimeBetweenStations;
@@ -20,22 +21,23 @@ private:
     int TripsBeforeCheckup;
     TimeClass CheckupDurationWCBus;
     TimeClass CheckupDurationMBus;
-    Station StationList[];
 
 public:
     CompanyClass(int StationCount, TimeClass TimeBetweenStations, int NumberOfWCBuses, int NumberOfMBuses,
-                 int WCBusCapacity, int MBusCapacity, int TripsBeforeCheckup, TimeClass CheckupDurationWCBus,
-                 TimeClass CheckupDurationMBus);
+                           int WCBusCapacity, int MBusCapacity, int TripsBeforeCheckup,
+                           TimeClass CheckupDurationWCBus, TimeClass CheckupDurationMBus);
 
     bool addPassenger(PassengerClass* Passenger);
 
     bool addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus);
 
-    bool leavePassenger(PassengerClass* Passenger,TimeClass LeaveTime);
+    bool leavePassenger(PassengerClass* Passenger);
 
     bool busMoving(BusClass* Bus);
 
     bool busAtCheckup(BusClass* Bus);
+
+    PassengerClass *getPassengerByID(int ID);
 };
 
 #endif //EASYTRIP_COMPANYCLASS_H
