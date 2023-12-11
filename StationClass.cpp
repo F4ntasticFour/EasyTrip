@@ -64,3 +64,24 @@ BusClass Station::removeBwBus() {
     BWbuses.dequeue();
     return bus;
 }
+
+PassengerClass * Station::getNpPassengerByID(int ID) {
+    int i = 0;
+    if (NPpassengers.isEmpty()) {
+        return new PassengerClass(); // Return a default-constructed object or handle the case appropriately.
+    }
+    while (i < NPpassengers.getLength()) {
+        PassengerClass currentPassenger = NPpassengers.getItemAtIndex(i);
+        if (currentPassenger.getPassengerID() == ID) {
+            return new PassengerClass(currentPassenger);
+        }
+        i++;
+    }
+    return new PassengerClass(); // Return a default-constructed object or handle the case appropriately.
+}
+
+
+
+Station * Station::operator->() {
+    return this;
+}
