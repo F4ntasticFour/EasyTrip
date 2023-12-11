@@ -1,42 +1,1 @@
-#ifndef EASYTRIP_EVENTCLASS_H
-#define EASYTRIP_EVENTCLASS_H
-
-#include "TimeClass.h"
-#include "PassengerClass.h"
-#include "CompanyClass.h"
-#include "BusClass.h"
-#include "StationClass.h"
-#include "FileHandler.h"
-
-class Event {
-public:
-    Event(char eventType,TimeClass eventTime, PassengerClass* P, CompanyClass* C);
-    void setTime(TimeClass& eventTime);
-    TimeClass getTime();
-
-protected:
-    char eventType;
-    TimeClass eventTime;
-    PassengerClass* P;
-    CompanyClass* C;
-};
-
-class ArriveEvent : public Event {
-public:
-    ArriveEvent(TimeClass ArrivalTime, PassengerClass* P, CompanyClass* C);
-    void execute(CompanyClass* C);
-
-private:
-    TimeClass ArrivalTime;
-};
-
-class LeaveEvent : public Event {
-public:
-    LeaveEvent(TimeClass LeaveTime, PassengerClass* P, CompanyClass* C);
-    void execute(CompanyClass* C);
-
-private:
-    TimeClass LeaveTime;
-};
-
-#endif //EASYTRIP_EVENTCLASS_H
+#ifndef EASYTRIP_EVENTCLASS_H#define EASYTRIP_EVENTCLASS_H#include "TimeClass.h"#include "PassengerClass.h"#include "BusClass.h"#include "Queue.h"class Event {public:    virtual ~Event() = default;    Event(TimeClass eventTime, PassengerClass* P, CompanyClass* C);    void setCompany(CompanyClass* company);    void setPassenger(PassengerClass* passenger);    void setEventQueue(Queue<std::vector<std::string>> eventQueue);    void setFile(std::string filename);    CompanyClass * getCompany();    PassengerClass * getPassenger();    Queue<std::vector<std::string>> getEventQueue();    std::string getFile();    virtual void execute() = 0;protected:    TimeClass eventTime;    PassengerClass* P;    CompanyClass* C;    Queue<std::vector<std::string>> eventQueue;    std::string file;};class ArriveEvent : public Event {public:    ArriveEvent(TimeClass ArrivalTime, PassengerClass* P, CompanyClass* C);    void execute() override;};class LeaveEvent : public Event {public:    LeaveEvent(TimeClass LeaveTime, PassengerClass* P, CompanyClass* C);    void execute() override;};void processEvent(std::string filename, CompanyClass* company);#endif //EASYTRIP_EVENTCLASS_H
