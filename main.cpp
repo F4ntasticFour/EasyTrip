@@ -11,4 +11,5 @@ int main() {
     CompanyClass * company;
     company->startSimulation("../random_file.txt");
 
+
 }
