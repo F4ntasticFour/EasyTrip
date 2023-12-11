@@ -87,13 +87,10 @@ TimeClass operator-(const TimeClass& lhs, const TimeClass& rhs) {
     temp.normalize();
     return temp;
 }
-TimeClass operator*(const TimeClass& lhs, const int& multiplier) {
-    TimeClass temp(lhs.hours * multiplier, lhs.minutes * multiplier);
+// Definition for overloaded multiplication operator
+TimeClass TimeClass::operator*(int multiplier) const {
+    TimeClass temp(hours * multiplier, minutes * multiplier);
     temp.normalize();
     return temp;
 }
-TimeClass& operator=(TimeClass& lhs, const TimeClass& rhs) {
-    lhs.hours = rhs.hours;
-    lhs.minutes = rhs.minutes;
-    return lhs;
-}
+

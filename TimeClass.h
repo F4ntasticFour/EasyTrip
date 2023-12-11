@@ -27,7 +27,7 @@ public:
     friend TimeClass operator+(const TimeClass& lhs, const TimeClass& rhs);
     friend TimeClass operator-(const TimeClass& lhs, const TimeClass& rhs);
     TimeClass& operator=(TimeClass& rhs);
-    TimeClass& operator*(const TimeClass& rhs, int multiplier);
+    TimeClass operator*(int multiplier) const;
 
 };
 
