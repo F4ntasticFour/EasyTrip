@@ -4,7 +4,20 @@
 
 #include <iostream>
 
-template <typename T>
+template<class T>
+class Node {
+private:
+    T data;
+    Node<T> *next;
+
+public:
+    Node(T newData) : data(newData), next(nullptr) {}
+    T getData() const { return data; }
+    Node<T>* getNext() const { return next; }
+    void setNext(Node<T> *newNext) { next = newNext; }
+};
+
+template<class T>
 class Stack {
 private:
     Node<T> *top;
