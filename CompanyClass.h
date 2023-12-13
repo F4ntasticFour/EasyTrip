@@ -31,6 +31,8 @@ public:
 
     bool addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus);
 
+    int getCount(int StationID, std::string PassengerType);
+
     bool leavePassenger(PassengerClass* Passenger);
 
     bool busMoving(BusClass* Bus);

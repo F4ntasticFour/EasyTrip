@@ -9,7 +9,7 @@ Station::Station(int number) {
 }
 
 void Station::addNpPassenger(PassengerClass* Passenger) {
-    NPpassengers.insertAtEnd(*Passenger);
+    NPpassengers.insertAtBeg(*Passenger);
 }
 
 void Station::addWpPassenger(PassengerClass* Passenger) {
@@ -78,6 +78,16 @@ PassengerClass * Station::getNpPassengerByID(int ID) {
         i++;
     }
     return new PassengerClass(); // Return a default-constructed object or handle the case appropriately.
+}
+int Station::getCount(std::string PassengertType) {
+    if  (PassengertType == "NP") {
+        return rand() % 10 + 1;;
+    } else if (PassengertType == "SP") {
+        return rand() % 10 + 1;
+    } else if (PassengertType == "WP") {
+        return rand() % 10 + 1;
+    }
+return -1;
 }
 
 

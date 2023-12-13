@@ -45,11 +45,32 @@ bool CompanyClass::busAtCheckup(BusClass* Bus) {
 
 
 bool CompanyClass::addPassenger(PassengerClass* Passenger) {
-    StationList[Passenger->getStartStation()].addNpPassenger(Passenger);
-    return true;
+    if(Passenger->getPassengerType()=="NP") {
+        StationList[Passenger->getStartStation()].addNpPassenger(Passenger);
+        return true;
+    }
+     if(Passenger->getPassengerType()=="SP") {
+        // StationList[Passenger->getStartStation()].addSpPassenger(Passenger);
+        return true;
+    }
+     if(Passenger->getPassengerType()=="WP") {
+        // StationList[Passenger->getStartStation()].addWpPassenger(Passenger);
+        return true;
+    }
+    return false;
+}
+int CompanyClass::getCount(int StationID, std::string PassengerType) {
+    if (PassengerType == "NP") {
+        return this->getStation(StationID).getCount(PassengerType);
+    } else if (PassengerType == "SP") {
+        return this->getStation(StationID).getCount(PassengerType);
+    } else if (PassengerType == "WP") {
+        return this->getStation(StationID).getCount(PassengerType);
+    }
+    return 0;
 }
 
-bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus) {
+bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass * Bus) {
     if (Bus->getBusCurrentStation() == Passenger->getEndStation()) {
         FinishedPassengers.enqueue(Passenger);
         StationList[Passenger->getEndStation()].removeNpPassenger(Passenger);
@@ -59,8 +80,16 @@ bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus
 }
 bool CompanyClass::leavePassenger(PassengerClass* Passenger) {
     if (Passenger->getEndStation() == Passenger->getStartStation()) {
-        StationList[Passenger->getStartStation()].removeNpPassenger(Passenger);
-        FinishedPassengers.enqueue(Passenger);
+        if (Passenger->getPassengerType() == "NP") {
+            FinishedPassengers.enqueue(Passenger);
+            StationList[Passenger->getStartStation()].removeNpPassenger(Passenger);
+        } else if (Passenger->getPassengerType() == "SP") {
+            FinishedPassengers.enqueue(Passenger);
+            StationList[Passenger->getStartStation()].removeSpPassenger();
+        } else if (Passenger->getPassengerType() == "WP") {
+            FinishedPassengers.enqueue(Passenger);
+            StationList[Passenger->getStartStation()].removeWpPassenger();
+        }
         return true;
     }
     return false;
