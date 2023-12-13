@@ -107,7 +107,7 @@ Queue<std::vector<std::string>> FileHandler::processEventLines() {
 
         // Check for SP Passenger and their statue
         if (lineDetails.size() > 1 && lineDetails[1] == "SP" && lineDetails.size() == 6) {
-            // SP Passenger with statue provided
+            lineDetails.push_back("normal");
         } else if (lineDetails.size() > 1 && lineDetails[1] == "SP" && lineDetails.size() == 5) {
             // SP Passenger without statue, set statue to 'normal'
             lineDetails.push_back("normal");

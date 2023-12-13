@@ -45,11 +45,11 @@ void Station::setStationNumber(int number) {
 }
 
 
-void Station::addFwBus(BusClass * Bus) {
+void Station::addFwBus(BusClass* Bus) {
     FWbuses.enqueue(*Bus);
 }
 
-void Station::addBwBus(BusClass * Bus) {
+void Station::addBwBus(BusClass* Bus) {
     BWbuses.enqueue(*Bus);
 }
 
@@ -65,7 +65,7 @@ BusClass Station::removeBwBus() {
     return bus;
 }
 
-PassengerClass * Station::getNpPassengerByID(int ID) {
+PassengerClass* Station::getNpPassengerByID(int ID) {
     int i = 0;
     if (NPpassengers.isEmpty()) {
         return new PassengerClass(); // Return a default-constructed object or handle the case appropriately.
@@ -79,19 +79,19 @@ PassengerClass * Station::getNpPassengerByID(int ID) {
     }
     return new PassengerClass(); // Return a default-constructed object or handle the case appropriately.
 }
+
 int Station::getCount(std::string PassengertType) {
-    if  (PassengertType == "NP") {
-        return rand() % 10 + 1;;
+    if (PassengertType == "NP") {
+        return NPpassengers.getLength();;
     } else if (PassengertType == "SP") {
-        return rand() % 10 + 1;
+        return SPpassengers.size();
     } else if (PassengertType == "WP") {
-        return rand() % 10 + 1;
+        return WPpassengers.getLength();
     }
-return -1;
+    return 0;
 }
 
 
-
-Station * Station::operator->() {
+Station* Station::operator->() {
     return this;
 }

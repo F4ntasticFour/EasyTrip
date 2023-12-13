@@ -20,12 +20,12 @@ CompanyClass::CompanyClass(int StationCount, TimeClass TimeBetweenStations, int 
     }
     for (int i = 0; i < NumberOfMBuses; ++i) {
         auto* bus = new BusClass(i, "Mbus", TimeBetweenStations, MBusCapacity,
-                                     CheckupDurationMBus, TripsBeforeCheckup);
+                                 CheckupDurationMBus, TripsBeforeCheckup);
         StationList[0].addFwBus(bus);
     }
     for (int i = 0; i < NumberOfWCBuses; ++i) {
         auto* bus = new BusClass(i, "Wbus", TimeBetweenStations, WCBusCapacity,
-                                     CheckupDurationWCBus, TripsBeforeCheckup);
+                                 CheckupDurationWCBus, TripsBeforeCheckup);
         StationList[0].addFwBus(bus);
     }
 }
@@ -45,20 +45,21 @@ bool CompanyClass::busAtCheckup(BusClass* Bus) {
 
 
 bool CompanyClass::addPassenger(PassengerClass* Passenger) {
-    if(Passenger->getPassengerType()=="NP") {
+    if (Passenger->getPassengerType() == "NP") {
         StationList[Passenger->getStartStation()].addNpPassenger(Passenger);
         return true;
     }
-     if(Passenger->getPassengerType()=="SP") {
-        // StationList[Passenger->getStartStation()].addSpPassenger(Passenger);
+    if (Passenger->getPassengerType() == "SP") {
+        StationList[Passenger->getStartStation()].addSpPassenger(Passenger);
         return true;
     }
-     if(Passenger->getPassengerType()=="WP") {
-        // StationList[Passenger->getStartStation()].addWpPassenger(Passenger);
+    if (Passenger->getPassengerType() == "WP") {
+        StationList[Passenger->getStartStation()].addWpPassenger(Passenger);
         return true;
     }
     return false;
 }
+
 int CompanyClass::getCount(int StationID, std::string PassengerType) {
     if (PassengerType == "NP") {
         return this->getStation(StationID).getCount(PassengerType);
@@ -70,7 +71,7 @@ int CompanyClass::getCount(int StationID, std::string PassengerType) {
     return 0;
 }
 
-bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass * Bus) {
+bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus) {
     if (Bus->getBusCurrentStation() == Passenger->getEndStation()) {
         FinishedPassengers.enqueue(Passenger);
         StationList[Passenger->getEndStation()].removeNpPassenger(Passenger);
@@ -78,6 +79,7 @@ bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass * Bu
     }
     return false;
 }
+
 bool CompanyClass::leavePassenger(PassengerClass* Passenger) {
     if (Passenger->getEndStation() == Passenger->getStartStation()) {
         if (Passenger->getPassengerType() == "NP") {
@@ -94,9 +96,10 @@ bool CompanyClass::leavePassenger(PassengerClass* Passenger) {
     }
     return false;
 }
-PassengerClass * CompanyClass::getPassengerByID(int ID) {
+
+PassengerClass* CompanyClass::getPassengerByID(int ID) {
     for (int i = 0; i < StationCount; ++i) {
-        if ( StationList[i].getNpPassengerByID(ID)!= nullptr) {
+        if (StationList[i].getNpPassengerByID(ID) != nullptr) {
             return StationList[i].getNpPassengerByID(ID);
         }
     }
