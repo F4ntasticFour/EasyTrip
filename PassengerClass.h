@@ -45,6 +45,7 @@ public:
     std::string getStatue() const;
     // Operator Overloading
     bool operator==(const PassengerClass& lhs) const;
+    std::ostream& operator<<(std::ostream& os) const;
 
 };
 

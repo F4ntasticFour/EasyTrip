@@ -20,23 +20,30 @@ public:
     }
 
     void enqueue(T data, int priority) {
-        NodeP<T>* temp = new NodeP<T>(data, priority);
-
-        if (isEmpty() || front->getPriority() > priority) {
-            temp->setNext(front);
-            front = temp;
-        } else {
-            NodeP<T>* current = front;
-            while (current->getNext() != nullptr && current->getNext()->getPriority() <= priority) {
-                current = current->getNext();
+        NodeP<T>* newNode = new NodeP<T>(data, priority);
+        if (front== nullptr) {
+            front = newNode;
+        }
+        else {
+            NodeP<T>* temp = front;
+            NodeP<T>* prev = nullptr;
+            while (temp != nullptr && temp->getPriority() <= priority) {
+                prev = temp;
+                temp = temp->getNext();
             }
-            temp->setNext(current->getNext());
-            current->setNext(temp);
+            if (prev == nullptr) {
+                newNode->setNext(front);
+                front = newNode;
+            }
+            else {
+                prev->setNext(newNode);
+                newNode->setNext(temp);
+            }
         }
     }
 
     void dequeue() {
-        if (isEmpty()) {
+        if (front == nullptr) {
             std::cout << "Priority Queue is empty" << std::endl;
             return;
         }
@@ -46,7 +53,7 @@ public:
     }
 
     T frontElement() const {
-        if (isEmpty()) {
+        if (front == nullptr) {
             std::cerr << "Priority Queue is empty" << std::endl;
             return T(); // Return default-constructed T if the queue is empty
         }
@@ -54,26 +61,33 @@ public:
     }
 
     void printPriorityQueue() const {
-        if (isEmpty()) {
+        if (front == nullptr) {
             std::cout << "Priority Queue is empty" << std::endl;
-            return;
         }
-        NodeP<T>* temp = front;
-        while (temp != nullptr) {
-            std::cout << "(" << temp->getData() << ", " << temp->getPriority() << ") ";
-            temp = temp->getNext();
+        else{
+            NodeP<T>* temp = front;
+            while (temp != nullptr) {
+                std::cout << "(" << temp->getData() << ", " << temp->getPriority() << ") ";
+                temp = temp->getNext();
+            }
+            std::cout << std::endl;
         }
-        std::cout << std::endl;
     }
 
     int size() const {
-        int count = 0;
-        NodeP<T>* temp = front;
-        while (temp != nullptr) {
-            count++;
-            temp = temp->getNext();
+        if(front == nullptr) {
+            return 0;
         }
-        return count;
+        else{
+            int count = 0;
+            NodeP<T>* temp = front;
+            while (temp != nullptr) {
+                count++;
+                temp = temp->getNext();
+            }
+            return count;
+        }
+
     }
 
 

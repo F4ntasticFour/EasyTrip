@@ -69,6 +69,9 @@ public:
         std::cout << "end" << std::endl;
     }
     int getLength() {
+        if(front == nullptr && rear == nullptr) {
+            return 0;
+        }
         int count = 0;
         Node<T> *temp = front;
         while (temp != nullptr) {

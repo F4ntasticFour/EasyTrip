@@ -51,6 +51,8 @@ public:
 
     Station * operator->();
 
+    LinkedList<PassengerClass> getNPpassengers();
+
 
 };
 
