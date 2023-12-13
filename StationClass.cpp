@@ -88,10 +88,14 @@ int Station::getCount(std::string PassengertType) {
     } else if (PassengertType == "WP") {
         return WPpassengers.getLength();
     }
-    return 0;
+    return 100;
 }
 
 
 Station* Station::operator->() {
     return this;
 }
+LinkedList<PassengerClass> Station::getNPpassengers() {
+    return NPpassengers;
+}
+

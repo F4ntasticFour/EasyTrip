@@ -76,7 +76,6 @@ bool processEvent(TimeClass Time, CompanyClass* company, Queue<std::vector<std::
             int EndStation = std::stoi(line[5]);
             std::string statue = line[6];
 
-
             if (statue.empty()) {
                 statue = "Normal";
             }
@@ -108,7 +107,6 @@ bool processEvent(TimeClass Time, CompanyClass* company, Queue<std::vector<std::
             }
             return false;
         }
-        numEvents--;
     }
     return false;
 }

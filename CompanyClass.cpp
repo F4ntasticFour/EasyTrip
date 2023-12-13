@@ -46,7 +46,7 @@ bool CompanyClass::busAtCheckup(BusClass* Bus) {
 
 bool CompanyClass::addPassenger(PassengerClass* Passenger) {
     if (Passenger->getPassengerType() == "NP") {
-        StationList[Passenger->getStartStation()].addNpPassenger(Passenger);
+        // StationList[Passenger->getStartStation()].addNpPassenger(Passenger);
         return true;
     }
     if (Passenger->getPassengerType() == "SP") {

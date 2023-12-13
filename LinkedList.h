@@ -134,8 +134,8 @@ public:
         }
         return temp->getData();
     }
-    int getLength() const {
-        if (isEmpty()) {
+    int getLength(){
+        if (Head == nullptr) {
             return 0;
         }
         Node<T>* temp = Head;

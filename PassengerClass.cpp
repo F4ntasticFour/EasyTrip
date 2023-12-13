@@ -88,3 +88,11 @@ int PassengerClass::getPriority() const {
 bool PassengerClass::operator==(const PassengerClass& rhs) const {
     return getPriority() == rhs.getPriority();
 }
+std::ostream& PassengerClass::operator<<(std::ostream& os) const {
+    os << "ArrivalTime: " << ArrivalTime << " LeaveTime: " << LeaveTime << " StartStation: " << StartStation
+       << " EndStation: " << EndStation << " PassengerID: " << PassengerID << " GetOnOffTime: " << GetOnOffTime
+       << " PassengerType: " << PassengerType << " statue: " << statue;
+    return os;
+}
+
+
