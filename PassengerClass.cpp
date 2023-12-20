@@ -3,9 +3,9 @@
 PassengerClass::PassengerClass() {
 }
 
-PassengerClass::PassengerClass(TimeClass ArrivalTime ,const int StartStation, int EndStation, int PassengerID,
+PassengerClass::PassengerClass(TimeClass ArrivalTime, const int StartStation, int EndStation, int PassengerID,
                                const std::string& passengerType, const std::string& statue)
-    :  StartStation(StartStation), EndStation(EndStation), PassengerID(PassengerID),
+    : ArrivalTime(ArrivalTime), StartStation(StartStation), EndStation(EndStation), PassengerID(PassengerID),
       PassengerType(passengerType), statue(statue) {
 }
 
@@ -17,23 +17,23 @@ TimeClass PassengerClass::getArrivalTime() {
 TimeClass PassengerClass::getLeaveTime() {
     return LeaveTime;
 }
-int PassengerClass::getStartStation() const {
+int PassengerClass::getStartStation(){
     return StartStation;
 }
 
-int PassengerClass::getEndStation() const {
+int PassengerClass::getEndStation(){
     return EndStation;
 }
 
-TimeClass PassengerClass::getGetOnOffTime() const {
+TimeClass PassengerClass::getGetOnOffTime(){
     return GetOnOffTime;
 }
 
-std::string PassengerClass::getPassengerType() const {
+std::string PassengerClass::getPassengerType() const{
     return PassengerType;
 }
 
-int PassengerClass::getPassengerID() const {
+int PassengerClass::getPassengerID(){
     return PassengerID;
 }
 
@@ -85,14 +85,25 @@ int PassengerClass::getPriority() const {
     return 4;
 }
 
+
 bool PassengerClass::operator==(const PassengerClass& rhs) const {
     return getPriority() == rhs.getPriority();
 }
-std::ostream& PassengerClass::operator<<(std::ostream& os) const {
-    os << "ArrivalTime: " << ArrivalTime << " LeaveTime: " << LeaveTime << " StartStation: " << StartStation
-       << " EndStation: " << EndStation << " PassengerID: " << PassengerID << " GetOnOffTime: " << GetOnOffTime
-       << " PassengerType: " << PassengerType << " statue: " << statue;
-    return os;
+bool PassengerClass::operator!=(const PassengerClass& rhs) const {
+    return !(rhs == *this);
+}
+PassengerClass* PassengerClass::operator&() {
+    return this;
 }
 
+void PassengerClass::printPassenger() {
+    std::cout<<"Passenger ID: "<<getPassengerID()<<std::endl;
+    std::cout<<"Passenger Type: "<<getPassengerType()<<std::endl;
+    std::cout<<"Start Station: "<<getStartStation()<<std::endl;
+    std::cout<<"End Station: "<<getEndStation()<<std::endl;
+    std::cout<<"Arrival Time: "<<getArrivalTime()<<std::endl;
+    std::cout<<"Leave Time: "<<getLeaveTime()<<std::endl;
+    std::cout<<"Get On/Off Time: "<<getGetOnOffTime()<<std::endl;
+    std::cout<<"Statue: "<<getStatue()<<std::endl;
 
+}

@@ -28,7 +28,7 @@ public:
 
     void insertAtEnd(T data) {
         Node<T>* newNode = new Node<T>(data);
-        if (isEmpty()) {
+        if (Head==nullptr) {
             Head = newNode;
         } else {
             Node<T>* temp = Head;
@@ -64,7 +64,7 @@ public:
 
     void printList() const {
         Node<T>* temp = Head;
-        if (isEmpty()) {
+        if (Head==nullptr) {
             std::cout << "List is Empty" << std::endl;
         } else {
             while (temp != nullptr) {
@@ -96,7 +96,7 @@ public:
     void remove(T data) {
         Node<T>* temp = Head;
         Node<T>* prev = nullptr;
-        if (isEmpty()) {
+        if (Head==nullptr) {
             std::cout << "List is empty, cannot remove" << std::endl;
         } else {
             while (temp->getNext() != nullptr) {
@@ -119,7 +119,7 @@ public:
             }
         }
     }
-    T  getItemAtIndex(int index) const {
+    T  getItemAtIndex(int index){
         if (index < 0) {
             std::cout << "Invalid index" << std::endl;
             return T();
@@ -140,7 +140,7 @@ public:
         }
         Node<T>* temp = Head;
         int length = 0;
-        while (temp != nullptr) {
+        while (temp->getNext() != nullptr) {
             length++;
             temp = temp->getNext();
         }

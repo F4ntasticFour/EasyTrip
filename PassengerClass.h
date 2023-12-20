@@ -19,18 +19,19 @@ private:
     std::string PassengerType;
     std::string statue;
 public:
-    // Constructor
+    //Default Constructor
     PassengerClass();
+    // Constructor
     PassengerClass(TimeClass ArrivalTime, int StartStation, int EndStation,int PassengerID,const std::string& passengerType ,const std::string& statue);
 
     // Getters
     TimeClass getArrivalTime();
     TimeClass getLeaveTime();
-    int getStartStation() const;
-    int getEndStation() const;
-    TimeClass getGetOnOffTime() const;
+    int getStartStation();
+    int getEndStation();
+    TimeClass getGetOnOffTime();
     std::string getPassengerType() const;
-    int getPassengerID() const;
+    int getPassengerID();
 
 
     // Setters
@@ -45,7 +46,11 @@ public:
     std::string getStatue() const;
     // Operator Overloading
     bool operator==(const PassengerClass& lhs) const;
+    bool operator!=(const PassengerClass& lhs) const;
+    PassengerClass* operator&();
+
     std::ostream& operator<<(std::ostream& os) const;
+    void printPassenger();
 
 };
 

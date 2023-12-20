@@ -65,22 +65,18 @@ BusClass Station::removeBwBus() {
     return bus;
 }
 
-PassengerClass* Station::getNpPassengerByID(int ID) {
-    int i = 0;
-    if (NPpassengers.isEmpty()) {
-        return new PassengerClass(); // Return a default-constructed object or handle the case appropriately.
-    }
-    while (i < NPpassengers.getLength()) {
-        PassengerClass currentPassenger = NPpassengers.getItemAtIndex(i);
-        if (currentPassenger.getPassengerID() == ID) {
-            return new PassengerClass(currentPassenger);
+int Station::getNpPassengerByID(int ID) {
+    for (int i = 0; i < NPpassengers.getLength(); i++) {
+        if (NPpassengers.getItemAtIndex(i).getPassengerID() == ID) {
+            return i;
         }
-        i++;
     }
-    return new PassengerClass(); // Return a default-constructed object or handle the case appropriately.
+    std::cerr << "Passenger Not Found" << std::endl;
+    return -1;
 }
 
-int Station::getCount(std::string PassengertType) {
+
+int Station::getCount(const std::string& PassengertType) {
     if (PassengertType == "NP") {
         return NPpassengers.getLength();;
     } else if (PassengertType == "SP") {
@@ -95,7 +91,7 @@ int Station::getCount(std::string PassengertType) {
 Station* Station::operator->() {
     return this;
 }
+
 LinkedList<PassengerClass> Station::getNPpassengers() {
     return NPpassengers;
 }
-

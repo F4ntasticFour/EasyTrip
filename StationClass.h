@@ -45,9 +45,9 @@ public:
 
     BusClass removeBwBus();
 
-    PassengerClass * getNpPassengerByID(int ID);
+    int getNpPassengerByID(int ID);
 
-    int getCount(std::string);
+    int getCount(const std::string&);
 
     Station * operator->();
 

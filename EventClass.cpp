@@ -58,7 +58,7 @@ void LeaveEvent::execute() {
 }
 
 bool processEvent(TimeClass Time, CompanyClass* company, Queue<std::vector<std::string>> eventQueue, int numEvents) {
-    while (numEvents != 0) {
+    while (eventQueue.getLength() != 0) {
         std::vector<std::string> line = eventQueue.frontElement();
         std::string eventType = line[0];
 
@@ -82,15 +82,16 @@ bool processEvent(TimeClass Time, CompanyClass* company, Queue<std::vector<std::
             if (Time == ArrivalTime) {
                 auto* P = new PassengerClass(ArrivalTime, StartStation, EndStation, PassengerID, PassengerType, statue);
                 ArriveEvent arriveEvent(ArrivalTime, P, company);
-                cout<<PassengerType<<" "<<ArrivalTime<<" "<<PassengerID<<" "<<StartStation<<" "<<EndStation<<" "<<statue<<endl;
+                cout << PassengerType << " " << ArrivalTime << " " << PassengerID << " " << StartStation << " " <<
+                        EndStation << " " << statue << endl;
                 arriveEvent.execute();
                 return true;
             }
             return false;
         } else if (eventType == "L") {
-            std::string PassengerType = line[1];
-            std::istringstream iss(line[2]);
+            std::istringstream iss(line[1]);
             std::string arrivaltime;
+
             std::getline(iss, arrivaltime, ':');
             int hours = std::stoi(arrivaltime);
 
@@ -100,10 +101,14 @@ bool processEvent(TimeClass Time, CompanyClass* company, Queue<std::vector<std::
 
             TimeClass leaveTime(hours, minutes);
             if (Time == leaveTime) {
-                PassengerClass* P = company->getPassengerByID(std::stoi(line[3]));
-                LeaveEvent leaveEvent(leaveTime, P, company);
-                leaveEvent.execute();
-                return true;
+                if (company->getPassengerByID(std::stoi(line[3]),std::stoi(line[2])) != nullptr) {
+                    PassengerClass* P = company->getPassengerByID(std::stoi(line[3]),std::stoi(line[2]));
+                    LeaveEvent leaveEvent(leaveTime, P, company);
+                    leaveEvent.execute();
+                    return true;
+                }
+                cerr << "Passenger not found" << endl;
+                return false;
             }
             return false;
         }

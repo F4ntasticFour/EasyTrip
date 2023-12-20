@@ -8,14 +8,14 @@ public:
     Node<T> *next;
 
     // Constructor
-    Node(T data);
+    explicit Node(T data);
 
     // Setter methods
     void setData(T data);
     void setNext(Node<T> *next);
 
     // Getter methods
-    T getData() const;
+    T getData();
     Node<T> *getNext();
 };
 
@@ -39,7 +39,7 @@ void Node<T>::setNext(Node<T> *next) {
 
 // Getter for data
 template<class T>
-T Node<T>::getData() const {
+T Node<T>::getData(){
     return data;
 }
 

@@ -14,7 +14,7 @@ CompanyClass::CompanyClass(int StationCount, TimeClass TimeBetweenStations, int 
       TripsBeforeCheckup(TripsBeforeCheckup),
       CheckupDurationWCBus(CheckupDurationWCBus),
       CheckupDurationMBus(CheckupDurationMBus) {
-    StationList.resize(StationCount);
+    StationList.resize(StationCount+1);
     for (auto i = 0; i < StationCount; i++) {
         StationList[i] = Station(i);
     }
@@ -46,7 +46,7 @@ bool CompanyClass::busAtCheckup(BusClass* Bus) {
 
 bool CompanyClass::addPassenger(PassengerClass* Passenger) {
     if (Passenger->getPassengerType() == "NP") {
-        // StationList[Passenger->getStartStation()].addNpPassenger(Passenger);
+        StationList[Passenger->getStartStation()].addNpPassenger(Passenger);
         return true;
     }
     if (Passenger->getPassengerType() == "SP") {
@@ -97,13 +97,12 @@ bool CompanyClass::leavePassenger(PassengerClass* Passenger) {
     return false;
 }
 
-PassengerClass* CompanyClass::getPassengerByID(int ID) {
-    for (int i = 0; i < StationCount; ++i) {
-        if (StationList[i].getNpPassengerByID(ID) != nullptr) {
-            return StationList[i].getNpPassengerByID(ID);
+PassengerClass *  CompanyClass::getPassengerByID(int station ,int ID) {
+        if (StationList[station].getNpPassengerByID(ID) != -1) {
+            return  &StationList[station].getNPpassengers().getItemAtIndex(StationList[station].getNpPassengerByID(ID));
+            std::cout<<"Passenger Found"<< std::endl;
         }
-    }
-    return nullptr;
+    return  nullptr;
 }
 
 int CompanyClass::getStationCount() const {

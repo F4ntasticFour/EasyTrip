@@ -39,7 +39,7 @@ public:
 
     bool busAtCheckup(BusClass* Bus);
 
-    PassengerClass *getPassengerByID(int ID);
+    PassengerClass * getPassengerByID(int station,int ID);
 
     int getStationCount() const;
 
