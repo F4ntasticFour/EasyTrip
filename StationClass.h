@@ -41,11 +41,15 @@ public:
 
     void addBwBus(BusClass * Bus);
 
+    BusClass  getFwBus();
+
+    BusClass getBwBus();
+
     BusClass removeFwBus();
 
     BusClass removeBwBus();
 
-    int getNpPassengerByID(int ID);
+    PassengerClass * getNpPassengerByID(int ID);
 
     int getCount(const std::string&);
 

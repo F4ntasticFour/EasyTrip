@@ -3,7 +3,7 @@
 PassengerClass::PassengerClass() {
 }
 
-PassengerClass::PassengerClass(TimeClass ArrivalTime, const int StartStation, int EndStation, int PassengerID,
+PassengerClass::PassengerClass(const TimeClass& ArrivalTime, const int StartStation, int EndStation, int PassengerID,
                                const std::string& passengerType, const std::string& statue)
     : ArrivalTime(ArrivalTime), StartStation(StartStation), EndStation(EndStation), PassengerID(PassengerID),
       PassengerType(passengerType), statue(statue) {
@@ -84,6 +84,7 @@ int PassengerClass::getPriority() const {
     }
     return 4;
 }
+
 
 
 bool PassengerClass::operator==(const PassengerClass& rhs) const {

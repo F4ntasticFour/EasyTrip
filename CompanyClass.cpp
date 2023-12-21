@@ -14,7 +14,7 @@ CompanyClass::CompanyClass(int StationCount, TimeClass TimeBetweenStations, int 
       TripsBeforeCheckup(TripsBeforeCheckup),
       CheckupDurationWCBus(CheckupDurationWCBus),
       CheckupDurationMBus(CheckupDurationMBus) {
-    StationList.resize(StationCount+1);
+    StationList.resize(StationCount + 1);
     for (auto i = 0; i < StationCount; i++) {
         StationList[i] = Station(i);
     }
@@ -30,8 +30,10 @@ CompanyClass::CompanyClass(int StationCount, TimeClass TimeBetweenStations, int 
     }
 }
 
-bool CompanyClass::busMoving(BusClass* Bus) {
-    MovingBus.enqueue(Bus);
+bool CompanyClass::startBus(BusClass Bus) {
+    if (Bus.getBusCurrentStation() == 0 && Bus.getJourneyCompleted() < 0) {
+        Bus.moveToNextStation(this);
+    }
     return true;
 }
 
@@ -97,12 +99,20 @@ bool CompanyClass::leavePassenger(PassengerClass* Passenger) {
     return false;
 }
 
-PassengerClass *  CompanyClass::getPassengerByID(int station ,int ID) {
-        if (StationList[station].getNpPassengerByID(ID) != -1) {
-            return  &StationList[station].getNPpassengers().getItemAtIndex(StationList[station].getNpPassengerByID(ID));
-            std::cout<<"Passenger Found"<< std::endl;
+PassengerClass* CompanyClass::getPassengerByID(int ID) {
+    for (int i = 0; i < 5; ++i) {
+        if (StationList[i].getNpPassengerByID(ID) != nullptr) {
+            return StationList[i].getNpPassengerByID(ID);
         }
-    return  nullptr;
+    }
+    return new PassengerClass();
+}
+
+BusClass* CompanyClass::getBus() {
+    BusClass* bus = MovingBus.frontElement();
+    MovingBus.dequeue();
+    MovingBus.enqueue(bus);
+    return bus;
 }
 
 int CompanyClass::getStationCount() const {
@@ -111,4 +121,24 @@ int CompanyClass::getStationCount() const {
 
 Station CompanyClass::getStation(int StationID) {
     return StationList[StationID];
+}
+
+bool CompanyClass::moveBus(BusClass Bus) {
+    if (Bus.getBusCurrentStation() == 0 || Bus.getBusCurrentStation() == StationCount && Bus.getJourneyCompleted() >=
+        TripsBeforeCheckup) {
+        Bus.performMaintenance();
+        return true;
+    }
+    if (Bus.getBusCurrentStation() == 0 && Bus.getJourneyCompleted() < TripsBeforeCheckup) {
+        Bus.moveToNextStation(this);
+        return true;
+    }
+    if(Bus.getBusCurrentStation() == StationCount) {
+        Bus.offBoardAllPassenger(this);
+    }
+    if(Bus.getBusCurrentStation()==0 && Bus.getJourneyCompleted() < 0){
+        this->startBus(Bus);
+        return true;
+    }
+    return false;
 }

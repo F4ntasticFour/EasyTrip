@@ -57,7 +57,7 @@ void LeaveEvent::execute() {
     cout << C->leavePassenger(P) << " Passengers left system" << endl;
 }
 
-bool processEvent(TimeClass Time, CompanyClass* company, Queue<std::vector<std::string>> eventQueue, int numEvents) {
+bool processEvent(TimeClass Time, CompanyClass* company, Queue<std::vector<std::string>> eventQueue) {
     while (eventQueue.getLength() != 0) {
         std::vector<std::string> line = eventQueue.frontElement();
         std::string eventType = line[0];
@@ -101,17 +101,16 @@ bool processEvent(TimeClass Time, CompanyClass* company, Queue<std::vector<std::
 
             TimeClass leaveTime(hours, minutes);
             if (Time == leaveTime) {
-                if (company->getPassengerByID(std::stoi(line[3]),std::stoi(line[2])) != nullptr) {
-                    PassengerClass* P = company->getPassengerByID(std::stoi(line[3]),std::stoi(line[2]));
+                if(company->getPassengerByID(std::stoi(line[3])) != nullptr){
+                    PassengerClass* P = company->getPassengerByID(std::stoi(line[3]));
                     LeaveEvent leaveEvent(leaveTime, P, company);
                     leaveEvent.execute();
                     return true;
                 }
-                cerr << "Passenger not found" << endl;
-                return false;
             }
-            return false;
+            return true;
         }
+        return false;
     }
-    return false;
 }
+

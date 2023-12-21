@@ -121,7 +121,7 @@ public:
     }
     T  getItemAtIndex(int index){
         if (index < 0) {
-            std::cout << "Invalid index" << std::endl;
+            std::cerr << "Invalid index" << std::endl;
             return T();
         }
         Node<T>* temp = Head;
@@ -129,7 +129,7 @@ public:
             temp = temp->getNext();
         }
         if (temp == nullptr) {
-            std::cout << "Index out of bounds" << std::endl;
+            std::cerr << "Index out of bounds" << std::endl;
             return T();
         }
         return temp->getData();

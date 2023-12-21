@@ -20,6 +20,7 @@ private:
     TimeClass TimeAtStation = TimeClass(0,0);
     int BusCurrentStation;
     int TripsBeforeCheckUp;
+    std::string busDirection;
     PriorityQueue<PassengerClass*> PassengersOnBoard;
 
 
@@ -55,9 +56,11 @@ public:
 
     bool onBoardPassenger(PassengerClass* Passenger);
 
-    bool offBoardPassenger(PassengerClass* Passenger,CompanyClass* Company);
+    bool offBoardPassenger(CompanyClass* Company);
 
-    bool moveToNextStation(CompanyClass* Company, TimeClass& CurrentTime);
+    bool offBoardAllPassenger(CompanyClass* Company);
+
+    bool moveToNextStation(CompanyClass* Company);
 
 
 };

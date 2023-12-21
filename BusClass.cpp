@@ -70,26 +70,61 @@ bool BusClass::onBoardPassenger(PassengerClass* Passenger) {
     return false;
 }
 
-bool BusClass::offBoardPassenger(PassengerClass* Passenger, CompanyClass* Company) {
-    if (PassengersOnBoard.frontElement() == Passenger && BusCurrentStation == Passenger
-        ->getEndStation()) {
-        Company->addFinshedPassengers(Passenger, this);
+bool BusClass::offBoardPassenger(CompanyClass* Company) {
+    int i = PassengersOnBoard.size();
+    while (i != 0) {
+        if(PassengersOnBoard.frontElement()->getEndStation()==BusCurrentStation) {
+            Company->addFinshedPassengers(PassengersOnBoard.frontElement(), this);
+            PassengersOnBoard.dequeue();
+        }
+        else{
+           auto * temp = PassengersOnBoard.frontElement();
+            PassengersOnBoard.dequeue();
+            PassengersOnBoard.enqueue(temp,temp->getPriority());
+        }
+        i--;
+    }
+    return true;
+
+}
+
+bool BusClass::offBoardAllPassenger(CompanyClass* Company) {
+    while (PassengersOnBoard.size() > 0) {
+        Company->addFinshedPassengers(PassengersOnBoard.frontElement(), this);
         PassengersOnBoard.dequeue();
+    }
+    return true;
+}
+
+
+bool BusClass::moveToNextStation(CompanyClass* Company) {
+    if (BusCurrentStation == 0) {
+        BusCurrentStation++;
+        JourneyCompleted++;
+        busDirection = "FW";
+        return true;
+    }
+    if (BusCurrentStation == Company->getStationCount()) {
+        BusCurrentStation--;
+        JourneyCompleted++;
+        busDirection = "BW";
+        return true;
+    }
+    if (busDirection == "BW") {
+        BusCurrentStation--;
+        JourneyCompleted++;
+        return true;
+    }
+    if (busDirection == "FW") {
+        BusCurrentStation++;
+        JourneyCompleted++;
+        return true;
+    }
+    if (busDirection == "BW" && BusCurrentStation == 0) {
+        BusCurrentStation++;
+        JourneyCompleted++;
+        busDirection = "FW";
         return true;
     }
     return false;
-}
-
-bool BusClass::moveToNextStation(CompanyClass* Company, TimeClass& CurrentTime) {
-
-    if (BusCurrentStation == Company->getStationCount() - 1)  {
-        BusCurrentStation = BusCurrentStation - 1;
-        Company->getStation(BusCurrentStation).addBwBus(this);
-        JourneyCompleted++;
-        return true;
-    } else {
-        BusCurrentStation++;
-        Company->getStation(BusCurrentStation).addFwBus(this);
-        return true;
-    }
 }

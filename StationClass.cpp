@@ -53,6 +53,14 @@ void Station::addBwBus(BusClass* Bus) {
     BWbuses.enqueue(*Bus);
 }
 
+BusClass  Station::getFwBus() {
+return FWbuses.frontElement();
+}
+
+BusClass Station::getBwBus() {
+    return BWbuses.frontElement();
+}
+
 BusClass Station::removeFwBus() {
     BusClass bus = FWbuses.frontElement();
     FWbuses.dequeue();
@@ -65,16 +73,22 @@ BusClass Station::removeBwBus() {
     return bus;
 }
 
-int Station::getNpPassengerByID(int ID) {
-    for (int i = 0; i < NPpassengers.getLength(); i++) {
-        if (NPpassengers.getItemAtIndex(i).getPassengerID() == ID) {
-            return i;
-        }
-    }
-    std::cerr << "Passenger Not Found" << std::endl;
-    return -1;
-}
 
+PassengerClass* Station::getNpPassengerByID(int ID) {
+    int i = 0;
+    if (NPpassengers.isEmpty()) {
+        return nullptr; // Return a default-constructed object or handle the case appropriately.
+    }
+    while (i < NPpassengers.getLength()) {
+        PassengerClass currentPassenger = NPpassengers.getItemAtIndex(i);
+        if (currentPassenger.getPassengerID() == ID) {
+            currentPassenger.printPassenger();
+            return &currentPassenger;
+        }
+        i++;
+    }
+    return nullptr; // Return a default-constructed object or handle the case appropriately.
+}
 
 int Station::getCount(const std::string& PassengertType) {
     if (PassengertType == "NP") {

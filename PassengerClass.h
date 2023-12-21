@@ -22,7 +22,7 @@ public:
     //Default Constructor
     PassengerClass();
     // Constructor
-    PassengerClass(TimeClass ArrivalTime, int StartStation, int EndStation,int PassengerID,const std::string& passengerType ,const std::string& statue);
+    PassengerClass(const TimeClass& ArrivalTime, int StartStation, int EndStation,int PassengerID,const std::string& passengerType ,const std::string& statue);
 
     // Getters
     TimeClass getArrivalTime();

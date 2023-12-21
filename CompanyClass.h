@@ -35,15 +35,19 @@ public:
 
     bool leavePassenger(PassengerClass* Passenger);
 
-    bool busMoving(BusClass* Bus);
+    bool startBus(BusClass Bus);
 
     bool busAtCheckup(BusClass* Bus);
 
-    PassengerClass * getPassengerByID(int station,int ID);
+    PassengerClass * getPassengerByID(int ID);
+
+    BusClass * getBus();
 
     int getStationCount() const;
 
     Station getStation(int ID);
+
+    bool moveBus(BusClass Bus);
 };
 
 #endif //EASYTRIP_COMPANYCLASS_H
