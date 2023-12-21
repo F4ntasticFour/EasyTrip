@@ -9,29 +9,29 @@ Station::Station(int number) {
 }
 
 void Station::addNpPassenger(PassengerClass* Passenger) {
-    NPpassengers.insertAtBeg(*Passenger);
+    NPpassengers.insertAtBeg(Passenger);
 }
 
 void Station::addWpPassenger(PassengerClass* Passenger) {
-    WPpassengers.enqueue(*Passenger);
+    WPpassengers.enqueue(Passenger);
 }
 
 void Station::addSpPassenger(PassengerClass* Passenger) {
-    SPpassengers.enqueue(*Passenger, Passenger->getPriority());
+    SPpassengers.enqueue(Passenger, Passenger->getPriority());
 }
 
 void Station::removeNpPassenger(PassengerClass* Passenger) {
-    NPpassengers.remove(*Passenger);
+    NPpassengers.remove( Passenger);
 }
 
-PassengerClass Station::removeWpPassenger() {
-    PassengerClass passenger = WPpassengers.frontElement();
+PassengerClass * Station::removeWpPassenger() {
+    PassengerClass * passenger = WPpassengers.frontElement();
     WPpassengers.dequeue();
     return passenger;
 }
 
-PassengerClass Station::removeSpPassenger() {
-    PassengerClass passenger = SPpassengers.frontElement();
+PassengerClass * Station::removeSpPassenger() {
+    PassengerClass * passenger = SPpassengers.frontElement();
     SPpassengers.dequeue();
     return passenger;
 }
@@ -46,29 +46,29 @@ void Station::setStationNumber(int number) {
 
 
 void Station::addFwBus(BusClass* Bus) {
-    FWbuses.enqueue(*Bus);
+    FWbuses.enqueue(Bus);
 }
 
 void Station::addBwBus(BusClass* Bus) {
-    BWbuses.enqueue(*Bus);
+    BWbuses.enqueue( Bus);
 }
 
-BusClass  Station::getFwBus() {
+BusClass * Station::getFwBus() {
 return FWbuses.frontElement();
 }
 
-BusClass Station::getBwBus() {
+BusClass * Station::getBwBus() {
     return BWbuses.frontElement();
 }
 
-BusClass Station::removeFwBus() {
-    BusClass bus = FWbuses.frontElement();
+BusClass * Station::removeFwBus() {
+    BusClass * bus = FWbuses.frontElement();
     FWbuses.dequeue();
     return bus;
 }
 
-BusClass Station::removeBwBus() {
-    BusClass bus = BWbuses.frontElement();
+BusClass * Station::removeBwBus() {
+    BusClass * bus = BWbuses.frontElement();
     BWbuses.dequeue();
     return bus;
 }
@@ -80,10 +80,10 @@ PassengerClass* Station::getNpPassengerByID(int ID) {
         return nullptr; // Return a default-constructed object or handle the case appropriately.
     }
     while (i < NPpassengers.getLength()) {
-        PassengerClass currentPassenger = NPpassengers.getItemAtIndex(i);
-        if (currentPassenger.getPassengerID() == ID) {
-            currentPassenger.printPassenger();
-            return &currentPassenger;
+        PassengerClass * currentPassenger = NPpassengers.getItemAtIndex(i);
+        if (currentPassenger->getPassengerID() == ID) {
+            currentPassenger->printPassenger();
+            return currentPassenger;
         }
         i++;
     }
@@ -106,6 +106,6 @@ Station* Station::operator->() {
     return this;
 }
 
-LinkedList<PassengerClass> Station::getNPpassengers() {
+LinkedList<PassengerClass *> Station::getNPpassengers() {
     return NPpassengers;
 }

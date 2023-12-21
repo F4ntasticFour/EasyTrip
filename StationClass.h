@@ -11,11 +11,11 @@
 class Station {
 private:
     int number;
-    PriorityQueue<PassengerClass> SPpassengers;
-    LinkedList<PassengerClass> NPpassengers;
-    Queue<PassengerClass> WPpassengers;
-    Queue<BusClass> FWbuses;
-    Queue<BusClass> BWbuses;
+    PriorityQueue<PassengerClass *> SPpassengers;
+    LinkedList<PassengerClass *> NPpassengers;
+    Queue<PassengerClass *> WPpassengers;
+    Queue<BusClass *> FWbuses;
+    Queue<BusClass *> BWbuses;
 public:
     Station() = default;
 
@@ -33,21 +33,21 @@ public:
 
     void removeNpPassenger(PassengerClass * Passenger);
 
-    PassengerClass removeWpPassenger();
+    PassengerClass *removeWpPassenger();
 
-    PassengerClass removeSpPassenger();
+    PassengerClass * removeSpPassenger();
 
     void addFwBus(BusClass * Bus);
 
     void addBwBus(BusClass * Bus);
 
-    BusClass  getFwBus();
+    BusClass * getFwBus();
 
-    BusClass getBwBus();
+    BusClass * getBwBus();
 
-    BusClass removeFwBus();
+    BusClass * removeFwBus();
 
-    BusClass removeBwBus();
+    BusClass * removeBwBus();
 
     PassengerClass * getNpPassengerByID(int ID);
 
@@ -55,7 +55,7 @@ public:
 
     Station * operator->();
 
-    LinkedList<PassengerClass> getNPpassengers();
+    LinkedList<PassengerClass * > getNPpassengers();
 
 
 };
