@@ -20,6 +20,7 @@ private:
     TimeClass TimeAtStation = TimeClass(0,0);
     int BusCurrentStation;
     int TripsBeforeCheckUp;
+    bool isMoved;
     std::string busDirection;
     PriorityQueue<PassengerClass*> PassengersOnBoard;
 
@@ -28,7 +29,7 @@ public:
     BusClass() = default;
 
     BusClass(int BusID, const std::string& busType,TimeClass TimeBetweenStations, int busCapacity, TimeClass checkUpTime,
-             int TripsBeforeCheckUp);
+             int TripsBeforeCheckUp,int BusCurrentStation);
 
     std::string getBusType() const;
 
@@ -36,9 +37,13 @@ public:
 
     int getJourneyCompleted() const;
 
-    int getBusCurrentStation() const;
+    int getBusCurrentStation();
+
+    int getBusID() const;
 
     TimeClass getCheckUpTime() const;
+
+    bool getIsMoved();
 
     // Setters
     void setBusType(const std::string& busType);
@@ -49,18 +54,23 @@ public:
 
     void setCheckUpTime(TimeClass checkUpTime);
 
+    void setBusCurrentStation(int BusCurrentStation);
+
+    bool setIsMoved(bool Moved);
+
     //Member Functions
     void performMaintenance();
 
     bool isSuitableForPassengerType(const std::string& passengerType) const;
 
-    bool onBoardPassenger(PassengerClass* Passenger);
+    bool onBoardPassenger(CompanyClass * Company);
 
     bool offBoardPassenger(CompanyClass* Company);
 
+    int getOnBoardPassengerCount();
+
     bool offBoardAllPassenger(CompanyClass* Company);
 
-    bool moveToNextStation(CompanyClass* Company);
 
 
 };

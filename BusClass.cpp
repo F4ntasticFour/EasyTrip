@@ -3,7 +3,7 @@
 #include "CompanyClass.h"
 
 BusClass::BusClass(int BusID, const std::string& busType, TimeClass TimeBetweenStations, int busCapacity,
-                   TimeClass checkUpTime, int TripsBeforeCheckUp)
+                   TimeClass checkUpTime, int TripsBeforeCheckUp, int BusCurrentStation)
 
 
     : BusID(BusID), BusType(busType), TimeBetweenStations(TimeBetweenStations), BusCapacity(busCapacity),
@@ -23,13 +23,22 @@ int BusClass::getJourneyCompleted() const {
     return JourneyCompleted;
 }
 
-int BusClass::getBusCurrentStation() const {
+int BusClass::getBusCurrentStation() {
     return BusCurrentStation;
+}
+
+int BusClass::getBusID() const {
+    return BusID;
 }
 
 TimeClass BusClass::getCheckUpTime() const {
     return CheckUpTime;
 }
+
+bool BusClass::getIsMoved() {
+    return isMoved;
+}
+
 
 // Setters
 void BusClass::setBusType(const std::string& busType) {
@@ -48,6 +57,15 @@ void BusClass::setCheckUpTime(TimeClass checkUpTime) {
     CheckUpTime = checkUpTime;
 }
 
+void BusClass::setBusCurrentStation(int BusCurrentStation) {
+    BusClass::BusCurrentStation = BusCurrentStation;
+}
+
+bool BusClass::setIsMoved(bool Moved) {
+    isMoved = Moved;
+}
+
+
 
 void BusClass::performMaintenance() {
 }
@@ -62,9 +80,13 @@ bool BusClass::isSuitableForPassengerType(const std::string& passengerType) cons
     }
 }
 
-bool BusClass::onBoardPassenger(PassengerClass* Passenger) {
-    if (PassengersOnBoard.size() < BusCapacity) {
-        PassengersOnBoard.enqueue(Passenger, Passenger->getPriority());
+bool BusClass::onBoardPassenger(CompanyClass* Company) {
+    int index = Company->getStation(BusCurrentStation).getCount("NP");
+    while (PassengersOnBoard.size() <= BusCapacity && Company->getStation(BusCurrentStation).getCount("NP") > 0) {
+        PassengerClass* Passenger = Company->getStation(BusCurrentStation).getNpPassenger(index);
+        PassengersOnBoard.enqueue(Passenger, Passenger->getEndStation());
+        std::cout << "Passenger " << Passenger->getPassengerID() << " boarded bus " << BusID << std::endl;
+        index = index - 1;
         return true;
     }
     return false;
@@ -73,19 +95,21 @@ bool BusClass::onBoardPassenger(PassengerClass* Passenger) {
 bool BusClass::offBoardPassenger(CompanyClass* Company) {
     int i = PassengersOnBoard.size();
     while (i != 0) {
-        if(PassengersOnBoard.frontElement()->getEndStation()==BusCurrentStation) {
+        if (PassengersOnBoard.frontElement()->getEndStation() == BusCurrentStation) {
             Company->addFinshedPassengers(PassengersOnBoard.frontElement(), this);
             PassengersOnBoard.dequeue();
-        }
-        else{
-           auto * temp = PassengersOnBoard.frontElement();
+        } else {
+            auto* temp = PassengersOnBoard.frontElement();
             PassengersOnBoard.dequeue();
-            PassengersOnBoard.enqueue(temp,temp->getPriority());
+            PassengersOnBoard.enqueue(temp, temp->getPriority());
         }
         i--;
     }
     return true;
+}
 
+int BusClass::getOnBoardPassengerCount() {
+    return PassengersOnBoard.size();
 }
 
 bool BusClass::offBoardAllPassenger(CompanyClass* Company) {
@@ -94,37 +118,4 @@ bool BusClass::offBoardAllPassenger(CompanyClass* Company) {
         PassengersOnBoard.dequeue();
     }
     return true;
-}
-
-
-bool BusClass::moveToNextStation(CompanyClass* Company) {
-    if (BusCurrentStation == 0) {
-        BusCurrentStation++;
-        JourneyCompleted++;
-        busDirection = "FW";
-        return true;
-    }
-    if (BusCurrentStation == Company->getStationCount()) {
-        BusCurrentStation--;
-        JourneyCompleted++;
-        busDirection = "BW";
-        return true;
-    }
-    if (busDirection == "BW") {
-        BusCurrentStation--;
-        JourneyCompleted++;
-        return true;
-    }
-    if (busDirection == "FW") {
-        BusCurrentStation++;
-        JourneyCompleted++;
-        return true;
-    }
-    if (busDirection == "BW" && BusCurrentStation == 0) {
-        BusCurrentStation++;
-        JourneyCompleted++;
-        busDirection = "FW";
-        return true;
-    }
-    return false;
 }
