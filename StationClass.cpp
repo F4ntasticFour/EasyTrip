@@ -102,6 +102,7 @@ PassengerClass* Station::getNpPassenger(int index) {
     this->removeNpPassenger(currentPassenger);
     return currentPassenger;
 }
+
 int Station::getCount(const std::string& PassengertType) {
     if (PassengertType == "NP") {
         return NPpassengers.getLength();;
