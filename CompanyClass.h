@@ -35,9 +35,11 @@ public:
 
     bool leavePassenger(PassengerClass* Passenger);
 
-    bool startBus(BusClass Bus);
+    bool startBus();
 
     bool busAtCheckup(BusClass* Bus);
+
+    bool moveBus();
 
     PassengerClass * getPassengerByID(int ID);
 
@@ -45,9 +47,13 @@ public:
 
     int getStationCount() const;
 
+    Queue<PassengerClass *> getFinishedPassengers();
+
     Station getStation(int ID);
 
-    bool moveBus(BusClass Bus);
+    static void startSimulation(std::string filename);
+
+
 };
 
 #endif //EASYTRIP_COMPANYCLASS_H
