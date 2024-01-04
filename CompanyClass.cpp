@@ -71,7 +71,6 @@ bool CompanyClass::moveBus() {
                     StationList[StationID - 1].addBwBus(bus);
                     std::cout << "Bus " << bus->getBusID() << " moved to station " << bus->getBusCurrentStation() <<
                             std::endl;
-                    break;
                 } else {
                     StationList[StationID].addBwBus(bus);
                     break;
@@ -86,7 +85,6 @@ bool CompanyClass::moveBus() {
                     StationList[StationID + 1].addFwBus(bus);
                     std::cout << "Bus " << bus->getBusID() << " moved to station " << bus->getBusCurrentStation() <<
                             std::endl;
-                    break;
                 } else {
                     StationList[StationID].addFwBus(bus);
                     break;
@@ -100,7 +98,6 @@ bool CompanyClass::moveBus() {
                     StationList[StationID - 1].addBwBus(bus);
                     std::cout << "Bus " << bus->getBusID() << " moved to station " << bus->getBusCurrentStation() <<
                             std::endl;
-                    break;
                 }
                 else {
                     StationList[StationID].addBwBus(bus);

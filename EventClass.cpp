@@ -57,7 +57,14 @@ void LeaveEvent::execute() {
     cout << C->leavePassenger(P) << " Passengers left system" << endl;
 }
 
-bool processEvent(TimeClass Time, CompanyClass* company, Queue<std::vector<std::string>> eventQueue) {
+
+EventManager::EventManager(CompanyClass* company, Queue<std::vector<std::string>>  eventQueue) {
+    this->eventQueue = eventQueue;
+    this->company = company;
+}
+
+
+bool EventManager::processEvents(TimeClass Time) {
     while (eventQueue.getLength() != 0) {
         std::vector<std::string> line = eventQueue.frontElement();
         std::string eventType = line[0];
@@ -85,6 +92,7 @@ bool processEvent(TimeClass Time, CompanyClass* company, Queue<std::vector<std::
                 cout << PassengerType << " " << ArrivalTime << " " << PassengerID << " " << StartStation << " " <<
                         EndStation << " " << statue << endl;
                 arriveEvent.execute();
+                eventQueue.dequeue();
                 return true;
             }
             return false;
@@ -101,11 +109,13 @@ bool processEvent(TimeClass Time, CompanyClass* company, Queue<std::vector<std::
 
             TimeClass leaveTime(hours, minutes);
             if (Time == leaveTime) {
-                if(company->getPassengerByID(std::stoi(line[3])) != nullptr){
+                if (company->getPassengerByID(std::stoi(line[3])) != nullptr) {
                     PassengerClass* P = company->getPassengerByID(std::stoi(line[3]));
                     LeaveEvent leaveEvent(leaveTime, P, company);
                     leaveEvent.execute();
+                    eventQueue.dequeue();
                     return true;
+
                 }
             }
             return true;
@@ -113,4 +123,3 @@ bool processEvent(TimeClass Time, CompanyClass* company, Queue<std::vector<std::
         return false;
     }
 }
-

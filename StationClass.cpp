@@ -21,17 +21,17 @@ void Station::addSpPassenger(PassengerClass* Passenger) {
 }
 
 void Station::removeNpPassenger(PassengerClass* Passenger) {
-    NPpassengers.remove( Passenger);
+    NPpassengers.remove(Passenger);
 }
 
-PassengerClass * Station::removeWpPassenger() {
-    PassengerClass * passenger = WPpassengers.frontElement();
+PassengerClass* Station::removeWpPassenger() {
+    PassengerClass* passenger = WPpassengers.frontElement();
     WPpassengers.dequeue();
     return passenger;
 }
 
-PassengerClass * Station::removeSpPassenger() {
-    PassengerClass * passenger = SPpassengers.frontElement();
+PassengerClass* Station::removeSpPassenger() {
+    PassengerClass* passenger = SPpassengers.frontElement();
     SPpassengers.dequeue();
     return passenger;
 }
@@ -50,29 +50,36 @@ void Station::addFwBus(BusClass* Bus) {
 }
 
 void Station::addBwBus(BusClass* Bus) {
-    BWbuses.enqueue( Bus);
+    BWbuses.enqueue(Bus);
 }
 
-BusClass * Station::getFwBus() {
-return FWbuses.frontElement();
+BusClass* Station::getFwBus() {
+    return FWbuses.frontElement();
 }
 
-BusClass * Station::getBwBus() {
+BusClass* Station::getBwBus() {
     return BWbuses.frontElement();
 }
 
-BusClass * Station::removeFwBus() {
-    BusClass * bus = FWbuses.frontElement();
+BusClass* Station::removeFwBus() {
+    BusClass* bus = FWbuses.frontElement();
     FWbuses.dequeue();
     return bus;
 }
 
-BusClass * Station::removeBwBus() {
-    BusClass * bus = BWbuses.frontElement();
+BusClass* Station::removeBwBus() {
+    BusClass* bus = BWbuses.frontElement();
     BWbuses.dequeue();
     return bus;
 }
 
+bool Station::isFwBusEmpty() {
+    return FWbuses.isEmpty();
+}
+
+bool Station::isBwBusEmpty() {
+    return BWbuses.isEmpty();
+}
 
 PassengerClass* Station::getNpPassengerByID(int ID) {
     int i = 0;
@@ -80,7 +87,7 @@ PassengerClass* Station::getNpPassengerByID(int ID) {
         return nullptr; // Return a default-constructed object or handle the case appropriately.
     }
     while (i < NPpassengers.getLength()) {
-        PassengerClass * currentPassenger = NPpassengers.getItemAtIndex(i);
+        PassengerClass* currentPassenger = NPpassengers.getItemAtIndex(i);
         if (currentPassenger->getPassengerID() == ID) {
             currentPassenger->printPassenger();
             return currentPassenger;
@@ -90,6 +97,11 @@ PassengerClass* Station::getNpPassengerByID(int ID) {
     return nullptr; // Return a default-constructed object or handle the case appropriately.
 }
 
+PassengerClass* Station::getNpPassenger(int index) {
+    PassengerClass* currentPassenger = NPpassengers.getItemAtIndex(index);
+    this->removeNpPassenger(currentPassenger);
+    return currentPassenger;
+}
 int Station::getCount(const std::string& PassengertType) {
     if (PassengertType == "NP") {
         return NPpassengers.getLength();;

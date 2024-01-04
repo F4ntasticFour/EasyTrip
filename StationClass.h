@@ -49,7 +49,13 @@ public:
 
     BusClass * removeBwBus();
 
+    bool isFwBusEmpty();
+
+    bool isBwBusEmpty();
+
     PassengerClass * getNpPassengerByID(int ID);
+
+    PassengerClass * getNpPassenger(int index);
 
     int getCount(const std::string&);
 
