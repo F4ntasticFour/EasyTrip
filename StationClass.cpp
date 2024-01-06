@@ -20,8 +20,14 @@ void Station::addSpPassenger(PassengerClass* Passenger) {
     SPpassengers.enqueue(Passenger, Passenger->getPriority());
 }
 
-void Station::removeNpPassenger(PassengerClass* Passenger) {
+void Station::leaveNpPassenger(PassengerClass* Passenger) {
     NPpassengers.remove(Passenger);
+}
+
+PassengerClass* Station::removeNpPassenger() {
+    PassengerClass* Passenger = NPpassengers.getItemAtIndex(0);
+    NPpassengers.remove(Passenger);
+    return Passenger;
 }
 
 PassengerClass* Station::removeWpPassenger() {
@@ -36,7 +42,7 @@ PassengerClass* Station::removeSpPassenger() {
     return passenger;
 }
 
-int Station::getStationNumber() {
+int Station::getStationNumber() const {
     return number;
 }
 
@@ -99,7 +105,7 @@ PassengerClass* Station::getNpPassengerByID(int ID) {
 
 PassengerClass* Station::getNpPassenger(int index) {
     PassengerClass* currentPassenger = NPpassengers.getItemAtIndex(index);
-    this->removeNpPassenger(currentPassenger);
+    this->removeNpPassenger();
     return currentPassenger;
 }
 

@@ -23,7 +23,7 @@ public:
 
     void setStationNumber(int number);
 
-    int getStationNumber();
+    int getStationNumber() const;
 
     void addNpPassenger(PassengerClass * Passenger);
 
@@ -31,11 +31,13 @@ public:
 
     void addSpPassenger(PassengerClass * Passenger);
 
-    void removeNpPassenger(PassengerClass * Passenger);
+    void leaveNpPassenger(PassengerClass* Passenger);
 
-    PassengerClass *removeWpPassenger();
+    PassengerClass*  removeNpPassenger();
 
-    PassengerClass * removeSpPassenger();
+    PassengerClass* removeWpPassenger();
+
+    PassengerClass* removeSpPassenger();
 
     void addFwBus(BusClass * Bus);
 
