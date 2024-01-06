@@ -34,8 +34,6 @@ public:
 
     bool leavePassenger(PassengerClass* Passenger);
 
-    bool startBus();
-
     bool busAtCheckup(BusClass* Bus);
 
     void moveBus();
@@ -52,6 +50,7 @@ public:
 
     static void startSimulation(std::string filename);
 
+    void onBoardPassengers(TimeClass& Time);
 
 };
 

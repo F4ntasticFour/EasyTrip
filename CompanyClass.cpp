@@ -25,12 +25,12 @@ CompanyClass::CompanyClass(int StationCount, TimeClass TimeBetweenStations, int 
         StationList[i] = Station(i);
     }
     for (int i = 0; i < NumberOfMBuses; ++i) {
-        auto* bus = new BusClass(i, "Mbus", TimeBetweenStations, MBusCapacity,
+        auto* bus = new BusClass(1000 + i, "Mbus", TimeBetweenStations, MBusCapacity,
                                  CheckupDurationMBus, TripsBeforeCheckup, 0);
         StationList[0].addFwBus(bus);
     }
     for (int i = 0; i < NumberOfWCBuses; ++i) {
-        auto* bus = new BusClass(i, "Wbus", TimeBetweenStations, WCBusCapacity,
+        auto* bus = new BusClass(2000 + i, "Wbus", TimeBetweenStations, WCBusCapacity,
                                  CheckupDurationWCBus, TripsBeforeCheckup, 0);
         StationList[0].addFwBus(bus);
     }
@@ -50,7 +50,7 @@ void CompanyClass::moveBus() {
     for (int StationID = 0; StationID < StationCount + 1; StationID++) {
         if (StationID == 0) {
             Queue<BusClass *> tempFwQueue;
-            while (!StationList[StationID].isFwBusEmpty()) {
+            if (!StationList[StationID].isFwBusEmpty()) {
                 if (BusClass* bus = StationList[StationID].removeFwBus(); bus->getIsMoved() == false) {
                     bus->setIsMoved(true);
                     bus->setBusCurrentStation(bus->getBusCurrentStation() + 1);
@@ -67,8 +67,7 @@ void CompanyClass::moveBus() {
                     tempFwQueue.dequeue();
                 }
             }
-        }
-        else if (StationID == StationCount) {
+        } else if (StationID == StationCount) {
             Queue<BusClass *> tempBwQueue;
             while (!StationList[StationID].isFwBusEmpty()) {
                 BusClass* bus = StationList[StationID].removeFwBus();
@@ -108,8 +107,7 @@ void CompanyClass::moveBus() {
                 StationList[StationID].addFwBus(tempFwQueue.frontElement());
                 tempFwQueue.dequeue();
             }
-        }
-        {
+        } {
             while (!StationList[StationID].isBwBusEmpty()) {
                 Queue<BusClass *> tempBwQueue;
                 if (BusClass* bus = StationList[StationID].removeBwBus();
@@ -121,8 +119,7 @@ void CompanyClass::moveBus() {
                         StationList[StationID - 1].addBwBus(bus);
                         std::cout << "Bus " << bus->getBusID() << " moved to station " << bus->getBusCurrentStation() <<
                                 std::endl;
-                    }
-                    else {
+                    } else {
                         bus->setIsMoved(true);
                         bus->setBusCurrentStation(bus->getBusCurrentStation() + 1);
                         bus->setBusDirection("Fw");
@@ -142,7 +139,7 @@ void CompanyClass::moveBus() {
         }
     }
 
-    for (int StationIndex = 0; StationIndex < StationCount+1; StationIndex++) {
+    for (int StationIndex = 0; StationIndex < StationCount + 1; StationIndex++) {
         Queue<BusClass *> tempFwQueue;
         while (!StationList[StationIndex].isFwBusEmpty()) {
             BusClass* bus = StationList[StationIndex].removeFwBus();
@@ -199,7 +196,7 @@ int CompanyClass::getCount(int StationID, std::string PassengerType) {
 bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus) {
     if (Bus->getBusCurrentStation() == Passenger->getEndStation()) {
         FinishedPassengers.enqueue(Passenger);
-        StationList[Passenger->getEndStation()].removeNpPassenger(Passenger);
+        StationList[Passenger->getEndStation()].leaveNpPassenger(Passenger);
         return true;
     }
     return false;
@@ -209,7 +206,7 @@ bool CompanyClass::leavePassenger(PassengerClass* Passenger) {
     if (Passenger->getEndStation() == Passenger->getStartStation()) {
         if (Passenger->getPassengerType() == "NP") {
             FinishedPassengers.enqueue(Passenger);
-            StationList[Passenger->getStartStation()].removeNpPassenger(Passenger);
+            StationList[Passenger->getStartStation()].leaveNpPassenger(Passenger);
         } else if (Passenger->getPassengerType() == "SP") {
             FinishedPassengers.enqueue(Passenger);
             StationList[Passenger->getStartStation()].removeSpPassenger();
@@ -222,9 +219,9 @@ bool CompanyClass::leavePassenger(PassengerClass* Passenger) {
     return false;
 }
 
-PassengerClass * CompanyClass::getPassengerByID(int ID) {
+PassengerClass* CompanyClass::getPassengerByID(int ID) {
     for (int i = 0; i < StationCount; ++i) {
-        if ( StationList[i].getNpPassengerByID(ID)!= nullptr) {
+        if (StationList[i].getNpPassengerByID(ID) != nullptr) {
             return StationList[i].getNpPassengerByID(ID);
         }
     }
@@ -248,6 +245,72 @@ Queue<PassengerClass *> CompanyClass::getFinishedPassengers() {
 
 Station CompanyClass::getStation(int StationID) {
     return StationList[StationID];
+}
+
+void CompanyClass::onBoardPassengers(TimeClass& Time) {
+    for (int StationIndex = 0; StationIndex < StationCount + 1; StationIndex++) {
+        Queue<BusClass *> tempFwQueue;
+        while (!StationList[StationIndex].isFwBusEmpty()) {
+            BusClass* bus = StationList[StationIndex].removeFwBus();
+            while (StationList[StationIndex].getCount("Sp") != 0) {
+                PassengerClass* passenger = StationList[StationIndex].removeSpPassenger();
+                if(passenger->getPassengerDirection()=="Fw") {
+                    passenger->setGetOnTime(Time);
+                    std::cout << bus->onBoardPassenger(passenger) << "SP Passenger on board" << std::endl;
+                } else {
+                    StationList[StationIndex].addSpPassenger(passenger);
+                    break;
+                }
+                std::cout << bus->onBoardPassenger(passenger) << "NP Passenger on board" << std::endl;
+            }
+            while (StationList[StationIndex].getCount("Np") != 0) {
+                PassengerClass* passenger =  StationList[StationIndex].removeNpPassenger();
+                if(passenger->getPassengerDirection()=="Fw") {
+                    passenger->setGetOnTime(Time);
+                    std::cout << bus->onBoardPassenger(passenger) << "NP Passenger on board" << std::endl;
+                } else {
+                    StationList[StationIndex].addNpPassenger(passenger);
+                    break;
+                }
+            }
+            tempFwQueue.enqueue(bus);
+
+        }
+        while (!tempFwQueue.isEmpty()) {
+            StationList[StationIndex].addFwBus(tempFwQueue.frontElement());
+            tempFwQueue.dequeue();
+        }
+        Queue<BusClass *> tempBwQueue;
+        while (!StationList[StationIndex].isBwBusEmpty()) {
+            BusClass* bus = StationList[StationIndex].removeBwBus();
+            while (StationList[StationIndex].getCount("Sp") != 0) {
+                PassengerClass* passenger = StationList[StationIndex].removeSpPassenger();
+                if(passenger->getPassengerDirection()=="Bw") {
+                    passenger->setGetOnTime(Time);
+                    std::cout << bus->onBoardPassenger(passenger) << "SP Passenger on board" << std::endl;
+                } else {
+                    StationList[StationIndex].addSpPassenger(passenger);
+                    break;
+                }
+                std::cout << bus->onBoardPassenger(passenger) << "NP Passenger on board" << std::endl;
+            }
+            while (StationList[StationIndex].getCount("Np") != 0) {
+                PassengerClass* passenger =  StationList[StationIndex].removeNpPassenger();
+                if(passenger->getPassengerDirection()== "Bw") {
+                    passenger->setGetOnTime(Time);
+                    std::cout << bus->onBoardPassenger(passenger) << "NP Passenger on board" << std::endl;
+                } else {
+                    StationList[StationIndex].addNpPassenger(passenger);
+                    break;
+                }
+            }
+            tempBwQueue.enqueue(bus);
+        }
+        while (!tempBwQueue.isEmpty()) {
+            StationList[StationIndex].addBwBus(tempBwQueue.frontElement());
+            tempBwQueue.dequeue();
+        }
+    }
 }
 
 
@@ -274,6 +337,7 @@ void CompanyClass::startSimulation(std::string filename) {
 
         while (timecounter == fileHandler.getTimeBetweenStations()) {
             company->moveBus();
+            company->onBoardPassengers(time);
             timecounter = 0;
         }
         timecounter++;
