@@ -4,6 +4,7 @@
 #include "TimeClass.h"
 #include "Queue.h"
 #include <string>
+#include "PriorityQueue.h"
 
 #include "PassengerClass.h"
 
