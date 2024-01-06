@@ -65,6 +65,8 @@ public:
 
     LinkedList<PassengerClass * > getNPpassengers();
 
+    PriorityQueue<PassengerClass*> getSPpassengers();
+
 
 };
 

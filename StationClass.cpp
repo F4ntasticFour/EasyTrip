@@ -128,3 +128,7 @@ Station* Station::operator->() {
 LinkedList<PassengerClass *> Station::getNPpassengers() {
     return NPpassengers;
 }
+
+PriorityQueue<PassengerClass*> Station::getSPpassengers() {
+    return SPpassengers;
+}
