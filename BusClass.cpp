@@ -39,6 +39,9 @@ bool BusClass::getIsMoved() {
     return isMoved;
 }
 
+std::string BusClass::getBusDirection() {
+    return busDirection;
+}
 
 // Setters
 void BusClass::setBusType(const std::string& busType) {
@@ -64,8 +67,17 @@ void BusClass::setBusCurrentStation(int BusCurrentStation) {
 bool BusClass::setIsMoved(bool Moved) {
     isMoved = Moved;
 }
+void BusClass::setBusDirection(std::string Direction) {
+    busDirection = Direction;
+}
 
+void BusClass::tickJourneyCompleted() {
+    JourneyCompleted++;
+}
 
+void BusClass::clearJourneyCompleted() {
+    JourneyCompleted = 0;
+}
 
 void BusClass::performMaintenance() {
 }

@@ -45,6 +45,8 @@ public:
 
     bool getIsMoved();
 
+    std::string getBusDirection();
+
     // Setters
     void setBusType(const std::string& busType);
 
@@ -57,6 +59,12 @@ public:
     void setBusCurrentStation(int BusCurrentStation);
 
     bool setIsMoved(bool Moved);
+
+    void setBusDirection(std::string Direction);
+
+    void tickJourneyCompleted();
+
+    void clearJourneyCompleted();
 
     //Member Functions
     void performMaintenance();
