@@ -248,60 +248,65 @@ Station CompanyClass::getStation(int StationID) {
 }
 
 void CompanyClass::onBoardPassengers(TimeClass& Time) {
-    for (int StationIndex = 0; StationIndex < StationCount + 1; StationIndex++) {
+    for (int StationIndex = 1; StationIndex < StationCount + 1; StationIndex++) {
         Queue<BusClass *> tempFwQueue;
+        Queue<PassengerClass *> tempPassengerFwQueue;
         while (!StationList[StationIndex].isFwBusEmpty()) {
             BusClass* bus = StationList[StationIndex].removeFwBus();
-            while (StationList[StationIndex].getCount("Sp") != 0) {
+            while (!StationList[StationIndex].getSPpassengers().isEmpty()) {
+                std::cerr << "Passenger count at " << StationIndex << StationList[StationIndex].getCount("Sp") <<
+                        std::endl;
                 PassengerClass* passenger = StationList[StationIndex].removeSpPassenger();
-                if(passenger->getPassengerDirection()=="Fw") {
+                if (passenger->getPassengerDirection() == "Fw") {
                     passenger->setGetOnTime(Time);
-                    std::cout << bus->onBoardPassenger(passenger) << "SP Passenger on board" << std::endl;
+                    // bus->onBoardPassenger(passenger);
+                    std::cout << "SP Passenger on board" << std::endl;
                 } else {
-                    StationList[StationIndex].addSpPassenger(passenger);
-                    break;
+                    tempPassengerFwQueue.enqueue(passenger);
                 }
-                std::cout << bus->onBoardPassenger(passenger) << "NP Passenger on board" << std::endl;
             }
-            while (StationList[StationIndex].getCount("Np") != 0) {
-                PassengerClass* passenger =  StationList[StationIndex].removeNpPassenger();
-                if(passenger->getPassengerDirection()=="Fw") {
+            while (!StationList[StationIndex].getNPpassengers().isEmpty()) {
+                PassengerClass* passenger = StationList[StationIndex].removeNpPassenger();
+                if (passenger->getPassengerDirection() == "Fw") {
                     passenger->setGetOnTime(Time);
-                    std::cout << bus->onBoardPassenger(passenger) << "NP Passenger on board" << std::endl;
+                    // bus->onBoardPassenger(passenger);
+                    std::cout << "NP Passenger on board" << std::endl;
                 } else {
-                    StationList[StationIndex].addNpPassenger(passenger);
-                    break;
+                    tempPassengerFwQueue.enqueue(passenger);
                 }
             }
             tempFwQueue.enqueue(bus);
-
         }
         while (!tempFwQueue.isEmpty()) {
             StationList[StationIndex].addFwBus(tempFwQueue.frontElement());
             tempFwQueue.dequeue();
         }
+        while (!tempPassengerFwQueue.isEmpty()) {
+            StationList[StationIndex].addNpPassenger(tempPassengerFwQueue.frontElement());
+            tempPassengerFwQueue.dequeue();
+        }
         Queue<BusClass *> tempBwQueue;
+        Queue<PassengerClass *> tempPassengerBwQueue;
         while (!StationList[StationIndex].isBwBusEmpty()) {
             BusClass* bus = StationList[StationIndex].removeBwBus();
-            while (StationList[StationIndex].getCount("Sp") != 0) {
+            while (!StationList[StationIndex].getSPpassengers().isEmpty()) {
                 PassengerClass* passenger = StationList[StationIndex].removeSpPassenger();
-                if(passenger->getPassengerDirection()=="Bw") {
+                if (passenger->getPassengerDirection() == "Bw") {
                     passenger->setGetOnTime(Time);
-                    std::cout << bus->onBoardPassenger(passenger) << "SP Passenger on board" << std::endl;
+                    // bus->onBoardPassenger(passenger);
+                    std::cout << "SP Passenger on board" << std::endl;
                 } else {
-                    StationList[StationIndex].addSpPassenger(passenger);
-                    break;
+                    tempPassengerBwQueue.enqueue(passenger);
                 }
-                std::cout << bus->onBoardPassenger(passenger) << "NP Passenger on board" << std::endl;
             }
-            while (StationList[StationIndex].getCount("Np") != 0) {
-                PassengerClass* passenger =  StationList[StationIndex].removeNpPassenger();
-                if(passenger->getPassengerDirection()== "Bw") {
+            while (!StationList[StationIndex].getNPpassengers().isEmpty()) {
+                PassengerClass* passenger = StationList[StationIndex].removeNpPassenger();
+                if (passenger->getPassengerDirection() == "Bw") {
                     passenger->setGetOnTime(Time);
-                    std::cout << bus->onBoardPassenger(passenger) << "NP Passenger on board" << std::endl;
+                    // bus->onBoardPassenger(passenger);
+                    std::cout << "NP Passenger on board" << std::endl;
                 } else {
-                    StationList[StationIndex].addNpPassenger(passenger);
-                    break;
+                    tempPassengerBwQueue.enqueue(passenger);
                 }
             }
             tempBwQueue.enqueue(bus);
@@ -309,6 +314,10 @@ void CompanyClass::onBoardPassengers(TimeClass& Time) {
         while (!tempBwQueue.isEmpty()) {
             StationList[StationIndex].addBwBus(tempBwQueue.frontElement());
             tempBwQueue.dequeue();
+        }
+        while (!tempPassengerBwQueue.isEmpty()) {
+            StationList[StationIndex].addNpPassenger(tempPassengerBwQueue.frontElement());
+            tempPassengerBwQueue.dequeue();
         }
     }
 }
