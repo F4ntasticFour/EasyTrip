@@ -82,21 +82,28 @@ void BusClass::clearJourneyCompleted() {
 void BusClass::performMaintenance() {
 }
 
-bool BusClass::isSuitableForPassengerType(const std::string& passengerType) const {
-    if (BusType == "WBus" && passengerType == "WP") {
-        return true;
-    } else if (BusType == "MBus" && (passengerType == "SP" || passengerType == "NP")) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 bool BusClass::onBoardPassenger(PassengerClass* Passenger) {
+    while(PassengersOnBoard.getLength()>0) {
+        if (getOnBoardPassengerCount() < BusCapacity ) {
+            if(BusType == "WBus" && Passenger->getPassengerType() == "WP") {
+                PassengersOnBoard.enqueue(Passenger);
+                return true;
+            } else if (BusType == "MBus" && (Passenger->getPassengerType() == "SP" || Passenger->getPassengerType() == "NP")) {
+                PassengersOnBoard.enqueue(Passenger);
+                return true;
+            } else {
+                return false;
+            }
 
+        }
+    }
+
+    return false;
 }
 
 bool BusClass::offBoardPassenger(CompanyClass* Company,BusClass* Bus ,PassengerClass * Passenger) {
+
 
 }
 
