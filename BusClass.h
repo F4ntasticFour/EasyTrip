@@ -2,7 +2,7 @@
 #define EASYTRIP_BUSCLASS_H
 
 #include "TimeClass.h"
-#include "PriorityQueue.h"
+#include "Queue.h"
 #include <string>
 
 #include "PassengerClass.h"
@@ -22,7 +22,7 @@ private:
     int TripsBeforeCheckUp;
     bool isMoved;
     std::string busDirection;
-    PriorityQueue<PassengerClass*> PassengersOnBoard;
+    Queue<PassengerClass*> PassengersOnBoard;
 
 
 public:
@@ -71,9 +71,9 @@ public:
 
     bool isSuitableForPassengerType(const std::string& passengerType) const;
 
-    bool onBoardPassenger(CompanyClass * Company);
+    bool onBoardPassenger(PassengerClass* Passenger);
 
-    bool offBoardPassenger(CompanyClass* Company);
+    bool offBoardPassenger(CompanyClass* Company,BusClass * Bus,PassengerClass* Passenger);
 
     int getOnBoardPassengerCount();
 

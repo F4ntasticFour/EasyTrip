@@ -92,40 +92,20 @@ bool BusClass::isSuitableForPassengerType(const std::string& passengerType) cons
     }
 }
 
-bool BusClass::onBoardPassenger(CompanyClass* Company) {
-    int index = Company->getStation(BusCurrentStation).getCount("NP");
-    while (PassengersOnBoard.size() <= BusCapacity && Company->getStation(BusCurrentStation).getCount("NP") > 0) {
-        PassengerClass* Passenger = Company->getStation(BusCurrentStation).getNpPassenger(index);
-        PassengersOnBoard.enqueue(Passenger, Passenger->getEndStation());
-        std::cout << "Passenger " << Passenger->getPassengerID() << " boarded bus " << BusID << std::endl;
-        index = index - 1;
-        return true;
-    }
-    return false;
+bool BusClass::onBoardPassenger(PassengerClass* Passenger) {
+
 }
 
-bool BusClass::offBoardPassenger(CompanyClass* Company) {
-    int i = PassengersOnBoard.size();
-    while (i != 0) {
-        if (PassengersOnBoard.frontElement()->getEndStation() == BusCurrentStation) {
-            Company->addFinshedPassengers(PassengersOnBoard.frontElement(), this);
-            PassengersOnBoard.dequeue();
-        } else {
-            auto* temp = PassengersOnBoard.frontElement();
-            PassengersOnBoard.dequeue();
-            PassengersOnBoard.enqueue(temp, temp->getPriority());
-        }
-        i--;
-    }
-    return true;
+bool BusClass::offBoardPassenger(CompanyClass* Company,BusClass* Bus ,PassengerClass * Passenger) {
+
 }
 
 int BusClass::getOnBoardPassengerCount() {
-    return PassengersOnBoard.size();
+    return PassengersOnBoard.getLength();
 }
 
 bool BusClass::offBoardAllPassenger(CompanyClass* Company) {
-    while (PassengersOnBoard.size() > 0) {
+    while (getOnBoardPassengerCount() > 0) {
         Company->addFinshedPassengers(PassengersOnBoard.frontElement(), this);
         PassengersOnBoard.dequeue();
     }
