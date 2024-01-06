@@ -21,7 +21,6 @@ private:
     int TripsBeforeCheckup;
     TimeClass CheckupDurationWCBus;
     TimeClass CheckupDurationMBus;
-
 public:
     CompanyClass(int StationCount, TimeClass TimeBetweenStations, int NumberOfWCBuses, int NumberOfMBuses,
                            int WCBusCapacity, int MBusCapacity, int TripsBeforeCheckup,
@@ -39,7 +38,7 @@ public:
 
     bool busAtCheckup(BusClass* Bus);
 
-    bool moveBus();
+    void moveBus();
 
     PassengerClass * getPassengerByID(int ID);
 
