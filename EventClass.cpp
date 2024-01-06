@@ -88,6 +88,11 @@ bool EventManager::processEvents(TimeClass Time) {
             }
             if (Time == ArrivalTime) {
                 auto* P = new PassengerClass(ArrivalTime, StartStation, EndStation, PassengerID, PassengerType, statue);
+                if (P->getStartStation() - P->getEndStation() > 0) {
+                    P->setPassengerDirection("Bw");
+                } else {
+                    P->setPassengerDirection("Fw");
+                }
                 ArriveEvent arriveEvent(ArrivalTime, P, company);
                 cout << PassengerType << " " << ArrivalTime << " " << PassengerID << " " << StartStation << " " <<
                         EndStation << " " << statue << endl;
