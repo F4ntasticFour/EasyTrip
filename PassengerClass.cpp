@@ -17,6 +17,11 @@ TimeClass PassengerClass::getArrivalTime() {
 TimeClass PassengerClass::getLeaveTime() {
     return LeaveTime;
 }
+
+TimeClass PassengerClass::getOnTime() {
+    return GetOnTime;
+}
+
 int PassengerClass::getStartStation(){
     return StartStation;
 }
@@ -37,6 +42,10 @@ int PassengerClass::getPassengerID(){
     return PassengerID;
 }
 
+std::string PassengerClass::getPassengerDirection() {
+    return PassengerDirection;
+}
+
 // Setters
 void PassengerClass::setArrivalTime(TimeClass ArrivalTime) {
     this->ArrivalTime = ArrivalTime;
@@ -44,6 +53,10 @@ void PassengerClass::setArrivalTime(TimeClass ArrivalTime) {
 
 void PassengerClass::setLeaveTime(TimeClass LeaveTime) {
     this->LeaveTime = LeaveTime;
+}
+
+void PassengerClass::setGetOnTime(TimeClass OnTime) {
+    GetOnTime = OnTime;
 }
 
 
@@ -67,6 +80,10 @@ void PassengerClass::setPassengerID(int PassengerID) {
     this->PassengerID = PassengerID;
 }
 
+void PassengerClass::setPassengerDirection(const std::string& passengerDirection) {
+    PassengerDirection = passengerDirection;
+}
+
 std::string PassengerClass::getStatue() const {
     return statue;
 }
@@ -74,15 +91,21 @@ std::string PassengerClass::getStatue() const {
 
 int PassengerClass::getPriority() const {
     if (getPassengerType() == "SP") {
-        if (getStatue() == "Aged") {
-            return 3;
-        } else if (getStatue() == "POD") {
-            return 2;
-        } else if (getStatue() == "Pregnant") {
+        if (getStatue() == "Aged" || getStatue() == "aged" || getStatue() == "Promoted") {
             return 1;
+        } if (getStatue() == "POD" ) {
+            return 2;
+        } if (getStatue() == "Pregnant") {
+            return 3;
         }
     }
     return 4;
+}
+
+void PassengerClass::promotePassenger() {
+    if (PassengerType == "Np") {
+        statue="Promoted";
+    }
 }
 
 
@@ -93,9 +116,7 @@ bool PassengerClass::operator==(const PassengerClass& rhs) const {
 bool PassengerClass::operator!=(const PassengerClass& rhs) const {
     return !(rhs == *this);
 }
-PassengerClass* PassengerClass::operator&() {
-    return this;
-}
+
 
 void PassengerClass::printPassenger() {
     std::cout<<"Passenger ID: "<<getPassengerID()<<std::endl;

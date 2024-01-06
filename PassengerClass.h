@@ -12,9 +12,11 @@ class PassengerClass {
 private:
     TimeClass ArrivalTime;
     TimeClass LeaveTime;
+    TimeClass GetOnTime;
     int StartStation;
     int EndStation;
     int PassengerID;
+    std::string PassengerDirection;
     const TimeClass GetOnOffTime = TimeClass(0,1/6);
     std::string PassengerType;
     std::string statue;
@@ -27,22 +29,28 @@ public:
     // Getters
     TimeClass getArrivalTime();
     TimeClass getLeaveTime();
+    TimeClass getOnTime();
     int getStartStation();
     int getEndStation();
     TimeClass getGetOnOffTime();
     std::string getPassengerType() const;
     int getPassengerID();
+    std::string getPassengerDirection();
+
 
 
     // Setters
     void setArrivalTime(TimeClass ArrivalTime);
     void setLeaveTime(TimeClass LeaveTime);
+    void setGetOnTime(TimeClass OnTime);
     void setStartStation(int startStation);
     void setEndStation(int endStation);
     void setPassengerType(const std::string& passengerType);
     void setStatue(const std::string& statue);
     void setPassengerID(int passengerID);
+    void setPassengerDirection(const std::string& passengerDirection);
     int getPriority() const;
+    void promotePassenger();
     std::string getStatue() const;
     // Operator Overloading
     bool operator==(const PassengerClass& lhs) const;
