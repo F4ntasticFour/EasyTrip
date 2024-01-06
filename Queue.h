@@ -42,7 +42,6 @@ public:
         if (front == nullptr) {
             rear = nullptr;
         }
-        delete temp;
     }
 
     T frontElement() const {
