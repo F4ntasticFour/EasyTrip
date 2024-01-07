@@ -180,7 +180,7 @@ bool CompanyClass::addPassenger(PassengerClass* Passenger) {
     return false;
 }
 
-int CompanyClass::getCount(int StationID, std::string PassengerType) {
+int CompanyClass::getCount(int StationID, const std::string& PassengerType) {
     if (PassengerType == "NP") {
         return this->getStation(StationID).getCount(PassengerType);
     }
@@ -195,9 +195,8 @@ int CompanyClass::getCount(int StationID, std::string PassengerType) {
 
 
 
-bool CompanyClass::ADDFinishedpassengers(PassengerClass* Passenger, BusClass* Bus){
+bool CompanyClass::ADDFinishedpassengers(PassengerClass* Passenger){
     FinishedPassengers.enqueue(Passenger);
-    StationList[Passenger->getEndStation()].leaveNpPassenger(Passenger);
     return true;
 };
 
@@ -351,6 +350,36 @@ void CompanyClass::onBoardPassengers(TimeClass& Time) {
     }
 }
 
+void CompanyClass::offBoardPassengers(TimeClass& Time) {
+    for (int StationIndex = 0; StationIndex < StationCount + 1; StationIndex++) {
+        Queue<BusClass *> tempFwQueue;
+        while (!StationList[StationIndex].isFwBusEmpty()) {
+            BusClass* bus = StationList[StationIndex].removeFwBus();
+            if (bus->offBoardPassenger(this, Time)) {
+                std::cout << "Passenger off board" << bus->getBusID() << std::endl;
+            }
+            tempFwQueue.enqueue(bus);
+        }
+        while (!tempFwQueue.isEmpty()) {
+            StationList[StationIndex].addFwBus(tempFwQueue.frontElement());
+            tempFwQueue.dequeue();
+        }
+
+        Queue<BusClass *> tempBwQueue;
+        while (!StationList[StationIndex].isBwBusEmpty()) {
+            BusClass* bus = StationList[StationIndex].removeBwBus();
+            if (bus->offBoardPassenger(this, Time)) {
+                std::cout << "Passenger off board" << bus->getBusID() << std::endl;
+            }
+            tempBwQueue.enqueue(bus);
+        }
+        while (!tempBwQueue.isEmpty()) {
+            StationList[StationIndex].addBwBus(tempBwQueue.frontElement());
+            tempBwQueue.dequeue();
+        }
+
+    }
+}
 
 void CompanyClass::startSimulation(std::string filename) {
     FileHandler fileHandler(std::move(filename));
@@ -376,6 +405,7 @@ void CompanyClass::startSimulation(std::string filename) {
 
         while (timecounter == fileHandler.getTimeBetweenStations()) {
             company->moveBus();
+            company->offBoardPassengers(time);
             company->onBoardPassengers(time);
             timecounter = 0;
         }
@@ -395,5 +425,17 @@ void CompanyClass::startSimulation(std::string filename) {
 
     std::cout << "Station 4: NP: " << company->getStation(4).getCount("NP") << " Sp: " << company->getStation(4).
             getCount("SP") << " WP: " << company->getStation(4).getCount("WP") << std::endl;
+    std::cout << "Station 5: NP: " << company->getStation(5).getCount("NP") << " Sp: " << company->getStation(5).
+        getCount("SP") << " WP: " << company->getStation(5).getCount("WP") << std::endl;
+    std::cout << "Station 6: NP: " << company->getStation(6).getCount("NP") << " Sp: " << company->getStation(6).
+        getCount("SP") << " WP: " << company->getStation(6).getCount("WP") << std::endl;
+    std::cout << "Station 7: NP: " << company->getStation(7).getCount("NP") << " Sp: " << company->getStation(7).
+        getCount("SP") << " WP: " << company->getStation(7).getCount("WP") << std::endl;
+    std::cout << "Station 8: NP: " << company->getStation(8).getCount("NP") << " Sp: " << company->getStation(8).
+        getCount("SP") << " WP: " << company->getStation(8).getCount("WP") << std::endl;
+    std::cout << "Station 9: NP: " << company->getStation(9).getCount("NP") << " Sp: " << company->getStation(9).
+        getCount("SP") << " WP: " << company->getStation(9).getCount("WP") << std::endl;
+    std::cout << "Station 10: NP: " << company->getStation(10).getCount("NP") << " Sp: " << company->getStation(10).
+        getCount("SP") << " WP: " << company->getStation(10).getCount("WP") << std::endl;
     return;
 }

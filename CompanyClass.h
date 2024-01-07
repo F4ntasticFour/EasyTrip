@@ -30,7 +30,7 @@ public:
 
     bool addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus);
 
-    int getCount(int StationID, std::string PassengerType);
+    int getCount(int StationID, const std::string& PassengerType);
 
     bool leavePassenger(PassengerClass* Passenger);
 
@@ -54,7 +54,9 @@ public:
 
     void onBoardPassengers(TimeClass& Time);
 
-    bool ADDFinishedpassengers(PassengerClass *Passenger, BusClass *Bus);
+    void offBoardPassengers(TimeClass& Time);
+
+    bool ADDFinishedpassengers(PassengerClass *Passenger);
 
 };
 
