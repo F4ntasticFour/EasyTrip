@@ -193,6 +193,14 @@ int CompanyClass::getCount(int StationID, std::string PassengerType) {
     return 0;
 }
 
+
+
+bool CompanyClass::ADDFinishedpassengers(PassengerClass* Passenger, BusClass* Bus){
+    FinishedPassengers.enqueue(Passenger);
+    StationList[Passenger->getEndStation()].leaveNpPassenger(Passenger);
+    return true;
+};
+
 bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus) {
     if (Bus->getBusCurrentStation() == Passenger->getEndStation()) {
         FinishedPassengers.enqueue(Passenger);
