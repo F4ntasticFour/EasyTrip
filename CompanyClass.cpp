@@ -56,7 +56,9 @@ void CompanyClass::moveBus() {
                     bus->setBusDirection("Fw");
                     std::cout << "Bus " << bus->getBusID() << " moved to station " << bus->getBusCurrentStation() <<
                             std::endl;
-                } else {
+                } else if(bus->getJourneyCompleted() == TripsBeforeCheckup){
+                    BusCheckUpQueue.enqueue(bus);
+                }else {
                     tempFwQueue.enqueue(bus);
                 }
                 while (!tempFwQueue.isEmpty()) {
@@ -111,6 +113,7 @@ void CompanyClass::moveBus() {
                     if (bus->getBusCurrentStation() > 1) {
                         bus->setIsMoved(true);
                         bus->setBusCurrentStation(bus->getBusCurrentStation() - 1);
+                        bus->tickJourneyCompleted();
                         StationList[StationID - 1].addBwBus(bus);
                         std::cout << "Bus " << bus->getBusID() << " moved to station " << bus->getBusCurrentStation() <<
                                 std::endl;
@@ -378,11 +381,9 @@ void CompanyClass::tickCheckup() {
     while (!BusCheckUpQueue.isEmpty()) {
         BusClass* bus = BusCheckUpQueue.frontElement();
         BusCheckUpQueue.dequeue();
-        if (bus->getBusType() == "Wbus") {
-            StationList[0].addFwBus(bus);
-        } else {
-            StationList[0].addFwBus(bus);
-        }
+        bus->clearJourneyCompleted();
+        std::cerr<<"Bus "<<bus->getBusID()<<" is at checkup"<<std::endl;
+        StationList[0].addFwBus(bus);
     }
 }
 
@@ -400,6 +401,7 @@ void CompanyClass::startSimulation(std::string filename) {
     EventManager eventManager(company, eventQueue);
 
     int timecounter = 0;
+    int timecountercheckup = 0;
 
     while (time != TimeClass(13, 0)) {
         time.tick();
@@ -414,6 +416,10 @@ void CompanyClass::startSimulation(std::string filename) {
             usleep(0.1 * microsecond);
             company->moveBus();
             timecounter = 0;
+        }
+        while (timecountercheckup == fileHandler.getC_MBus()) {
+            company->tickCheckup();
+            timecountercheckup = 0;
         }
         timecounter++;
     }

@@ -4,6 +4,7 @@
 #include "Queue.h"
 #include "StationClass.h"
 #include "BusClass.h"
+#include "FileHandler.h"
 #include "PassengerClass.h"
 
 class CompanyClass {
