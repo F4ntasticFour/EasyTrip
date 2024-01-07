@@ -10,23 +10,49 @@
 #include "Queue.h"
 #include "PassengerClass.h"
 #include "BusClass.h"
+#include "FileHandler.h"
 
 
 
-void writeToFile(Queue<PassengerClass *> passengers) {
-    std::ofstream outputFile("/Users/safey/Dev/CLionProjects/EasyTrip 3.09.42 pm/FileOutput.txt");
+void writeToFile(Queue<PassengerClass *> passengers,CompanyClass *company, FileHandler fileHandler) {
+    std::ofstream outputFile("../FileOutput.txt");
+    int NPCount = 0, SPCount = 0, WPCount = 0,  TotalPass = 0, count = 0;
+    TimeClass TotalTrip = 0, TotalWait = 0;
+    std::vector<int> buses;
     if (outputFile.is_open()) {
-        outputFile << "FT\t\tID\tAT\t\tWT\t\tTT\n";
+        outputFile << "FT\t\tID\tAT\t\t\tWT\t\t\tTT\n";
 
         while (!passengers.isEmpty()) {
             PassengerClass* passenger = passengers.frontElement();
-            outputFile << passenger->getArrivalTime()<< "\t"
+            outputFile << passenger->getLeaveTime()<< "\t"
                        << passenger->getPassengerID() << "\t"
                        << passenger->getArrivalTime() << "\t\t"
-                       << passenger->getLeaveTime() << "\t\t"
-                       << passenger->getGetOnOffTime() << "\n";
+                       << passenger->getOnTime()-passenger->getArrivalTime() << "\t\t"
+                       << passenger->getLeaveTime()-passenger->getArrivalTime() << "\n";
+            TotalTrip =TotalTrip+ passenger->getLeaveTime()-passenger->getOnTime();
+            TotalWait = TotalWait + passenger->getOnTime()-passenger->getArrivalTime();
             passengers.dequeue();
+
+            if (passenger->getPassengerType() == "NP") {
+                NPCount++;
+                TotalPass++;
+
+            } else if (passenger->getPassengerType() == "SP") {
+                SPCount++;
+                TotalPass++;
+
+            } else {
+                WPCount++;
+                TotalPass++;
+
+            }
+
         }
+        outputFile << "Total Passengers : " << TotalPass << "\t [NP :" << NPCount << "\t SP :" << SPCount << "\t WP :" << WPCount << "]\n";
+        outputFile << "Avg Waiting Time for Passengers : " << (TotalWait / TotalPass)<< "\n";
+        outputFile << "Avg Trip Time for Passengers : " << (TotalTrip / TotalPass) <<"\n";
+        outputFile << "Buses : " << fileHandler.getWBusCount()+fileHandler.getMBusCount()<< "\t [MBus :" << fileHandler.getMBusCount() << "\t WBus :" << fileHandler.getWBusCount() << "]\n";
+
 
         outputFile.close();
     } else {

@@ -436,5 +436,6 @@ void CompanyClass::startSimulation(std::string filename) {
         getCount("SP") << " WP: " << company->getStation(9).getCount("WP") << std::endl;
     std::cout << "Station 10: NP: " << company->getStation(10).getCount("NP") << " Sp: " << company->getStation(10).
         getCount("SP") << " WP: " << company->getStation(10).getCount("WP") << std::endl;
-    writeToFile(company->getFinishedPassengers());
+    writeToFile(company->getFinishedPassengers(),company,fileHandler);
+
 }

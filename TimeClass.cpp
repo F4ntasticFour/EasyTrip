@@ -75,7 +75,7 @@ TimeClass operator+(const TimeClass& lhs, const TimeClass& rhs) {
 
 // Overloaded subtraction operator
 TimeClass operator-(const TimeClass& lhs, const TimeClass& rhs) {
-    TimeClass temp(lhs.hours - rhs.hours, lhs.minutes - rhs.minutes);
+    TimeClass temp(lhs.hours - rhs.hours, abs(lhs.minutes - rhs.minutes));
     temp.normalize();
     return temp;
 }
@@ -93,6 +93,18 @@ TimeClass& TimeClass::operator=(const TimeClass& rhs) {
         normalize();
     }
     return *this;
+}
+
+// Overloaded division operator
+TimeClass TimeClass::operator/(int divisor) const {
+    if (divisor == 0) {
+        throw std::invalid_argument("Cannot divide by zero");
+    }
+    int totalMinutes = hours * 60 + minutes;
+    totalMinutes /= divisor;
+    TimeClass temp(abs(totalMinutes / 60), abs(totalMinutes % 60));
+    temp.normalize();
+    return temp;
 }
 
 

@@ -40,6 +40,7 @@ public:
     // Inside the TimeClass declaration
     TimeClass operator*(int multiplier) const;
     // Inside the TimeClass declaration
+    TimeClass operator/(int divisor) const;
 
 };
 
