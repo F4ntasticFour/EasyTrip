@@ -46,7 +46,7 @@ ArriveEvent::ArriveEvent(TimeClass ArrivalTime, PassengerClass* P, CompanyClass*
 }
 
 void ArriveEvent::execute() {
-    cout << C->addPassenger(P) << " Passengers in the system" << endl;
+    cout << C->addPassenger(P) << "  Passengers Inserted" << endl;
 }
 
 LeaveEvent::LeaveEvent(TimeClass LeaveTime, PassengerClass* P, CompanyClass* C)
@@ -54,7 +54,7 @@ LeaveEvent::LeaveEvent(TimeClass LeaveTime, PassengerClass* P, CompanyClass* C)
 }
 
 void LeaveEvent::execute() {
-    cout << C->leavePassenger(P) << " Passengers left system" << endl;
+    cout << C->leavePassenger(P) << "  Passengers Left" << endl;
 }
 
 

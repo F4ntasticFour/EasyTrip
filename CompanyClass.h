@@ -52,6 +52,8 @@ public:
 
     static void startSimulation(std::string filename);
 
+    void tickCheckup();
+
     void onBoardPassengers(TimeClass& Time);
 
     void offBoardPassengers(TimeClass& Time);

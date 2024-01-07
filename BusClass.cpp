@@ -107,12 +107,14 @@ void BusClass::offBoardPassenger(CompanyClass* Company, TimeClass& time) {
         if (currentPassenger->getEndStation() == BusCurrentStation) {
             currentPassenger->setLeaveTime(time);
             Company->ADDFinishedpassengers(currentPassenger);
-            std::cerr << "Passenger off board" << std::endl;
+            std::cerr<<"Passenger "<< currentPassenger->getPassengerID()<<" got off at station "<<BusCurrentStation<<std::endl;
+        } else {
+            tempQueue.enqueue(currentPassenger);
         }
-        tempQueue.enqueue(currentPassenger);
     }
     while (!tempQueue.isEmpty()) {
-        PassengersOnBoard.enqueue(tempQueue.frontElement());
+        PassengerClass* Passenger = tempQueue.frontElement();
+        PassengersOnBoard.enqueue(Passenger);
         tempQueue.dequeue();
     }
 }

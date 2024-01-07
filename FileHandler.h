@@ -40,6 +40,8 @@ public:
     Queue<std::vector<std::string>> processEventLines();
 
     int getNumEvents();
+
+    void writeToFile(Queue<PassengerClass*>& passengers);
 };
 
 #endif //EASYTRIP_FILEHANDLER_H
