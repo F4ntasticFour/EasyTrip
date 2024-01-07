@@ -67,6 +67,7 @@ void BusClass::setBusCurrentStation(int BusCurrentStation) {
 bool BusClass::setIsMoved(bool Moved) {
     isMoved = Moved;
 }
+
 void BusClass::setBusDirection(std::string Direction) {
     busDirection = Direction;
 }
@@ -84,27 +85,21 @@ void BusClass::performMaintenance() {
 
 
 bool BusClass::onBoardPassenger(PassengerClass* Passenger) {
-    while(PassengersOnBoard.getLength()>0) {
-        if (getOnBoardPassengerCount() < BusCapacity ) {
-            if(BusType == "WBus" && Passenger->getPassengerType() == "WP") {
-                PassengersOnBoard.enqueue(Passenger);
-                return true;
-            } else if (BusType == "MBus" && (Passenger->getPassengerType() == "SP" || Passenger->getPassengerType() == "NP")) {
-                PassengersOnBoard.enqueue(Passenger);
-                return true;
-            } else {
-                return false;
-            }
-
+    if (getOnBoardPassengerCount() < BusCapacity) {
+        if (BusType == "Wbus" && Passenger->getPassengerType() == "WP") {
+            PassengersOnBoard.enqueue(Passenger);
+            return true;
         }
+        if (BusType == "Mbus" && (Passenger->getPassengerType() == "SP" || Passenger->getPassengerType() == "NP")) {
+            PassengersOnBoard.enqueue(Passenger);
+            return true;
+        }
+        return false;
     }
-
     return false;
 }
 
-bool BusClass::offBoardPassenger(CompanyClass* Company,BusClass* Bus ,PassengerClass * Passenger) {
-
-
+bool BusClass::offBoardPassenger(CompanyClass* Company, BusClass* Bus, PassengerClass* Passenger) {
 }
 
 int BusClass::getOnBoardPassengerCount() {
