@@ -99,19 +99,22 @@ bool BusClass::onBoardPassenger(PassengerClass* Passenger) {
     return false;
 }
 
-bool BusClass::offBoardPassenger(CompanyClass* Company, TimeClass& time) {
-    int passengerCount = getOnBoardPassengerCount();
-    for (int i = 0; i < passengerCount; i++) {
+void BusClass::offBoardPassenger(CompanyClass* Company, TimeClass& time) {
+    Queue<PassengerClass *> tempQueue;
+    while (!PassengersOnBoard.isEmpty()) {
         PassengerClass* currentPassenger = PassengersOnBoard.frontElement();
         PassengersOnBoard.dequeue();
         if (currentPassenger->getEndStation() == BusCurrentStation) {
             currentPassenger->setLeaveTime(time);
             Company->ADDFinishedpassengers(currentPassenger);
-            return true;
+            std::cerr << "Passenger off board" << std::endl;
         }
-        PassengersOnBoard.enqueue(currentPassenger);
+        tempQueue.enqueue(currentPassenger);
     }
-    return false;
+    while (!tempQueue.isEmpty()) {
+        PassengersOnBoard.enqueue(tempQueue.frontElement());
+        tempQueue.dequeue();
+    }
 }
 
 int BusClass::getOnBoardPassengerCount() {

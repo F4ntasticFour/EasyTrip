@@ -14,9 +14,9 @@
 
 
 
-void writeToFile(Queue<PassengerClass *> passengers,CompanyClass *company, FileHandler fileHandler) {
+void writeToFile(Queue<PassengerClass *> passengers, FileHandler fileHandler) {
     std::ofstream outputFile("../FileOutput.txt");
-    int NPCount = 0, SPCount = 0, WPCount = 0,  TotalPass = 0, count = 0;
+    int NPCount,TotalPass,SPCount,WPCount = 0;
     TimeClass TotalTrip = 0, TotalWait = 0;
     std::vector<int> buses;
     if (outputFile.is_open()) {

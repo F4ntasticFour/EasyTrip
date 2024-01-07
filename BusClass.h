@@ -72,7 +72,7 @@ public:
 
     bool onBoardPassenger(PassengerClass* Passenger);
 
-    bool offBoardPassenger(CompanyClass* Company,TimeClass& Time);
+    void offBoardPassenger(CompanyClass* Company, TimeClass& Time);
 
     int getOnBoardPassengerCount();
 
