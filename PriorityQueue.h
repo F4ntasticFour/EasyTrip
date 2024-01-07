@@ -49,7 +49,6 @@ public:
         }
         NodeP<T>* temp = front;
         front = front->getNext();
-        delete temp;
     }
 
     T frontElement() const {
