@@ -49,6 +49,8 @@ public:
 
     BusClass * removeFwBus();
 
+    bool addPassenger(PassengerClass * Passenger);
+
     BusClass * removeBwBus();
 
     bool isFwBusEmpty();
@@ -66,6 +68,8 @@ public:
     LinkedList<PassengerClass * > getNPpassengers();
 
     PriorityQueue<PassengerClass*> getSPpassengers();
+
+    Queue<PassengerClass*> getWPpassengers();
 
 
 };

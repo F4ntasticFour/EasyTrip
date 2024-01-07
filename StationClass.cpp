@@ -72,6 +72,21 @@ BusClass* Station::removeFwBus() {
     FWbuses.dequeue();
     return bus;
 }
+bool Station::addPassenger(PassengerClass* Passenger) {
+    if (Passenger->getPassengerType() == "NP") {
+        this[Passenger->getStartStation()].addNpPassenger(Passenger);
+        return true;
+    }
+    if (Passenger->getPassengerType() == "SP") {
+        this[Passenger->getStartStation()].addSpPassenger(Passenger);
+        return true;
+    }
+    if (Passenger->getPassengerType() == "WP") {
+        this[Passenger->getStartStation()].addWpPassenger(Passenger);
+        return true;
+    }
+    return false;
+}
 
 BusClass* Station::removeBwBus() {
     BusClass* bus = BWbuses.frontElement();
@@ -131,4 +146,9 @@ LinkedList<PassengerClass *> Station::getNPpassengers() {
 
 PriorityQueue<PassengerClass*> Station::getSPpassengers() {
     return SPpassengers;
+}
+
+
+Queue<PassengerClass*> Station::getWPpassengers() {
+    return WPpassengers;
 }
