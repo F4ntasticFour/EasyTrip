@@ -2,7 +2,7 @@
 
 #include "CompanyClass.h"
 #include<unistd.h>
-
+#include "FileOutput.h"
 #include "FileHandler.h"
 #include "EventClass.h"
 
@@ -46,7 +46,6 @@ bool CompanyClass::busAtCheckup(BusClass* Bus) {
 }
 
 void CompanyClass::moveBus() {
-    std::wcerr << "called" << std::endl;
     for (int StationID = 0; StationID < StationCount + 1; StationID++) {
         if (StationID == 0) {
             Queue<BusClass *> tempFwQueue;
@@ -437,5 +436,5 @@ void CompanyClass::startSimulation(std::string filename) {
         getCount("SP") << " WP: " << company->getStation(9).getCount("WP") << std::endl;
     std::cout << "Station 10: NP: " << company->getStation(10).getCount("NP") << " Sp: " << company->getStation(10).
         getCount("SP") << " WP: " << company->getStation(10).getCount("WP") << std::endl;
-    return;
+    writeToFile(company->getFinishedPassengers());
 }
