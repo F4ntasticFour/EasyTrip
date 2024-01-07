@@ -44,6 +44,8 @@ public:
 
     int getStationCount() const;
 
+
+
     Queue<PassengerClass *> getFinishedPassengers();
 
     Station getStation(int ID);
@@ -51,6 +53,8 @@ public:
     static void startSimulation(std::string filename);
 
     void onBoardPassengers(TimeClass& Time);
+
+    bool ADDFinishedpassengers(PassengerClass *Passenger, BusClass *Bus);
 
 };
 
