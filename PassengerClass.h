@@ -35,9 +35,8 @@ public:
     TimeClass getGetOnOffTime();
     std::string getPassengerType() const;
     int getPassengerID();
+    int getPriority() const;
     std::string getPassengerDirection();
-
-
 
     // Setters
     void setArrivalTime(TimeClass ArrivalTime);
@@ -49,9 +48,9 @@ public:
     void setStatue(const std::string& statue);
     void setPassengerID(int passengerID);
     void setPassengerDirection(const std::string& passengerDirection);
-    int getPriority() const;
     void promotePassenger();
     std::string getStatue() const;
+
     // Operator Overloading
     bool operator==(const PassengerClass& lhs) const;
     bool operator!=(const PassengerClass& lhs) const;

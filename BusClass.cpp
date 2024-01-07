@@ -81,9 +81,9 @@ void BusClass::clearJourneyCompleted() {
 }
 
 void BusClass::performMaintenance() {
+    JourneyCompleted = 0;
 
 }
-
 
 bool BusClass::onBoardPassenger(PassengerClass* Passenger) {
     if (getOnBoardPassengerCount() < BusCapacity) {

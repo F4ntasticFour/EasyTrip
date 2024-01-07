@@ -57,8 +57,6 @@ void CompanyClass::moveBus() {
                     bus->setBusDirection("Fw");
                     std::cout << "Bus " << bus->getBusID() << " moved to station " << bus->getBusCurrentStation() <<
                             std::endl;
-                } else if(bus->getJourneyCompleted() == TripsBeforeCheckup){
-                    BusCheckUpQueue.enqueue(bus);
                 }else {
                     tempFwQueue.enqueue(bus);
                 }
@@ -98,7 +96,11 @@ void CompanyClass::moveBus() {
                     StationList[StationID + 1].addFwBus(bus);
                     std::cout << "Bus " << bus->getBusID() << " moved to station " << bus->getBusCurrentStation() <<
                             std::endl;
-                } else {
+                }
+                else if (bus->getJourneyCompleted() >= TripsBeforeCheckup) {
+                    BusCheckUpQueue.enqueue(bus);
+                }
+                else {
                     tempFwQueue.enqueue(bus);
                 }
             }
@@ -383,7 +385,11 @@ void CompanyClass::tickCheckup() {
         BusClass* bus = BusCheckUpQueue.frontElement();
         BusCheckUpQueue.dequeue();
         bus->clearJourneyCompleted();
+<<<<<<< HEAD
         std::cerr<<"Bus "<<bus->getBusID()<<" is at checkup"<<std::endl;
+=======
+        std::cerr << "Bus " << bus->getBusID() << " is at checkup" << std::endl;
+>>>>>>> 26432a4 (Final)
         StationList[0].addFwBus(bus);
     }
 }
