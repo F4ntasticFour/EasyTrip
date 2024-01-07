@@ -25,6 +25,8 @@ add_executable(EasyTrip main.cpp
         CompanyClass.h
         FileHandler.cpp
         FileHandler.h
-        NodeP.h)
+        NodeP.h
+        FileOutput.cpp
+        FileOutput.h)
 
 
