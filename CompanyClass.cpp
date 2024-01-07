@@ -385,11 +385,7 @@ void CompanyClass::tickCheckup() {
         BusClass* bus = BusCheckUpQueue.frontElement();
         BusCheckUpQueue.dequeue();
         bus->clearJourneyCompleted();
-<<<<<<< HEAD
-        std::cerr<<"Bus "<<bus->getBusID()<<" is at checkup"<<std::endl;
-=======
         std::cerr << "Bus " << bus->getBusID() << " is at checkup" << std::endl;
->>>>>>> 26432a4 (Final)
         StationList[0].addFwBus(bus);
     }
 }
