@@ -248,19 +248,17 @@ Station CompanyClass::getStation(int StationID) {
 }
 
 void CompanyClass::onBoardPassengers(TimeClass& Time) {
-    for (int StationIndex = 1; StationIndex < StationCount + 1; StationIndex++) {
+    for (int StationIndex = 0; StationIndex < StationCount + 1; StationIndex++) {
         Queue<BusClass *> tempFwQueue;
         Queue<PassengerClass *> tempPassengerFwQueue;
         while (!StationList[StationIndex].isFwBusEmpty()) {
             BusClass* bus = StationList[StationIndex].removeFwBus();
             while (!StationList[StationIndex].getSPpassengers().isEmpty()) {
-                std::cerr << "Passenger count at " << StationIndex << StationList[StationIndex].getCount("Sp") <<
-                        std::endl;
                 PassengerClass* passenger = StationList[StationIndex].removeSpPassenger();
                 if (passenger->getPassengerDirection() == "Fw") {
                     passenger->setGetOnTime(Time);
-                    // bus->onBoardPassenger(passenger);
-                    std::cout << "SP Passenger on board" << std::endl;
+                    bus->onBoardPassenger(passenger);
+                    std::cout << "SP Passenger on board" << bus->getBusID() << std::endl;
                 } else {
                     tempPassengerFwQueue.enqueue(passenger);
                 }
@@ -269,8 +267,18 @@ void CompanyClass::onBoardPassengers(TimeClass& Time) {
                 PassengerClass* passenger = StationList[StationIndex].removeNpPassenger();
                 if (passenger->getPassengerDirection() == "Fw") {
                     passenger->setGetOnTime(Time);
-                    // bus->onBoardPassenger(passenger);
-                    std::cout << "NP Passenger on board" << std::endl;
+                    bus->onBoardPassenger(passenger);
+                    std::cout << "NP Passenger on board" << bus->getBusID() << std::endl;
+                } else {
+                    tempPassengerFwQueue.enqueue(passenger);
+                }
+            }
+            while (!StationList[StationIndex].getWPpassengers().isEmpty()) {
+                PassengerClass* passenger = StationList[StationIndex].removeWpPassenger();
+                if (passenger->getPassengerDirection() == "Fw") {
+                    passenger->setGetOnTime(Time);
+                    bus->onBoardPassenger(passenger);
+                    std::cout << "WP Passenger on board" << bus->getBusID() << std::endl;
                 } else {
                     tempPassengerFwQueue.enqueue(passenger);
                 }
@@ -282,7 +290,8 @@ void CompanyClass::onBoardPassengers(TimeClass& Time) {
             tempFwQueue.dequeue();
         }
         while (!tempPassengerFwQueue.isEmpty()) {
-            StationList[StationIndex].addNpPassenger(tempPassengerFwQueue.frontElement());
+            PassengerClass* Passenger = tempPassengerFwQueue.frontElement();
+            StationList[Passenger->getStartStation()].addPassenger(Passenger);
             tempPassengerFwQueue.dequeue();
         }
         Queue<BusClass *> tempBwQueue;
@@ -293,8 +302,8 @@ void CompanyClass::onBoardPassengers(TimeClass& Time) {
                 PassengerClass* passenger = StationList[StationIndex].removeSpPassenger();
                 if (passenger->getPassengerDirection() == "Bw") {
                     passenger->setGetOnTime(Time);
-                    // bus->onBoardPassenger(passenger);
-                    std::cout << "SP Passenger on board" << std::endl;
+                    bus->onBoardPassenger(passenger);
+                    std::cout << "SP Passenger on board" << bus->getBusID() << std::endl;
                 } else {
                     tempPassengerBwQueue.enqueue(passenger);
                 }
@@ -303,8 +312,18 @@ void CompanyClass::onBoardPassengers(TimeClass& Time) {
                 PassengerClass* passenger = StationList[StationIndex].removeNpPassenger();
                 if (passenger->getPassengerDirection() == "Bw") {
                     passenger->setGetOnTime(Time);
-                    // bus->onBoardPassenger(passenger);
-                    std::cout << "NP Passenger on board" << std::endl;
+                    bus->onBoardPassenger(passenger);
+                    std::cout << "NP Passenger on board" << bus->getBusID() << std::endl;
+                } else {
+                    tempPassengerBwQueue.enqueue(passenger);
+                }
+            }
+            while (!StationList[StationIndex].getWPpassengers().isEmpty()) {
+                PassengerClass* passenger = StationList[StationIndex].removeWpPassenger();
+                if (passenger->getPassengerDirection() == "Bw") {
+                    passenger->setGetOnTime(Time);
+                    bus->onBoardPassenger(passenger);
+                    std::cout << "WP Passenger on board" << bus->getBusID() << std::endl;
                 } else {
                     tempPassengerBwQueue.enqueue(passenger);
                 }
@@ -316,7 +335,9 @@ void CompanyClass::onBoardPassengers(TimeClass& Time) {
             tempBwQueue.dequeue();
         }
         while (!tempPassengerBwQueue.isEmpty()) {
-            StationList[StationIndex].addNpPassenger(tempPassengerBwQueue.frontElement());
+            PassengerClass * Passenger = tempPassengerBwQueue.frontElement();
+            StationList[Passenger->getStartStation()].addPassenger(
+                Passenger);
             tempPassengerBwQueue.dequeue();
         }
     }
@@ -338,9 +359,10 @@ void CompanyClass::startSimulation(std::string filename) {
 
     int timecounter = 0;
 
-    while (time != TimeClass(7, 40)) {
+
+    while (time != TimeClass(9, 40)) {
         time.tick();
-        usleep(0.1 * microsecond);
+        usleep(0.0001 * microsecond);
         std::cout << time << std::endl;
         eventManager.processEvents(time);
 
@@ -365,4 +387,5 @@ void CompanyClass::startSimulation(std::string filename) {
 
     std::cout << "Station 4: NP: " << company->getStation(4).getCount("NP") << " Sp: " << company->getStation(4).
             getCount("SP") << " WP: " << company->getStation(4).getCount("WP") << std::endl;
+    return;
 }
