@@ -99,18 +99,18 @@ bool BusClass::onBoardPassenger(PassengerClass* Passenger) {
     return false;
 }
 
-bool BusClass::offBoardPassenger(CompanyClass* Company, BusClass* Bus, PassengerClass* Passenger) {
+bool BusClass::offBoardPassenger(CompanyClass* Company, TimeClass& time) {
     int passengerCount = getOnBoardPassengerCount();
     for (int i = 0; i < passengerCount; i++) {
         PassengerClass* currentPassenger = PassengersOnBoard.frontElement();
         PassengersOnBoard.dequeue();
-        if (currentPassenger->getPassengerID() == Passenger->getPassengerID()) {
-            Company->ADDFinishedpassengers(currentPassenger, Bus);
+        if (currentPassenger->getEndStation() == BusCurrentStation) {
+            currentPassenger->setLeaveTime(time);
+            Company->ADDFinishedpassengers(currentPassenger);
             return true;
         }
         PassengersOnBoard.enqueue(currentPassenger);
     }
-
     return false;
 }
 

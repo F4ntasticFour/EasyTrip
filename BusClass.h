@@ -70,11 +70,9 @@ public:
     //Member Functions
     void performMaintenance();
 
-    bool isSuitableForPassengerType(const std::string& passengerType) const;
-
     bool onBoardPassenger(PassengerClass* Passenger);
 
-    bool offBoardPassenger(CompanyClass* Company,BusClass * Bus,PassengerClass* Passenger);
+    bool offBoardPassenger(CompanyClass* Company,TimeClass& Time);
 
     int getOnBoardPassengerCount();
 
