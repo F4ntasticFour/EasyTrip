@@ -4,13 +4,12 @@
 #include <iostream>
 #include "Queue.h"
 
-
-// Constructor and other methods...
+// Constructor that initializes the fileName and reads the file contents
 FileHandler::FileHandler(std::string fileName) {
     this->fileName = std::move(fileName);
     readFileContents();
 }
-
+// Method to read the contents of the file and store them in the fileContents vector
 void FileHandler::readFileContents() {
     std::ifstream file(fileName);
     std::string line;
@@ -19,6 +18,8 @@ void FileHandler::readFileContents() {
     }
     file.close();
 }
+
+// Various getter methods to extract specific data from the file contents
 
 int FileHandler::getNumStations() {
     std::istringstream ss1(fileContents[0]);
@@ -104,6 +105,7 @@ int FileHandler::getNumEvents() {
     return numEvents;
 }
 
+// Method to write the data of finished passengers to the output file
 void FileHandler::writeToFile(Queue<PassengerClass*>& passengers){
 
     std::ofstream outputFile("../FileOutput.txt");
@@ -147,7 +149,7 @@ void FileHandler::writeToFile(Queue<PassengerClass*>& passengers){
 }
 
 
-// Assuming fileContents is a member of FileHandler and contains all lines of the file
+// Method to process the event lines from the file and return them as a queue of vectors
 Queue<std::vector<std::string>> FileHandler::processEventLines() {
     Queue<std::vector<std::string>> eventQueue;
 

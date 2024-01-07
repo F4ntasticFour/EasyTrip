@@ -7,6 +7,7 @@
 
 int microsecond = 1000000;
 
+// Constructor for the CompanyClas
 CompanyClass::CompanyClass(int StationCount, TimeClass TimeBetweenStations, int NumberOfWCBuses, int NumberOfMBuses,
                            int WCBusCapacity, int MBusCapacity, int TripsBeforeCheckup,
                            TimeClass CheckupDurationWCBus, TimeClass CheckupDurationMBus)
@@ -35,7 +36,7 @@ CompanyClass::CompanyClass(int StationCount, TimeClass TimeBetweenStations, int 
     }
 }
 
-
+// Method to check if a bus is at checkup
 bool CompanyClass::busAtCheckup(BusClass* Bus) {
     if (Bus->getBusCurrentStation() == 0 && Bus->getJourneyCompleted() == TripsBeforeCheckup) {
         BusCheckUpQueue.enqueue(Bus);
@@ -43,7 +44,7 @@ bool CompanyClass::busAtCheckup(BusClass* Bus) {
     }
     return false;
 }
-
+// Method to move the bus
 void CompanyClass::moveBus() {
     for (int StationID = 0; StationID < StationCount + 1; StationID++) {
         if (StationID == 0) {
@@ -160,7 +161,7 @@ void CompanyClass::moveBus() {
     }
 }
 
-
+// Method to add a passenger
 bool CompanyClass::addPassenger(PassengerClass* Passenger) {
     if (Passenger->getPassengerType() == "NP") {
         StationList[Passenger->getStartStation()].addNpPassenger(Passenger);
@@ -176,7 +177,7 @@ bool CompanyClass::addPassenger(PassengerClass* Passenger) {
     }
     return false;
 }
-
+// Method to get the count of passengers
 int CompanyClass::getCount(int StationID, const std::string& PassengerType) {
     if (PassengerType == "NP") {
         return this->getStation(StationID).getCount(PassengerType);
@@ -190,12 +191,12 @@ int CompanyClass::getCount(int StationID, const std::string& PassengerType) {
     return 0;
 }
 
-
+// Method to add finished passengers
 bool CompanyClass::ADDFinishedpassengers(PassengerClass* Passenger) {
     FinishedPassengers.enqueue(Passenger);
     return true;
 };
-
+// Method to add finished passengers
 bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus) {
     if (Bus->getBusCurrentStation() == Passenger->getEndStation()) {
         FinishedPassengers.enqueue(Passenger);
@@ -204,7 +205,7 @@ bool CompanyClass::addFinshedPassengers(PassengerClass* Passenger, BusClass* Bus
     }
     return false;
 }
-
+// Method to leave a passenger
 bool CompanyClass::leavePassenger(PassengerClass* Passenger) {
     if (Passenger->getEndStation() == Passenger->getStartStation()) {
         if (Passenger->getPassengerType() == "NP") {
@@ -221,7 +222,7 @@ bool CompanyClass::leavePassenger(PassengerClass* Passenger) {
     }
     return false;
 }
-
+// Method to get a passenger by ID /
 PassengerClass* CompanyClass::getPassengerByID(int ID) {
     for (int i = 0; i < StationCount; ++i) {
         if (StationList[i].getNpPassengerByID(ID) != nullptr) {
@@ -230,26 +231,26 @@ PassengerClass* CompanyClass::getPassengerByID(int ID) {
     }
     return new PassengerClass();
 }
-
+// Method to get a bus
 BusClass* CompanyClass::getBus() {
     BusClass* bus = MovingBus.frontElement();
     MovingBus.dequeue();
     MovingBus.enqueue(bus);
     return bus;
 }
-
+// Method to get the station count
 int CompanyClass::getStationCount() const {
     return StationCount;
 }
-
+// Method to get the finished passengers
 Queue<PassengerClass *> CompanyClass::getFinishedPassengers() {
     return FinishedPassengers;
 }
-
+// Method to get a station
 Station CompanyClass::getStation(int StationID) {
     return StationList[StationID];
 }
-
+// Method to onboard passengers
 void CompanyClass::onBoardPassengers(TimeClass& Time) {
     for (int StationIndex = 0; StationIndex < StationCount + 1; StationIndex++) {
         Queue<BusClass *> tempFwQueue;
@@ -351,7 +352,7 @@ void CompanyClass::onBoardPassengers(TimeClass& Time) {
         }
     }
 }
-
+// Method to offboard passengers
 void CompanyClass::offBoardPassengers(TimeClass& Time) {
     for (int StationIndex = 0; StationIndex < StationCount + 1; StationIndex++) {
         Queue<BusClass *> tempFwQueue;
