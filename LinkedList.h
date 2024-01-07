@@ -94,30 +94,27 @@ public:
     // Utility Functions
 
     void remove(T data) {
+        if (Head == nullptr) {
+            std::cerr << "List is empty" << std::endl;
+            return;
+        }
         Node<T>* temp = Head;
         Node<T>* prev = nullptr;
-        if (Head==nullptr) {
-            std::cout << "List is empty, cannot remove" << std::endl;
-        } else {
-            while (temp->getNext() != nullptr) {
-                if (temp->getData() == data) {
-                    if (prev == nullptr) {
-                        // If the node to be removed is the head
-                        Head = temp->getNext();
-                    } else {
-                        // If the node to be removed is not the head
-                        prev->setNext(temp->getNext());
-                    }
-
-                    // Delete the node and break out of the loop
-                    delete temp;
-                    break;
-                } else {
-                    prev = temp;
-                    temp = temp->getNext();
-                }
-            }
+        if (temp != nullptr && temp->getData() == data) {
+            Head = temp->getNext();
+            delete temp;
+            return;
         }
+        while (temp != nullptr && temp->getData() != data) {
+            prev = temp;
+            temp = temp->getNext();
+        }
+        if (temp == nullptr) {
+            std::cerr << "Element not found" << std::endl;
+            return;
+        }
+        prev->setNext(temp->getNext());
+        delete temp;
     }
     T  getItemAtIndex(int index){
         if (index < 0) {
